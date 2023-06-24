@@ -1,0 +1,11 @@
+#ifndef RESOURCEHOLDER_RESOURCEHOLDERIDENTIFIER_H
+#define RESOURCEHOLDER_RESOURCEHOLDERIDENTIFIER_H
+
+enum class TextureID {
+	None
+};
+
+enum class FontID {
+	Roboto
+};
+#endif
