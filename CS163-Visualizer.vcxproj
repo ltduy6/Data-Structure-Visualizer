@@ -127,6 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\GUIComponent\ActionsList.cpp" />
+    <ClCompile Include="source\GUIComponent\ActionsContainer.cpp" />
     <ClCompile Include="source\GUIComponent\Container.cpp" />
     <ClCompile Include="source\States\HomeState.cpp" />
     <ClCompile Include="source\GUIComponent\Button.cpp" />
@@ -139,6 +141,8 @@
     <ClCompile Include="source\States\State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\GUIComponent\ActionsList.h" />
+    <ClInclude Include="source\GUIComponent\ActionsContainer.h" />
     <ClInclude Include="source\GUIComponent\Container.h" />
     <ClInclude Include="source\States\HomeState.h" />
     <ClInclude Include="source\GUIComponent\Button.h" />

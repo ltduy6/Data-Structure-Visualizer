@@ -53,3 +53,36 @@ Vector2 GUI::Component::GetSize()
 	return Vector2();
 }
 
+bool GUI::Component::getHoverStatus(std::map<std::string, Rectangle> bounds, bool Hover, bool nonHover)
+{
+	if (nonHover)
+		return false;
+	bool nonHoverBound = true;
+	for (auto bound : bounds)
+	{
+		if (CheckCollisionPointRec(GetMousePosition(), bound.second))
+		{
+			nonHoverBound = false;
+			break; 
+		}
+	}
+	if (nonHoverBound == false)
+		Hover = true;
+	else if (Hover)
+		Hover = false;
+	return Hover;
+}
+
+bool GUI::Component::getHoverStatus(Rectangle bound, bool Hover, bool nonHover)
+{
+	if (nonHover)
+		return false;
+	if (CheckCollisionPointRec(GetMousePosition(), bound))
+	{
+		Hover = true;
+	}
+	else if (Hover)
+		Hover = false; 
+	return Hover;
+}
+

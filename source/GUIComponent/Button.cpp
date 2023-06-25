@@ -1,10 +1,8 @@
 #include "Button.h"
 #include "../ResourceHolder/FontHolder.h"
 
-GUI::Button::Button(Rectangle bound) : Component(bound)
+GUI::Button::Button(const std::string content) : Component(), mText{content}
 {
-	this->mRect = bound;
-	this->mColor = GRAY; 
 }
 
 GUI::Button::~Button()
@@ -13,28 +11,50 @@ GUI::Button::~Button()
 
 void GUI::Button::update(float dt)
 {
-	if (this->mIsActivated)
-		this->checkInteraction();
+	if (this->GetActive())
+	{
+		if (this->isClicked())
+			this->triggerCallBack();
+	}
 }
 
-void GUI::Button::draw()
+bool GUI::Button::isSelectable() const
 {
-	DrawRectangle(mRect.x, mRect.y, mRect.width, mRect.height, (this->mState == ButtonState::None) ? mColor : mHover);
+	return false;
+}
+
+bool GUI::Button::isClicked()
+{
+	return (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && CheckCollisionPointRec(GetMousePosition(), mRect));
+}
+
+void GUI::Button::draw(Vector2 basePos)
+{
+	float x = mPos.x + basePos.x; 
+	float y = mPos.y + basePos.y; 
+
+	mRect.x = x; mRect.y = y; 
+
+	this->isHover = this->getHoverStatus(mRect, isHover, false);
+	DrawRectangleRec(mRect, (this->isHover) ? mHover : mColor);
 
 	if (this->textSize == 0)
 	{
 		this->textSize = this->mRect.height / 2; 
 	}
-	Vector2 textBounds = MeasureTextEx(FontHolder::getInstance().get(FontID::Roboto), this->mText.c_str(), this->textSize, 0); 
-	DrawTextEx(FontHolder::getInstance().get(FontID::Roboto), this->mText.c_str(),
-		{ this->mRect.x + this->mRect.width / 2 - textBounds.x / 2,
-		this->mRect.y + this->mRect.height / 2 - textBounds.y / 2 },
-		this->textSize, 0, this->mContentColor);
+
+	drawText();
 }
 
 void GUI::Button::setSize(Vector2 size)
 {
-	GUI::Component::setSize(size);
+	this->mRect.width = size.x; 
+	this->mRect.height = size.y;
+}
+
+Vector2 GUI::Button::GetSize()
+{
+	return Vector2{this->mRect.width, this->mRect.height};
 }
 
 void GUI::Button::setCallBack(CallBack callback)
@@ -57,47 +77,39 @@ void GUI::Button::setTextSize(int size)
 	this->textSize = size; 
 }
 
-Color GUI::Button::getColor() const
+void GUI::Button::setTextAlignment(TextAlignMent alignment)
 {
-	return mColor;
+	this->alignment = alignment;
 }
 
-void GUI::Button::activate()
+Vector2 GUI::Button::getTextPos()
 {
-	mIsActivated = true; 
-}
+	Vector2 textBound = MeasureTextEx(FontHolder::getInstance().get(FontID::Roboto), this->mText.c_str(), this->textSize, 0);
+	float x = this->mRect.x;
+	float y = this->mRect.y + (this->mRect.height - this->textSize) / 2; 
 
-void GUI::Button::deactivate()
-{
-	if (mIsActivated)
-		SetMouseCursor(MOUSE_CURSOR_DEFAULT); 
-	mIsActivated = false;
-}
-
-void GUI::Button::checkInteraction()
-{
-	Vector2 mousePosView = GetMousePosition(); 
-	if (CheckCollisionPointRec(mousePosView, this->mRect))
+	switch (alignment)
 	{
-		SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-		if (mState == ButtonState::None)
-			mState = ButtonState::Focused;
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-			mState = ButtonState::Active; 
-		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT) && mState == ButtonState::Active)
-		{
-			mState = ButtonState::None; 
-			this->callBack();
-		}
+	case TextAlignMent::Left:
+		x = this->mRect.x + 10; 
+		break;
+	case TextAlignMent::Center:
+		x = this->mRect.x + (this->mRect.width - textBound.x) / 2;
+		break; 
+	case TextAlignMent::Right:
+		x = this->mRect.x + this->mRect.width - textBound.x - 10; 
+		break; 
+	default:
+		break;
 	}
-	else {
-		if (!IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-		{
-			if (mState == ButtonState::Focused || mState == ButtonState::Active)
-			{
-				SetMouseCursor(MOUSE_CURSOR_DEFAULT); 
-			}
-			mState = ButtonState::None;
-		}
-	}
+	return Vector2{ x, y };
 }
+
+void GUI::Button::drawText()
+{
+	DrawTextEx(FontHolder::getInstance().get(FontID::Roboto), this->mText.c_str(),
+		this->getTextPos(), this->textSize, 0, this->mContentColor);
+}
+
+
+

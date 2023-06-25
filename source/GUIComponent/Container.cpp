@@ -18,14 +18,21 @@ void GUI::Container::draw(Vector2 basePos)
 {
     if (!mIsActive)
         return; 
-    this->drawCurrent(basePos); 
+
+    drawCurrent(basePos);
 
     basePos.x += mPos.x; 
     basePos.y += mPos.y;
 
-    for (auto children : mChildren)
+    for (const GUI::Component::Ptr children : mChildren)
         children->draw(basePos);
 
+}
+
+void GUI::Container::update(float dt)
+{
+    for (const GUI::Component::Ptr children : mChildren)
+        children->update(dt);
 }
 
 bool GUI::Container::isSelectable() const
@@ -52,4 +59,12 @@ Vector2 GUI::Container::Getsize()
         maxPos.y = std::max(maxPos.y, child.get()->GetPos().y + child.get()->GetSize().y); 
     }
     return Vector2{ maxPos.x - minPos.x, maxPos.y - minPos.y };
+
+    return Vector2{ 0, 0 };
 }
+
+std::vector<GUI::Component::Ptr> GUI::Container::getChildren()
+{
+    return mChildren;
+}
+
