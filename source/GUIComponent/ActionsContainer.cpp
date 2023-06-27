@@ -13,16 +13,16 @@ void GUI::ActionsContainer::drawCurrent(Vector2 base)
 	this->updatePos(base);
 }
 
-void GUI::ActionsContainer::setActive(bool active)
+void GUI::ActionsContainer::SetActive(bool active)
 {
-	for (auto child : mChildren)
+	for (auto& child : mChildren)
 		child.get()->SetActive(active); 
 	this->mIsActive = active;
 }
 
 void GUI::ActionsContainer::updatePos(Vector2 base)
 {
-	Vector2 nextButtonPos = Vector2{ 3, 2 }; 
+	Vector2 nextButtonPos = Vector2{ 3, 0 }; 
 	for (auto& child : this->mChildren)
 	{
 		child.get()->SetPos(nextButtonPos); 

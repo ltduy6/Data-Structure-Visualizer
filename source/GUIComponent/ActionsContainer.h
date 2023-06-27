@@ -12,7 +12,7 @@ namespace GUI {
 		~ActionsContainer();
 
 		void drawCurrent(Vector2 base = Vector2{0, 0});
-		void setActive(bool active);
+		void SetActive(bool active);
 	private:
 		void updatePos(Vector2 base);
 	};

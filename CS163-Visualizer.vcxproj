@@ -127,6 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Helper\Helper.cpp" />
+    <ClCompile Include="source\GUIComponent\InputBox.cpp" />
     <ClCompile Include="source\GUIComponent\ActionsList.cpp" />
     <ClCompile Include="source\GUIComponent\ActionsContainer.cpp" />
     <ClCompile Include="source\GUIComponent\Container.cpp" />
@@ -141,6 +143,8 @@
     <ClCompile Include="source\States\State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Helper\Helper.h" />
+    <ClInclude Include="source\GUIComponent\InputBox.h" />
     <ClInclude Include="source\GUIComponent\ActionsList.h" />
     <ClInclude Include="source\GUIComponent\ActionsContainer.h" />
     <ClInclude Include="source\GUIComponent\Container.h" />

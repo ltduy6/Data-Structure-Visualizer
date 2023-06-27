@@ -31,7 +31,7 @@ void GUI::Container::draw(Vector2 basePos)
 
 void GUI::Container::update(float dt)
 {
-    for (const GUI::Component::Ptr children : mChildren)
+    for (auto& children : mChildren)
         children->update(dt);
 }
 

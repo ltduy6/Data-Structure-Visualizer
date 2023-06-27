@@ -53,7 +53,7 @@ void GUI::ActionsList::AddOperation(GUI::Button::Ptr action, GUI::Container::Ptr
 	{
 		lastOperationPos = this->buttons.getChildren().rbegin()->get()->GetPos(); 
 	}
-	lastOperationPos.y += buttonHeight;
+	lastOperationPos.y += buttonHeight + 5;
 
 	action.get()->SetPos(lastOperationPos); 
 	action.get()->setSize(Vector2{150, buttonHeight});

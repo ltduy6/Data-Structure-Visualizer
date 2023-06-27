@@ -1,5 +1,6 @@
 #include <iostream>
 #include "source/GUIComponent/Button.h"
+#include "source/GUIComponent/InputBox.h"
 #include "source/GUIComponent/ActionsContainer.h"
 #include "source/GUIComponent/ActionsList.h"
 #include "source/ResourceHolder/FontHolder.h"
@@ -16,31 +17,34 @@ int main()
 
 	std::vector<std::string> a = { "Insert", "Update", "Search" }; 
 
+
 	for (int i = 0; i < a.size(); ++i)
 	{
 		GUI::Button::Ptr button(new GUI::Button(a[i]));
 		button->setTextAlignment(GUI::Button::TextAlignMent::Left);
-		button->setSize(Vector2{ 100, 100 });
 
-		GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer()); 
-		GUI::Button::Ptr button_1(new GUI::Button("Hello")); 
-		GUI::Button::Ptr button_2(new GUI::Button("Bye"));
-		button_1->setSize(Vector2{ 100, 50 }); 
-		button_2->setSize(Vector2{ 100, 50 });
-		container->pack(button_1); 
-		container->pack(button_2);
+		GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer());
+		GUI::InputBox::Ptr box(new GUI::InputBox());
+		box->setSize(Vector2{ 100, 50 });
+		container->pack(box);
 
 
 		actionList.AddOperation(button, container); 
 	}
 
+	GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer()); 
+	GUI::InputBox::Ptr box(new GUI::InputBox());
+	box->setSize(Vector2{ 100, 50 });
+	container->pack(box);
+
+	container->SetActive(false);
 
 	while (WindowShouldClose() == false)
 	{
 		BeginDrawing();
 		ClearBackground(WHITE); 
-		actionList.update(GetFrameTime());
-		actionList.draw({ 100, 100 });
+		actionList.update(GetFrameTime()); 
+		actionList.draw(Vector2{ 100, 100 });
 		EndDrawing();
 	}
 
