@@ -1,4 +1,5 @@
 #include "ActionsContainer.h"
+#include <iostream>
 
 GUI::ActionsContainer::ActionsContainer()
 {
@@ -26,6 +27,7 @@ void GUI::ActionsContainer::updatePos(Vector2 base)
 	for (auto& child : this->mChildren)
 	{
 		child.get()->SetPos(nextButtonPos); 
+		std::cout << child.get()->GetPos().x << ' ' << child.get()->GetPos().y << '\n';
 		nextButtonPos.x = nextButtonPos.x + child.get()->GetSize().x + 3; 
 	}
 }

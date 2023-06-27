@@ -20,10 +20,13 @@ namespace GUI {
 		void initActionBar();
 		Vector2 GetSize();
 	private:
+		virtual void updateMouseCursor();
+	private:
 		// buttons for several actions
 		GUI::Container buttons;
 		// list of operations for an action
 		GUI::Container optionContainers; 
+		std::size_t indActive{ 0 };
 		bool isVisible; 
 	};
 }

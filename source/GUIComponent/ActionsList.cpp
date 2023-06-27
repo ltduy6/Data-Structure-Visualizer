@@ -11,6 +11,7 @@ GUI::ActionsList::~ActionsList()
 void GUI::ActionsList::showOptions(std::size_t index)
 {
 	optionContainers.getChildren().at(index).get()->SetActive(true);
+	this->indActive = index;
 }
 
 void GUI::ActionsList::hideAllOptions()
@@ -36,6 +37,7 @@ void GUI::ActionsList::draw(Vector2 base)
 	{
 		buttons.draw(base);
 		optionContainers.draw(base);
+		this->updateMouseCursor();
 	}
 }
 
@@ -80,3 +82,18 @@ Vector2 GUI::ActionsList::GetSize()
 {
 	return Vector2();
 }
+
+void GUI::ActionsList::updateMouseCursor()
+{
+	bool hoverButton = this->buttons.getHoverStatus(); 
+	bool hoverOption = this->optionContainers.getChildren().at(this->indActive)->getHoverStatus();
+	if (hoverButton == true)
+		SetMouseCursor(MOUSE_CURSOR_POINTING_HAND); 
+	else {
+		if (this->optionContainers.GetActive() == true && hoverOption)
+			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+		else
+			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+	}
+}
+

@@ -40,7 +40,6 @@ namespace GUI {
 		Color mColor{WHITE};
 		Color mBorderColor{ BLACK };
 		Font font{ FontHolder::getInstance().get(FontID::Roboto) };
-		Rectangle mRect{ Rectangle {0, 0, 0, 0} };
 		Rectangle mCursor{ Rectangle{0, 0, 0, 0} }; 
 		float fontSize{ 30 };
 		float mBorderThickness{ 1 };

@@ -12,8 +12,8 @@ GUI::InputBox::~InputBox()
 void GUI::InputBox::draw(Vector2 base)
 {
 
-	base.x += mPos.x; 
-	base.y += mPos.y;  
+	base.x += mRect.x; 
+	base.y += mRect.y;  
 	this->mRect = Rectangle{ base.x, base.y, this->mFieldSize.x, this->mFieldSize.y };
 
 	this->checkInteraction();
@@ -40,7 +40,6 @@ void GUI::InputBox::draw(Vector2 base)
 	DrawRectangleLines(base.x, base.y, this->mFieldSize.x, this->mFieldSize.y, this->mBorderColor);
 
 	int textSize = this->mFieldSize.y * 2 / 3; 
-	std::cout << this->mInputText << '\n';
 	std::string DisplayText = mInputText.substr(this->ind_start, this->ind_end - this->ind_start + 1); 
 
 	Vector2 textBounds = MeasureTextEx(font, DisplayText.c_str(), fontSize, 0.5);
@@ -66,7 +65,6 @@ bool GUI::InputBox::isSelectable() const
 
 void GUI::InputBox::update(float dt)
 {
-	std::cout << this->mRect.y << " " << this->GetActive() << '\n';
 	if (this->GetActive() == false)
 	{
 		this->mCursorVisible = false;
@@ -89,6 +87,8 @@ void GUI::InputBox::setSize(Vector2 base)
 {
 	this->mFieldSize.x = base.x;
 	this->mFieldSize.y = base.y;
+	this->mRect.width = base.x; 
+	this->mRect.height = base.y;
 }
 
 std::string GUI::InputBox::getInputText() const
@@ -118,13 +118,11 @@ void GUI::InputBox::checkInteraction()
 		Vector2 mousePos = GetMousePosition();
 		if (CheckCollisionPointRec(mousePos, mRect))
 		{
-			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 			if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 				mIsFocused = true;
 			}
 		}
 		else {
-			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 			if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 				mIsFocused = false;
 			}

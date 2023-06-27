@@ -47,8 +47,6 @@ namespace GUI {
 		TextAlignMent alignment{TextAlignMent::Left};
 
 		CallBack callBack;
-		
-		Rectangle mRect{ Rectangle{0, 0, 0, 0} };
 
 		Color mHover{ GRAY };
 		Color mColor{ 64, 64, 64, 255 };

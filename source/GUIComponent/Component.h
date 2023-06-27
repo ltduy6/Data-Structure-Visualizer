@@ -2,7 +2,7 @@
 
 #include "raylib.h"
 #include <memory>
-#include <map>
+#include <vector>
 #include <string>
 
 namespace GUI {
@@ -27,14 +27,15 @@ namespace GUI {
 		void SetPos(Vector2 pos); 
 		Vector2 GetPos(); 
 		virtual Vector2 GetSize(); 
+		virtual Rectangle GetRec();
+	public:
+		virtual bool getHoverStatus();
 	protected:
-		virtual bool getHoverStatus(std::map<std::string, Rectangle> bounds, bool Hover, bool nonHover);
-		virtual bool getHoverStatus(Rectangle bound, bool Hover, bool nonHover);
-	protected:
-		Vector2 mPos;
-		bool mIsActive;
+		Vector2 mPos{ Vector2 {0, 0} };
+		Rectangle mRect{ Rectangle {0, 0, 0, 0} };
+		bool mIsActive{ true };
 	private:
-		bool mIsSelected; 
+		bool mIsSelected{ false };
 	};
 }
 

@@ -1,6 +1,6 @@
 #include "Component.h"
 
-GUI::Component::Component() : mPos{ Vector2{0, 0} }, mIsSelected{ false }, mIsActive{ true }
+GUI::Component::Component()
 {
 }
 
@@ -40,12 +40,14 @@ bool GUI::Component::GetActive()
 
 void GUI::Component::SetPos(Vector2 pos)
 {
-	this->mPos = pos; 
+	this->mPos = pos;
+	this->mRect.x = pos.x;
+	this->mRect.y = pos.y;
 }
 
 Vector2 GUI::Component::GetPos()
 {
-	return this->mPos;
+	return Vector2{ this->mRect.x, this->mRect.y };
 }
 
 Vector2 GUI::Component::GetSize()
@@ -53,36 +55,16 @@ Vector2 GUI::Component::GetSize()
 	return Vector2();
 }
 
-bool GUI::Component::getHoverStatus(std::map<std::string, Rectangle> bounds, bool Hover, bool nonHover)
+Rectangle GUI::Component::GetRec()
 {
-	if (nonHover)
-		return false;
-	bool nonHoverBound = true;
-	for (auto bound : bounds)
-	{
-		if (CheckCollisionPointRec(GetMousePosition(), bound.second))
-		{
-			nonHoverBound = false;
-			break; 
-		}
-	}
-	if (nonHoverBound == false)
-		Hover = true;
-	else if (Hover)
-		Hover = false;
-	return Hover;
+	return this->mRect;
 }
 
-bool GUI::Component::getHoverStatus(Rectangle bound, bool Hover, bool nonHover)
+bool GUI::Component::getHoverStatus()
 {
-	if (nonHover)
-		return false;
-	if (CheckCollisionPointRec(GetMousePosition(), bound))
-	{
-		Hover = true;
-	}
-	else if (Hover)
-		Hover = false; 
-	return Hover;
+	if (CheckCollisionPointRec(GetMousePosition(), this->mRect))
+		return true;
+	else
+		return false; 
 }
 

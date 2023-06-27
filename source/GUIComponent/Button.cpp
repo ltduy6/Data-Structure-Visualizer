@@ -30,12 +30,12 @@ bool GUI::Button::isClicked()
 
 void GUI::Button::draw(Vector2 basePos)
 {
-	float x = mPos.x + basePos.x; 
-	float y = mPos.y + basePos.y; 
+	basePos.x += mPos.x; 
+	basePos.y += mPos.y; 
 
-	mRect.x = x; mRect.y = y; 
+	mRect.x = basePos.x; mRect.y = basePos.y; 
 
-	this->isHover = this->getHoverStatus(mRect, isHover, false);
+	this->isHover = this->getHoverStatus();
 	DrawRectangleRec(mRect, (this->isHover) ? mHover : mColor);
 
 	if (this->textSize == 0)

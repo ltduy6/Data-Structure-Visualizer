@@ -6,12 +6,13 @@ GUI::Container::Container() : mChildren() {
 
 void GUI::Container::pack(Component::Ptr component)
 {
-    mChildren.push_back(component);
+    this->mChildren.push_back(component);
 }
 
 void GUI::Container::unpack()
 {
     mChildren.clear();
+    this->mBounds.clear();
 }
 
 void GUI::Container::draw(Vector2 basePos)
@@ -62,6 +63,29 @@ Vector2 GUI::Container::Getsize()
 
     return Vector2{ 0, 0 };
 }
+
+std::vector<Rectangle> GUI::Container::GetBounds()
+{
+    return this->mBounds;
+}
+
+bool GUI::Container::getHoverStatus()
+{
+    bool nonHoverBound = true;
+    for (auto bound : this->mChildren)
+    {
+        if (CheckCollisionPointRec(GetMousePosition(), bound->GetRec()))
+        {
+            nonHoverBound = false;
+            break;
+        }
+    }
+    if (nonHoverBound == false)
+        return true;
+    else
+        return false;
+}
+
 
 std::vector<GUI::Component::Ptr> GUI::Container::getChildren()
 {

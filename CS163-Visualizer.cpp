@@ -24,20 +24,28 @@ int main()
 		button->setTextAlignment(GUI::Button::TextAlignMent::Left);
 
 		GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer());
-		GUI::InputBox::Ptr box(new GUI::InputBox());
-		box->setSize(Vector2{ 100, 50 });
-		container->pack(box);
 
+		GUI::Button::Ptr box(new GUI::Button("Bye"));
+		box->setSize(Vector2{ 100, 50 });
+
+		GUI::Button::Ptr button_temp(new GUI::Button("Hello"));
+		button_temp->setSize(Vector2{ 100, 50 });
+		
+		GUI::Button::Ptr button_temp1(new GUI::Button("Hello"));
+		button_temp->setSize(Vector2{ 100, 50 });
+
+		GUI::InputBox::Ptr box_2(new GUI::InputBox()); 
+		box_2->setSize(Vector2{ 100, 50 });
+
+
+		container->pack(box);
+		container->pack(button_temp);
+		container->pack(button_temp1);
+		container->pack(box_2);
 
 		actionList.AddOperation(button, container); 
 	}
 
-	GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer()); 
-	GUI::InputBox::Ptr box(new GUI::InputBox());
-	box->setSize(Vector2{ 100, 50 });
-	container->pack(box);
-
-	container->SetActive(false);
 
 	while (WindowShouldClose() == false)
 	{
