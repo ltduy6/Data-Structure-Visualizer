@@ -4,6 +4,7 @@
 #include "source/GUIComponent/ActionsContainer.h"
 #include "source/GUIComponent/ActionsList.h"
 #include "source/ResourceHolder/FontHolder.h"
+#include "source/GUIComponent/OptionInputField.h"
 #include "source/GlobalVar.h"
 
 int main()
@@ -13,45 +14,37 @@ int main()
 
 	FontHolder::getInstance().load(FontID::Roboto, "assets/Fonts/Roboto-Medium.ttf");
 
+	
+	std::vector<std::string> a = { "Create", "Insert", "Delete" }; 
+
 	GUI::ActionsList actionList;
 
-	std::vector<std::string> a = { "Insert", "Update", "Search" }; 
-
-
-	for (int i = 0; i < a.size(); ++i)
+	for (auto x : a)
 	{
-		GUI::Button::Ptr button(new GUI::Button(a[i]));
-		button->setTextAlignment(GUI::Button::TextAlignMent::Left);
+		GUI::Button::Ptr button(new GUI::Button()); 
+		button->setText(x); 
 
-		GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer());
+		GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer()); 
 
-		GUI::Button::Ptr box(new GUI::Button("Bye"));
-		box->setSize(Vector2{ 100, 50 });
+		GUI::Button::Ptr button_2(new GUI::Button()); 
+		button_2->setText("Bye"); 
+		button_2->setSize(Vector2{ 150, 50 }); 
 
-		GUI::Button::Ptr button_temp(new GUI::Button("Hello"));
-		button_temp->setSize(Vector2{ 100, 50 });
-		
-		GUI::Button::Ptr button_temp1(new GUI::Button("Hello"));
-		button_temp->setSize(Vector2{ 100, 50 });
+		GUI::OptionInputField::Ptr input(new GUI::OptionInputField()); 
 
-		GUI::InputBox::Ptr box_2(new GUI::InputBox()); 
-		box_2->setSize(Vector2{ 100, 50 });
-
-
-		container->pack(box);
-		container->pack(button_temp);
-		container->pack(button_temp1);
-		container->pack(box_2);
+		container->pack(button_2); 
+		container->pack(input);
 
 		actionList.AddOperation(button, container); 
 	}
 
+	
 
 	while (WindowShouldClose() == false)
 	{
 		BeginDrawing();
-		ClearBackground(WHITE); 
-		actionList.update(GetFrameTime()); 
+		ClearBackground(WHITE);
+		actionList.update(GetFrameTime());
 		actionList.draw(Vector2{ 100, 100 });
 		EndDrawing();
 	}

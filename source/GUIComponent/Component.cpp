@@ -52,7 +52,7 @@ Vector2 GUI::Component::GetPos()
 
 Vector2 GUI::Component::GetSize()
 {
-	return Vector2();
+	return Vector2{ this->mRect.width, this->mRect.height };
 }
 
 Rectangle GUI::Component::GetRec()

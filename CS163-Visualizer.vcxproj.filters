@@ -57,6 +57,9 @@
     <ClCompile Include="source\Helper\Helper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\GUIComponent\OptionInputField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Application.h">
@@ -105,6 +108,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Helper\Helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUIComponent\OptionInputField.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

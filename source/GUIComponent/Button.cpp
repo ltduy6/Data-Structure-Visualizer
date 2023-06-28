@@ -1,7 +1,7 @@
 #include "Button.h"
 #include "../ResourceHolder/FontHolder.h"
 
-GUI::Button::Button(const std::string content) : Component(), mText{content}
+GUI::Button::Button() : Component()
 {
 }
 

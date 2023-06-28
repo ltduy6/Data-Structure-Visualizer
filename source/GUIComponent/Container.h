@@ -20,7 +20,6 @@ namespace GUI {
 
 		virtual void drawCurrent(Vector2 basePos);
 
-		virtual Vector2 Getsize(); 
 		virtual std::vector<Rectangle> GetBounds();
 		std::vector<GUI::Component::Ptr> getChildren();
 		virtual bool getHoverStatus();

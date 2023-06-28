@@ -37,14 +37,17 @@ void GUI::ActionsList::draw(Vector2 base)
 	{
 		buttons.draw(base);
 		optionContainers.draw(base);
-		this->updateMouseCursor();
 	}
 }
 
 void GUI::ActionsList::update(float dt)
 {
-	buttons.update(dt); 
-	optionContainers.update(dt);
+	if (this->isVisible)
+	{
+		buttons.update(dt);
+		optionContainers.update(dt); 
+		this->updateMouseCursor();
+	}
 }
 
 void GUI::ActionsList::AddOperation(GUI::Button::Ptr action, GUI::Container::Ptr optionContainer)
@@ -55,7 +58,7 @@ void GUI::ActionsList::AddOperation(GUI::Button::Ptr action, GUI::Container::Ptr
 	{
 		lastOperationPos = this->buttons.getChildren().rbegin()->get()->GetPos(); 
 	}
-	lastOperationPos.y += buttonHeight + 5;
+	lastOperationPos.y += buttonHeight;
 
 	action.get()->SetPos(lastOperationPos); 
 	action.get()->setSize(Vector2{150, buttonHeight});
@@ -95,5 +98,5 @@ void GUI::ActionsList::updateMouseCursor()
 		else
 			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 	}
-}
+}	
 

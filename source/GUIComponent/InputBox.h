@@ -16,7 +16,7 @@ namespace GUI {
 	public:
 		typedef std::shared_ptr<InputBox> Ptr;
 	public:
-		InputBox();
+		explicit InputBox();
 		~InputBox();
 		void draw(Vector2 base);
 		bool isSelectable() const;
@@ -24,9 +24,7 @@ namespace GUI {
 		void setSize(Vector2 base);
 		std::string getInputText() const;
 		void resetLabel(); 
-	public:
-		static std::function<bool(std::string)> integerValid(int minValue, int maxValue);
-		static std::function<bool(std::string)> integerSpaceSeparatedListValid();
+
 	private:
 		void checkInteraction();
 		void drawCursor(Vector2 base); 
@@ -34,7 +32,6 @@ namespace GUI {
 		int ind_end{ 0 };
 		int ind_mouse{ 0 };
 	private:
-		Vector2 mFieldSize{ Vector2{0, 0} };
 		std::string mInputText;
 		Color mTextColor{ BLACK }; 
 		Color mColor{WHITE};

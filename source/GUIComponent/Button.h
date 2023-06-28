@@ -20,7 +20,7 @@ namespace GUI {
 		};
 
 	public:
-		Button(const std::string content); 
+		explicit Button(); 
 		~Button(); 
 
 		virtual void update(float dt);
