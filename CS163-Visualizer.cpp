@@ -31,21 +31,24 @@ int main()
 		button_2->setSize(Vector2{ 150, 50 }); 
 
 		GUI::OptionInputField::Ptr input(new GUI::OptionInputField()); 
+		input->AddInputField(Vector2{ 150, 50 }, "");
 
 		container->pack(button_2); 
 		container->pack(input);
 
-		actionList.AddOperation(button, container); 
+		actionList.AddOperation(button, input); 
 	}
 
-	
+	GUI::OptionInputField::Ptr input(new GUI::OptionInputField());
+	input->AddInputField(Vector2{ 150, 50 }, "");
 
+	std::cout << input->GetSize().x << '\n';
 	while (WindowShouldClose() == false)
 	{
 		BeginDrawing();
 		ClearBackground(WHITE);
-		actionList.update(GetFrameTime());
-		actionList.draw(Vector2{ 100, 100 });
+		input->update(GetFrameTime());
+		input->draw(Vector2{ 100, 100 });
 		EndDrawing();
 	}
 

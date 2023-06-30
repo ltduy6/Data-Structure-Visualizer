@@ -1,5 +1,6 @@
 #include "InputBox.h"
 #include <iostream>
+#include <regex>
 
 GUI::InputBox::InputBox()
 {
@@ -11,8 +12,8 @@ GUI::InputBox::~InputBox()
 
 void GUI::InputBox::draw(Vector2 base)
 {
-	base.x += mPos.x; 
-	base.y += mPos.y;  
+	base.x += this->mPos.x; 
+	base.y += this->mPos.y;  
 	this->mRect = Rectangle{ base.x, base.y, this->mRect.width, this->mRect.height };
 
 	this->checkInteraction();
@@ -92,6 +93,18 @@ void GUI::InputBox::setSize(Vector2 base)
 std::string GUI::InputBox::getInputText() const
 {
 	return this->mInputText;
+}
+
+bool GUI::InputBox::IntegerValidator(int number) const
+{
+	return number >= this->minValue && number <= this->maxValue; 
+}
+
+bool GUI::InputBox::IntegerSpaceValidator() const
+{
+	std::regex pattern("(?:-?\\d+)?(?:\\s+-?\\d+)*\\s*");
+
+	return std::regex_match(this->mInputText, pattern);
 }
 
 void GUI::InputBox::resetLabel()

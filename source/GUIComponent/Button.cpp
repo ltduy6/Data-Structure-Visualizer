@@ -30,8 +30,8 @@ bool GUI::Button::isClicked()
 
 void GUI::Button::draw(Vector2 basePos)
 {
-	basePos.x += mPos.x; 
-	basePos.y += mPos.y; 
+	basePos.x += this->mPos.x; 
+	basePos.y += this->mPos.y; 
 
 	mRect.x = basePos.x; mRect.y = basePos.y; 
 
@@ -59,12 +59,13 @@ Vector2 GUI::Button::GetSize()
 
 void GUI::Button::setCallBack(CallBack callback)
 {
-	this->callBack = callback;
+	this->callBack.push_back(callback);
 }
 
 void GUI::Button::triggerCallBack()
 {
-	this->callBack();
+	for (auto x : this->callBack)
+		x(); 
 }
 
 void GUI::Button::setText(const std::string text)
@@ -80,6 +81,21 @@ void GUI::Button::setTextSize(int size)
 void GUI::Button::setTextAlignment(TextAlignMent alignment)
 {
 	this->alignment = alignment;
+}
+
+void GUI::Button::setBackGroundColor(Color color)
+{
+	this->mColor = color; 
+}
+
+void GUI::Button::setHoverColor(Color color)
+{
+	this->mHover = color; 
+}
+
+void GUI::Button::setContentColor(Color color)
+{
+	this->mContentColor = color; 
 }
 
 Vector2 GUI::Button::getTextPos()

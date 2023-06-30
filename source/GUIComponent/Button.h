@@ -3,6 +3,7 @@
 #include "Component.h"
 
 #include <functional>
+#include <vector>
 #include <string>
 
 namespace GUI {
@@ -39,6 +40,9 @@ namespace GUI {
 		void setTextSize(int size);
 		void setTextAlignment(TextAlignMent alignment);
 
+		void setBackGroundColor(Color color); 
+		void setHoverColor(Color color);
+		void setContentColor(Color color);
 
 	private:
 		Vector2 getTextPos();
@@ -46,7 +50,7 @@ namespace GUI {
 	protected:
 		TextAlignMent alignment{TextAlignMent::Left};
 
-		CallBack callBack;
+		std::vector<CallBack> callBack;
 
 		Color mHover{ GRAY };
 		Color mColor{ 64, 64, 64, 255 };

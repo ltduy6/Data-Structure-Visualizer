@@ -13,6 +13,10 @@ namespace GUI {
 
 		void drawCurrent(Vector2 base = Vector2{0, 0});
 		void SetActive(bool active);
+		virtual void DrawError(); 
+		virtual Vector2 GetSize(); 
+	public:
+		std::string error; 
 	private:
 		void updatePos(Vector2 base);
 	};

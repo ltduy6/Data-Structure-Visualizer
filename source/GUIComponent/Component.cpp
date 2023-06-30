@@ -47,7 +47,7 @@ void GUI::Component::SetPos(Vector2 pos)
 
 Vector2 GUI::Component::GetPos()
 {
-	return Vector2{ this->mRect.x, this->mRect.y };
+	return Vector2{ this->mPos.x, this->mPos.y };
 }
 
 Vector2 GUI::Component::GetSize()

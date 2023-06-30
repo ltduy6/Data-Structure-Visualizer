@@ -23,6 +23,10 @@ namespace GUI {
 		void update(float dt);
 		void setSize(Vector2 base);
 		std::string getInputText() const;
+
+		bool IntegerValidator(int number) const; 
+		bool IntegerSpaceValidator() const; 
+
 		void resetLabel(); 
 
 	private:
@@ -31,6 +35,8 @@ namespace GUI {
 		int ind_start{ 0 };
 		int ind_end{ 0 };
 		int ind_mouse{ 0 };
+		int minValue{-100}; 
+		int maxValue{100};
 	private:
 		std::string mInputText;
 		Color mTextColor{ BLACK }; 
