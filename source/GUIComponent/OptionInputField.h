@@ -1,30 +1,29 @@
 #pragma once
-#include "ActionsContainer.h"
+#include "Container.h"
 #include "InputBox.h"
 #include "Button.h"
 #include <map>
 
 namespace GUI {
-	class OptionInputField : public ActionsContainer
+	class OptionInputField : public Container
 	{
 	public:
 		typedef std::shared_ptr<OptionInputField> Ptr; 
 	public:
 		OptionInputField(); 
 		~OptionInputField();
-		void AddInputField(Vector2 size, std::string label); 
-		void AddActionSubmit(std::function<void()> action); 
-		void AddActionRandom(std::function<void()> action);
-		void DrawError(); 
-		void DrawInput(); 
-		int checkValidSubmit(); 
-		std::vector<int> ExtractValue(); 
+		void SetOption(std::string content, std::vector<GUI::InputBox::Ptr> fields,
+			std::function<void(std::map<std::string, std::string>)> CallBack); 
+		void SetNoFieldOption(std::string content, std::function<void()> CallBack);
+		void drawCurrent(Vector2 base);
+		virtual Vector2 GetSize() const; 
 	private:
-		GUI::Button::Ptr mSubmit; 
-		GUI::Button::Ptr mRandom; 
-		GUI::InputBox::Ptr mInputField; 
-		std::vector<std::string> Errors; 
-		std::string error{""};
+		std::map<std::string, std::string> ExtractInput(); 
+		void AddInput(InputBox::Ptr InputBox); 
+		void AddSubmit(std::function<void(std::map<std::string, std::string>)> CallBack); 
+	private:
+		GUI::Container::Ptr mInputField;
+		std::map<std::string, std::string> InputData;
 	};
 }
 

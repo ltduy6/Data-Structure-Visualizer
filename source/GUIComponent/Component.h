@@ -14,8 +14,7 @@ namespace GUI {
 		Component(); 
 		virtual ~Component();
 		virtual void draw(Vector2 basePos = Vector2{0, 0}) = 0;
-		virtual void update(float dt) = 0;
-		virtual bool isSelectable() const = 0; 
+		virtual void update(float dt) = 0; 
 		bool isSelected() const; 
 		virtual void select(); 
 		virtual void deSelect(); 
@@ -26,6 +25,7 @@ namespace GUI {
 	public:
 		void SetPos(Vector2 pos); 
 		Vector2 GetPos(); 
+		virtual void SetSize(Vector2 base); 
 		virtual Vector2 GetSize(); 
 		virtual Rectangle GetRec();
 	public:

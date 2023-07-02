@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "InputField.h"
 #include "../ResourceHolder/FontHolder.h"
 #include "../Helper/Helper.h"
 #include "raylib.h"
@@ -11,18 +11,17 @@
 #include <functional>
 
 namespace GUI {
-	class InputBox : public Component
+	class InputBox : public InputField
 	{
 	public:
 		typedef std::shared_ptr<InputBox> Ptr;
 	public:
 		explicit InputBox();
 		~InputBox();
-		void draw(Vector2 base);
-		bool isSelectable() const;
-		void update(float dt);
-		void setSize(Vector2 base);
-		std::string getInputText() const;
+		virtual void drawField(Vector2 base);
+		virtual void updateField(float dt);
+		virtual void setSizeBox(Vector2 base);
+		virtual std::string getInputText() const;
 
 		bool IntegerValidator(int number) const; 
 		bool IntegerSpaceValidator() const; 
@@ -32,10 +31,12 @@ namespace GUI {
 	private:
 		void checkInteraction();
 		void drawCursor(Vector2 base); 
+		virtual void Random(); 
+	private:
 		int ind_start{ 0 };
 		int ind_end{ 0 };
 		int ind_mouse{ 0 };
-		int minValue{-100}; 
+		int minValue{0}; 
 		int maxValue{100};
 	private:
 		std::string mInputText;
@@ -43,6 +44,7 @@ namespace GUI {
 		Color mColor{WHITE};
 		Color mBorderColor{ BLACK };
 		Font font{ FontHolder::getInstance().get(FontID::Roboto) };
+		Rectangle mBound{ Rectangle{0, 0, 0, 0} };
 		Rectangle mCursor{ Rectangle{0, 0, 0, 0} }; 
 		float fontSize{ 30 };
 		float mBorderThickness{ 1 };

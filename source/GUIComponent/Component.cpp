@@ -50,6 +50,12 @@ Vector2 GUI::Component::GetPos()
 	return Vector2{ this->mPos.x, this->mPos.y };
 }
 
+void GUI::Component::SetSize(Vector2 base)
+{
+	this->mRect.width = base.x; 
+	this->mRect.height = base.y; 
+}
+
 Vector2 GUI::Component::GetSize()
 {
 	return Vector2{ this->mRect.width, this->mRect.height };

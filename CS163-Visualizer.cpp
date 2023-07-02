@@ -4,8 +4,9 @@
 #include "source/GUIComponent/ActionsContainer.h"
 #include "source/GUIComponent/ActionsList.h"
 #include "source/ResourceHolder/FontHolder.h"
+#include "source/Helper/ColorSetting.h"
 #include "source/GUIComponent/OptionInputField.h"
-#include "source/GlobalVar.h"
+#include "source/Helper/GlobalVar.h"
 
 int main()
 {
@@ -14,41 +15,47 @@ int main()
 
 	FontHolder::getInstance().load(FontID::Roboto, "assets/Fonts/Roboto-Medium.ttf");
 
-	
-	std::vector<std::string> a = { "Create", "Insert", "Delete" }; 
+	ColorSetting::GetInstance().load(); 
 
-	GUI::ActionsList actionList;
+	GUI::ActionsList actionlist; 
 
-	for (auto x : a)
+	for (int i = 0; i < 3; ++i)
 	{
-		GUI::Button::Ptr button(new GUI::Button()); 
-		button->setText(x); 
+		GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer());
+		GUI::Button::Ptr button(new GUI::Button());
+		button->setText("Hello");
+		button->setTextAlignment(GUI::Button::TextAlignMent::Center);
 
-		GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer()); 
+		GUI::InputBox::Ptr InputBox(new GUI::InputBox());
+		InputBox->SetSize(Vector2{ 300, 50 });
+		InputBox->SetLabel("v =");
 
-		GUI::Button::Ptr button_2(new GUI::Button()); 
-		button_2->setText("Bye"); 
-		button_2->setSize(Vector2{ 150, 50 }); 
+		GUI::InputBox::Ptr InputBox_1(new GUI::InputBox());
+		InputBox_1->SetSize(Vector2{ 300, 50 });
+		InputBox_1->SetLabel("i =");
 
-		GUI::OptionInputField::Ptr input(new GUI::OptionInputField()); 
-		input->AddInputField(Vector2{ 150, 50 }, "");
+		std::vector<GUI::InputBox::Ptr> fields;
+		fields.push_back(InputBox);
+		fields.push_back(InputBox_1);
 
-		container->pack(button_2); 
-		container->pack(input);
+		GUI::OptionInputField::Ptr optionInputField(new GUI::OptionInputField());
+		optionInputField->SetOption("User define", fields, [&](std::map<std::string, std::string> inputs) {
+			std::cout << inputs["v ="] << '\n';
+			std::cout << inputs["i ="] << '\n';
+			actionlist.hideAllOptions();
+			});
 
-		actionList.AddOperation(button, input); 
+		container->pack(optionInputField);
+
+		actionlist.AddOperation(button, container);
 	}
 
-	GUI::OptionInputField::Ptr input(new GUI::OptionInputField());
-	input->AddInputField(Vector2{ 150, 50 }, "");
-
-	std::cout << input->GetSize().x << '\n';
 	while (WindowShouldClose() == false)
 	{
 		BeginDrawing();
 		ClearBackground(WHITE);
-		input->update(GetFrameTime());
-		input->draw(Vector2{ 100, 100 });
+		actionlist.update(GetFrameTime());
+		actionlist.draw(Vector2{ 100, 100 });
 		EndDrawing();
 	}
 

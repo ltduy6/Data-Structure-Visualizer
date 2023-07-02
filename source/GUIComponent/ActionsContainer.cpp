@@ -13,17 +13,11 @@ GUI::ActionsContainer::~ActionsContainer()
 void GUI::ActionsContainer::drawCurrent(Vector2 base)
 {
 	this->updatePos(base);
-	DrawError();
+	DrawError(base);
 }
 
-void GUI::ActionsContainer::SetActive(bool active)
-{
-	for (auto& child : mChildren)
-		child.get()->SetActive(active); 
-	this->mIsActive = active;
-}
 
-void GUI::ActionsContainer::DrawError()
+void GUI::ActionsContainer::DrawError(Vector2 base)
 {
 }
 

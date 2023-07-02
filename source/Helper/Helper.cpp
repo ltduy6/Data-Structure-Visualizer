@@ -1,5 +1,6 @@
 #include "Helper.h"
 
+
 int Helper::rand(int minValue, int maxValue)
 {
     std::mt19937 mt{

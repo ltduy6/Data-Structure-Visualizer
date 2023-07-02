@@ -12,8 +12,7 @@ namespace GUI {
 		~ActionsContainer();
 
 		void drawCurrent(Vector2 base = Vector2{0, 0});
-		void SetActive(bool active);
-		virtual void DrawError(); 
+		virtual void DrawError(Vector2 base); 
 		virtual Vector2 GetSize(); 
 	public:
 		std::string error; 

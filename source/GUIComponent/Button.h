@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "../Helper/ColorSetting.h"
 
 #include <functional>
 #include <vector>
@@ -29,9 +30,6 @@ namespace GUI {
 
 		bool isSelectable() const; 
 		bool isClicked(); 
-
-		void setSize(Vector2 size); 
-		Vector2 GetSize(); 
 		
 		void setCallBack(CallBack callback);
 		void triggerCallBack();
@@ -44,6 +42,8 @@ namespace GUI {
 		void setHoverColor(Color color);
 		void setContentColor(Color color);
 
+		void UpdateMouseCursor(); 
+
 	private:
 		Vector2 getTextPos();
 		void drawText();
@@ -52,9 +52,9 @@ namespace GUI {
 
 		std::vector<CallBack> callBack;
 
-		Color mHover{ GRAY };
-		Color mColor{ 64, 64, 64, 255 };
-		Color mContentColor{ WHITE }; 
+		Color mHover{ ColorSetting::GetInstance().get(ColorThemeID::BUTTON_HOVER)};
+		Color mColor{ ColorSetting::GetInstance().get(ColorThemeID::BUTTON_BACKGROUND)};
+		Color mContentColor{ ColorSetting::GetInstance().get(ColorThemeID::TEXT) };
 
 		std::string mText{""};
 		int textSize{ 32 }; 

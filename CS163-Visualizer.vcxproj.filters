@@ -60,6 +60,15 @@
     <ClCompile Include="source\GUIComponent\OptionInputField.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\GUIComponent\ActionBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Helper\ColorSetting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GUIComponent\InputField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Application.h">
@@ -80,7 +89,7 @@
     <ClInclude Include="source\States\StateIdentifiers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\GlobalVar.h">
+    <ClInclude Include="source\Helper\GlobalVar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\ResourceHolder\FontHolder.h">
@@ -111,6 +120,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\GUIComponent\OptionInputField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUIComponent\ActionBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Helper\ColorSetting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\GUIComponent\InputField.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

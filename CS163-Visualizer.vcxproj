@@ -127,6 +127,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\GUIComponent\InputField.cpp" />
+    <ClCompile Include="source\Helper\ColorSetting.cpp" />
+    <ClCompile Include="source\GUIComponent\ActionBox.cpp" />
     <ClCompile Include="source\GUIComponent\OptionInputField.cpp" />
     <ClCompile Include="source\Helper\Helper.cpp" />
     <ClCompile Include="source\GUIComponent\InputBox.cpp" />
@@ -144,6 +147,9 @@
     <ClCompile Include="source\States\State.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\GUIComponent\InputField.h" />
+    <ClInclude Include="source\Helper\ColorSetting.h" />
+    <ClInclude Include="source\GUIComponent\ActionBox.h" />
     <ClInclude Include="source\GUIComponent\OptionInputField.h" />
     <ClInclude Include="source\Helper\Helper.h" />
     <ClInclude Include="source\GUIComponent\InputBox.h" />
@@ -154,7 +160,7 @@
     <ClInclude Include="source\GUIComponent\Button.h" />
     <ClInclude Include="source\GUIComponent\Component.h" />
     <ClInclude Include="source\ResourceHolder\FontHolder.h" />
-    <ClInclude Include="source\GlobalVar.h" />
+    <ClInclude Include="source\Helper\GlobalVar.h" />
     <ClInclude Include="source\ResourceHolder\ResourceIdentifier.h" />
     <ClInclude Include="source\Application.h" />
     <ClInclude Include="source\ResourceHolder\TextureHolder.h" />

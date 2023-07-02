@@ -1,4 +1,5 @@
 #include "ActionsList.h"
+#include "../Helper/GlobalVar.h"
 
 GUI::ActionsList::ActionsList() : isVisible{true}
 {
@@ -52,16 +53,15 @@ void GUI::ActionsList::update(float dt)
 
 void GUI::ActionsList::AddOperation(GUI::Button::Ptr action, GUI::Container::Ptr optionContainer)
 {
-	float buttonHeight = 50; 
-	Vector2 lastOperationPos = Vector2{ 43, -buttonHeight };
+	Vector2 lastOperationPos = Vector2{ 43, -Constant::BUTTON_HEIGHT };
 	if (this->buttons.getChildren().empty() == false)
 	{
 		lastOperationPos = this->buttons.getChildren().rbegin()->get()->GetPos(); 
 	}
-	lastOperationPos.y += buttonHeight;
+	lastOperationPos.y += Constant::BUTTON_HEIGHT;
 
 	action.get()->SetPos(lastOperationPos); 
-	action.get()->setSize(Vector2{150, buttonHeight});
+	action.get()->SetSize(Vector2{Constant::BUTTON_WIDTH, Constant::BUTTON_HEIGHT});
 	action.get()->setTextSize(36);
 
 	optionContainer.get()->SetPos(Vector2{ lastOperationPos.x + 150, lastOperationPos.y }); 
@@ -90,13 +90,7 @@ void GUI::ActionsList::updateMouseCursor()
 {
 	bool hoverButton = this->buttons.getHoverStatus(); 
 	bool hoverOption = this->optionContainers.getChildren().at(this->indActive)->getHoverStatus();
-	if (hoverButton == true)
-		SetMouseCursor(MOUSE_CURSOR_POINTING_HAND); 
-	else {
-		if (this->optionContainers.GetActive() == true && hoverOption)
-			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-		else
-			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-	}
+	if (hoverButton == false && hoverOption == false)
+		SetMouseCursor(MOUSE_CURSOR_DEFAULT); 
 }	
 

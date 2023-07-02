@@ -12,20 +12,20 @@ namespace GUI {
 		Container();
 
 		void pack(Component::Ptr component);
-		void unpack();
+		void unPackAll();
 
 		virtual void draw(Vector2 basePos = Vector2{0, 0});
 		virtual void update(float dt);
 		virtual bool isSelectable() const; 
 
 		virtual void drawCurrent(Vector2 basePos);
-
-		virtual std::vector<Rectangle> GetBounds();
+		virtual void ToggleActive();
 		std::vector<GUI::Component::Ptr> getChildren();
 		virtual bool getHoverStatus();
+
+		void SetActive(bool active);
 	protected:
 		std::vector<GUI::Component::Ptr> mChildren;
-		std::vector<Rectangle> mBounds;
 	};
 }
 

@@ -9,10 +9,9 @@ void GUI::Container::pack(Component::Ptr component)
     this->mChildren.push_back(component);
 }
 
-void GUI::Container::unpack()
+void GUI::Container::unPackAll()
 {
     mChildren.clear();
-    this->mBounds.clear();
 }
 
 void GUI::Container::draw(Vector2 basePos)
@@ -45,11 +44,14 @@ void GUI::Container::drawCurrent(Vector2 basePos)
 {
 }
 
-
-std::vector<Rectangle> GUI::Container::GetBounds()
+void GUI::Container::ToggleActive()
 {
-    return this->mBounds;
+    this->mIsActive = !this->mIsActive; 
+    for (auto child : this->mChildren)
+        child->SetActive(this->mIsActive);
 }
+
+
 
 bool GUI::Container::getHoverStatus()
 {
@@ -66,6 +68,13 @@ bool GUI::Container::getHoverStatus()
         return true;
     else
         return false;
+}
+
+void GUI::Container::SetActive(bool active)
+{
+    for (auto& child : mChildren)
+        child.get()->SetActive(active);
+    this->mIsActive = active;
 }
 
 
