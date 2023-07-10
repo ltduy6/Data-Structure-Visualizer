@@ -64,7 +64,9 @@ void GUI::InputBox::updateField(float dt)
 	{
 		this->resetLabel();
 	}
-	if (this->mIsFocused && this->GetActive())
+	else if (this->mIsFocused == false)
+		this->mCursorVisible = false; 
+	else
 	{
 		this->countTime += dt;
 		if (this->countTime > 0.75)

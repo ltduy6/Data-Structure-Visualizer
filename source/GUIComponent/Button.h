@@ -2,6 +2,7 @@
 
 #include "Component.h"
 #include "../Helper/ColorSetting.h"
+#include "../ResourceHolder/FontHolder.h"
 
 #include <functional>
 #include <vector>

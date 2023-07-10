@@ -1,5 +1,4 @@
 #include "Button.h"
-#include "../ResourceHolder/FontHolder.h"
 
 GUI::Button::Button() : Component()
 {

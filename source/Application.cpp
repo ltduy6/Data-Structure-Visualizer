@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "GlobalVar.h"
+#include "../source/Helper/GlobalVar.h"
 #include <raylib.h>
 
 Application::Application() : mStateStack{State::Context()}
@@ -7,8 +7,11 @@ Application::Application() : mStateStack{State::Context()}
 	InitWindow(Constant::WINDOW_WIDTH, Constant::WINDOW_HEIGHT, "VisualALGO"); 
 	SetTargetFPS(60); 
 
+	this->loadFonts();
+	this->loadColor();
+
 	registerStates(); 
-	mStateStack.pushState(StateIDs::Home);
+	mStateStack.pushState(StateIDs::BST);
 }
 
 Application::~Application()
@@ -28,6 +31,7 @@ void Application::run()
 void Application::render()
 {
 	BeginDrawing(); 
+	ClearBackground(WHITE);
 	mStateStack.draw(); 
 	EndDrawing();
 }
@@ -39,7 +43,7 @@ void Application::update(float dt)
 
 void Application::registerStates()
 {
-
+	this->mStateStack.registerState<BSTState>(StateIDs::BST); 
 }
 
 void Application::loadTextures()
@@ -51,4 +55,9 @@ void Application::loadFonts()
 {
 	std::string BASE_PATH = "assets/Fonts/"; 
 	FontHolder::getInstance().load(FontID::Roboto, BASE_PATH + "Roboto-Medium.ttf");
+}
+
+void Application::loadColor()
+{
+	ColorSetting::GetInstance().load();
 }

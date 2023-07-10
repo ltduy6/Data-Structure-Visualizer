@@ -3,6 +3,8 @@
 
 #include "ResourceHolder/TextureHolder.h"; 
 #include "ResourceHolder/FontHolder.h";
+#include "Helper/ColorSetting.h"
+#include "States/BSTState.h"
 #include "StateStack.h"
 
 class Application
@@ -17,6 +19,7 @@ private:
 	void registerStates();
 	void loadTextures(); 
 	void loadFonts();
+	void loadColor(); 
 private:
 	StateStack mStateStack;
 };

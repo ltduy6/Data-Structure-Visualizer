@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,6 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,6 +129,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Core\AVL.cpp" />
+    <ClCompile Include="source\Core\Algorithm.cpp" />
+    <ClCompile Include="source\Visualization\CircularNode.cpp" />
+    <ClCompile Include="source\Visualization\SceneNode.cpp" />
+    <ClCompile Include="source\States\BSTState.cpp" />
     <ClCompile Include="source\GUIComponent\InputField.cpp" />
     <ClCompile Include="source\Helper\ColorSetting.cpp" />
     <ClCompile Include="source\GUIComponent\ActionBox.cpp" />
@@ -145,8 +152,16 @@
     <ClCompile Include="source\ResourceHolder\TextureHolder.cpp" />
     <ClCompile Include="source\StateStack.cpp" />
     <ClCompile Include="source\States\State.cpp" />
+    <ClCompile Include="source\Visualization\VisualScene.cpp" />
+    <ClCompile Include="source\Visualization\Visualization.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Core\AVL.h" />
+    <ClInclude Include="source\Core\Algorithm.h" />
+    <ClInclude Include="source\NonCopyable.hpp" />
+    <ClInclude Include="source\Visualization\CircularNode.h" />
+    <ClInclude Include="source\Visualization\SceneNode.h" />
+    <ClInclude Include="source\States\BSTState.h" />
     <ClInclude Include="source\GUIComponent\InputField.h" />
     <ClInclude Include="source\Helper\ColorSetting.h" />
     <ClInclude Include="source\GUIComponent\ActionBox.h" />
@@ -167,6 +182,8 @@
     <ClInclude Include="source\StateStack.h" />
     <ClInclude Include="source\States\State.h" />
     <ClInclude Include="source\States\StateIdentifiers.h" />
+    <ClInclude Include="source\Visualization\VisualScene.h" />
+    <ClInclude Include="source\Visualization\Visualization.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

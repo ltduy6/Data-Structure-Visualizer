@@ -2,5 +2,5 @@
 enum class StateIDs {
 	None,
 	Home,
-	BinarySearchTree
+	BST
 };

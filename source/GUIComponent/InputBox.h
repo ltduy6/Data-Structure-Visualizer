@@ -20,7 +20,6 @@ namespace GUI {
 		~InputBox();
 		virtual void drawField(Vector2 base);
 		virtual void updateField(float dt);
-		virtual void setSizeBox(Vector2 base);
 		virtual std::string getInputText() const;
 
 		bool IntegerValidator(int number) const; 
@@ -32,6 +31,7 @@ namespace GUI {
 		void checkInteraction();
 		void drawCursor(Vector2 base); 
 		virtual void Random(); 
+		virtual void setSizeBox(Vector2 base);
 	private:
 		int ind_start{ 0 };
 		int ind_end{ 0 };

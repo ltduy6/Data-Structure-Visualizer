@@ -30,6 +30,9 @@ void ColorSetting::loadLightMode()
 	this->mColor[ColorThemeID::BUTTON_BACKGROUND] = Color{ 64, 64, 64, 255 };
 	this->mColor[ColorThemeID::BUTTON_HOVER] = GRAY; 
 	this->mColor[ColorThemeID::TEXT] = WHITE; 
+	this->mColor[ColorThemeID::NODE_BACKGROUND] = WHITE; 
+	this->mColor[ColorThemeID::NODE_LABEL] = BLACK; 
+	this->mColor[ColorThemeID::NODE_OUTLINE] = BLACK;
 }
 
 void ColorSetting::loadDarkMode()

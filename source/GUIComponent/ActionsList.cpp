@@ -38,6 +38,7 @@ void GUI::ActionsList::draw(Vector2 base)
 	{
 		buttons.draw(base);
 		optionContainers.draw(base);
+		drawError();
 	}
 }
 
@@ -83,7 +84,28 @@ void GUI::ActionsList::initActionBar()
 
 Vector2 GUI::ActionsList::GetSize()
 {
-	return Vector2();
+	Vector2 size = Vector2{ 0, 0 }; 
+	for (auto button : this->buttons.getChildren())
+	{
+		size.y += button->GetSize().y; 
+	}
+	return size;
+}
+
+void GUI::ActionsList::drawError()
+{
+
+	Font font = FontHolder::getInstance().get(FontID::Roboto);
+	Vector2 textBound = MeasureTextEx(font, this->mError.c_str(), 30, 0); 
+
+	DrawTextEx(font, this->mError.c_str(),
+		Vector2{this->mPos.x + 43, this->mPos.y - textBound.y},
+		30, 0, BLACK);
+}
+
+void GUI::ActionsList::setError(std::string error)
+{
+	this->mError = error;
 }
 
 void GUI::ActionsList::updateMouseCursor()

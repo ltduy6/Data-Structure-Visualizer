@@ -23,7 +23,8 @@ namespace GUI {
 		std::vector<GUI::Component::Ptr> getChildren();
 		virtual bool getHoverStatus();
 
-		void SetActive(bool active);
+		virtual void SetActive(bool active);
+		virtual Vector2 GetSize() const; 
 	protected:
 		std::vector<GUI::Component::Ptr> mChildren;
 	};

@@ -16,13 +16,11 @@ namespace GUI {
 			std::function<void(std::map<std::string, std::string>)> CallBack); 
 		void SetNoFieldOption(std::string content, std::function<void()> CallBack);
 		void drawCurrent(Vector2 base);
-		virtual Vector2 GetSize() const; 
 	private:
 		std::map<std::string, std::string> ExtractInput(); 
 		void AddInput(InputBox::Ptr InputBox); 
 		void AddSubmit(std::function<void(std::map<std::string, std::string>)> CallBack); 
 	private:
-		GUI::Container::Ptr mInputField;
 		std::map<std::string, std::string> InputData;
 	};
 }

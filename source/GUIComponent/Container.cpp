@@ -77,6 +77,17 @@ void GUI::Container::SetActive(bool active)
     this->mIsActive = active;
 }
 
+Vector2 GUI::Container::GetSize() const
+{
+    Vector2 size = Vector2{ 0, 0 };
+    for (auto child : this->mChildren)
+    {
+        size.x += child->GetSize().x; 
+        size.y = std::max(size.y, child->GetSize().y);
+    }
+    return size;
+}
+
 
 std::vector<GUI::Component::Ptr> GUI::Container::getChildren()
 {

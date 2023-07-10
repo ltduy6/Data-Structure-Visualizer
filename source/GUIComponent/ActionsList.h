@@ -19,6 +19,8 @@ namespace GUI {
 		void AddOperation(GUI::Button::Ptr action, GUI::Container::Ptr optionContainer);
 		void initActionBar();
 		Vector2 GetSize();
+		void drawError(); 
+		void setError(std::string error);
 	private:
 		virtual void updateMouseCursor();
 	private:
@@ -28,6 +30,7 @@ namespace GUI {
 		GUI::Container optionContainers; 
 		std::size_t indActive{ 0 };
 		bool isVisible; 
+		std::string mError{ "" }; 
 	};
 }
 
