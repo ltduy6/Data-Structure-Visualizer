@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <queue>
+#include <algorithm>
 
 Algorithms::AVL::AVL(Visualize::Visualization& visualization) : Algorithm(visualization)
 {
@@ -26,6 +27,7 @@ void Algorithms::AVL::InitRandomFixSize(int size)
 			i++;
 		}
 	}
+	std::sort(list.begin(), list.end());
 	this->Init(list);
 }
 
@@ -33,7 +35,7 @@ void Algorithms::AVL::Init(std::vector<int>& list)
 {
 	if (list.size() == 0)
 		return; 
-	this->sceneInit();
+	this->sceneReset();
 	this->mRoot = this->SortedArrayToAVL(list, 0, list.size() - 1);
 	this->modifyDistance();
 	this->BalanceTree();
@@ -109,6 +111,32 @@ void Algorithms::AVL::BalanceTree()
 	Vector2 pos = Vector2{ STARTING_POINT.x - HORIZONTAL_SPACE * this->countNode(this->mRoot), STARTING_POINT.y };
 	int count = 0;
 	this->traverse(this->mRoot, pos, 1, count);
+	this->addEdge();
+}
+
+void Algorithms::AVL::addEdge()
+{
+	if (this->mRoot == nullptr)
+		return; 
+	std::queue<Node::Ptr> q; 
+	q.push(this->mRoot); 
+	while (!q.empty())
+	{
+		Node::Ptr curr = q.front(); 
+		q.pop(); 
+		if (curr->left)
+		{
+			this->mVisualization.createEdge(this->mVisualization.getCirNodePosition(curr->id), 
+				this->mVisualization.getCirNodePosition(curr->left->id));
+			q.push(curr->left);
+		}
+		if (curr->right)
+		{
+			this->mVisualization.createEdge(this->mVisualization.getCirNodePosition(curr->id),
+				this->mVisualization.getCirNodePosition(curr->right->id)); 
+			q.push(curr->right);
+		}
+	}
 }
 
 float Algorithms::AVL::Height(Node::Ptr root)
@@ -149,6 +177,11 @@ int Algorithms::AVL::countNode(Node::Ptr root)
 	if (root == nullptr)
 		return 0; 
 	return countNode(root->left) + countNode(root->right) + 1;
+}
+
+void Algorithms::AVL::sceneReset()
+{
+	this->mVisualization.reset();
 }
 
 void Algorithms::AVL::sceneInit()

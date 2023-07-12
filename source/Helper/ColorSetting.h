@@ -13,7 +13,9 @@ enum class ColorThemeID
 	TEXT,
 	NODE_BACKGROUND,
 	NODE_OUTLINE, 
-	NODE_LABEL
+	NODE_LABEL,
+	EDGE,
+	ERROR
 };
 
 class ColorSetting

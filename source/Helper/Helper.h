@@ -4,6 +4,7 @@
 #include <random>
 #include <vector>
 #include <string>
+#include <raylib.h>
 
 namespace Helper {
 	int rand(int minValue, int maxValue);
@@ -11,3 +12,7 @@ namespace Helper {
 	bool checkValidNumber(std::string& num, int minValue, int maxValue);
 };
 
+Vector2 operator + (const Vector2& a, const Vector2& b);
+Vector2 operator - (const Vector2& a, const Vector2& b);
+Vector2 operator * (const Vector2& a, float b);
+Vector2 operator / (const Vector2& a, float b);

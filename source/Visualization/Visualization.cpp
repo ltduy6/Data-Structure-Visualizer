@@ -80,3 +80,28 @@ Vector2 Visualize::Visualization::getCirNodePosition(int id) const
 {
 	return this->mContainer.back().getCirNodePosition(id);
 }
+
+int Visualize::Visualization::createEdge(Vector2 source, Vector2 des)
+{
+	return this->mContainer.back().createEdge(source, des);
+}
+
+void Visualize::Visualization::moveEdgeSource(int id, Vector2 source)
+{
+	this->mContainer.back().moveEdgeSource(id, source); 
+}
+
+void Visualize::Visualization::moveEdgeDes(int id, Vector2 des)
+{
+	this->mContainer.back().moveEdgeDes(id, des);
+}
+
+void Visualize::Visualization::moveEdgeDelta(int id, Vector2 source, Vector2 des)
+{
+	this->mContainer.back().moveEdgeDelta(id, source, des);
+}
+
+void Visualize::Visualization::removeEdge(int id)
+{
+	this->mContainer.back().removeEdge(id);
+}

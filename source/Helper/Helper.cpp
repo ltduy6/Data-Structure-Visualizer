@@ -34,3 +34,23 @@ bool Helper::checkValidNumber(std::string& num, int minValue, int maxValue)
         return true; 
     return false;
 }
+
+Vector2 operator+(const Vector2& a, const Vector2& b)
+{
+    return Vector2{ a.x + b.x, a.y + b.y};
+}
+
+Vector2 operator-(const Vector2& a, const Vector2& b)
+{
+    return Vector2{a.x - b.x, a.y - b.y};
+}
+
+Vector2 operator*(const Vector2& a, float b)
+{
+    return Vector2{ a.x * b, a.y * b };
+}
+
+Vector2 operator/(const Vector2& a, float b)
+{
+    return Vector2{ a.x / b, a.y / b };
+}

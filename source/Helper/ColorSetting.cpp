@@ -27,12 +27,18 @@ Color ColorSetting::get(ColorThemeID id)
 void ColorSetting::loadLightMode()
 {
 	this->mColor[ColorThemeID::SCREEN_BACKGROUND] = WHITE; 
+
 	this->mColor[ColorThemeID::BUTTON_BACKGROUND] = Color{ 64, 64, 64, 255 };
 	this->mColor[ColorThemeID::BUTTON_HOVER] = GRAY; 
 	this->mColor[ColorThemeID::TEXT] = WHITE; 
+
 	this->mColor[ColorThemeID::NODE_BACKGROUND] = WHITE; 
 	this->mColor[ColorThemeID::NODE_LABEL] = BLACK; 
 	this->mColor[ColorThemeID::NODE_OUTLINE] = BLACK;
+
+	this->mColor[ColorThemeID::EDGE] = BLACK;
+	
+	this->mColor[ColorThemeID::ERROR] = RED; 
 }
 
 void ColorSetting::loadDarkMode()
@@ -41,6 +47,10 @@ void ColorSetting::loadDarkMode()
 	this->mColor[ColorThemeID::BUTTON_BACKGROUND] = Color{ 162, 123, 93, 255 }; 
 	this->mColor[ColorThemeID::BUTTON_HOVER] = BLACK; 
 	this->mColor[ColorThemeID::TEXT] = WHITE;
+
+	this->mColor[ColorThemeID::EDGE] = WHITE;
+
+	this->mColor[ColorThemeID::ERROR] = WHITE; 
 }
 
 void ColorSetting::load()

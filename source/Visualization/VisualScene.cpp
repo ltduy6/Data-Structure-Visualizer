@@ -13,6 +13,8 @@ void Visualize::VisualScene::draw()
 {
 	for (auto obj : this->mCirNodeMap)
 		obj.second.draw();
+	for (auto obj : this->mEdgeMap)
+		obj.second.draw();
 }
 
 int Visualize::VisualScene::createCirNode(int value)
@@ -76,6 +78,42 @@ Vector2 Visualize::VisualScene::getCirNodePosition(int id) const
 	return this->getCirNode(id).GetPosition();
 }
 
+int Visualize::VisualScene::createEdge(Vector2 source, Vector2 des)
+{
+	Edge newEdge; 
+	newEdge.SetSource(source); 
+	newEdge.SetDestination(des); 
+
+	int obj = newEdge.getObjectId(); 
+	auto insert = this->mEdgeMap.emplace(obj, newEdge); 
+	
+	assert(insert.second == true);
+
+	return obj;
+}
+
+void Visualize::VisualScene::moveEdgeSource(int id, Vector2 source)
+{
+	this->getEdge(id).SetSource(source);
+}
+
+void Visualize::VisualScene::moveEdgeDes(int id, Vector2 des)
+{
+	this->getEdge(id).SetDestination(des);
+}
+
+void Visualize::VisualScene::moveEdgeDelta(int id, Vector2 source, Vector2 des)
+{
+	Edge& edge = this->getEdge(id); 
+	edge.SetSource(edge.GetSource() + source); 
+	edge.SetDestination(edge.GetDestination() + des); 
+}
+
+void Visualize::VisualScene::removeEdge(int id)
+{
+	this->mEdgeMap.erase(id);
+}
+
 Visualize::CircularNode& Visualize::VisualScene::getCirNode(int id)
 {
 	// TODO: insert return statement here
@@ -92,6 +130,26 @@ const Visualize::CircularNode& Visualize::VisualScene::getCirNode(int id) const
 	auto found = this->mCirNodeMap.find(id);
 
 	assert(found != this->mCirNodeMap.end());
+
+	return found->second;
+}
+
+Visualize::Edge& Visualize::VisualScene::getEdge(int id)
+{
+	// TODO: insert return statement here
+	auto found = this->mEdgeMap.find(id); 
+
+	assert(found != this->mEdgeMap.end()); 
+
+	return found->second;
+}
+
+const Visualize::Edge& Visualize::VisualScene::getEdge(int id) const
+{
+	// TODO: insert return statement here
+	auto found = this->mEdgeMap.find(id);
+
+	assert(found != this->mEdgeMap.end());
 
 	return found->second;
 }

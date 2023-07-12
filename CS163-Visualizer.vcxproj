@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Visualization\Edge.cpp" />
     <ClCompile Include="source\Core\AVL.cpp" />
     <ClCompile Include="source\Core\Algorithm.cpp" />
     <ClCompile Include="source\Visualization\CircularNode.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="source\Visualization\Visualization.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Visualization\Edge.h" />
     <ClInclude Include="source\Core\AVL.h" />
     <ClInclude Include="source\Core\Algorithm.h" />
     <ClInclude Include="source\NonCopyable.hpp" />

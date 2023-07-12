@@ -35,5 +35,6 @@ private:
 	Visualize::VisualScene scene;
 	Visualize::Visualization mVisualization;
 	Algorithms::AVL mAlgo; 
+	Visualize::Edge edge; 
 };
 

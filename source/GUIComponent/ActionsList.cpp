@@ -100,7 +100,7 @@ void GUI::ActionsList::drawError()
 
 	DrawTextEx(font, this->mError.c_str(),
 		Vector2{this->mPos.x + 43, this->mPos.y - textBound.y},
-		30, 0, BLACK);
+		30, 0, ColorSetting::GetInstance().get(ColorThemeID::ERROR));
 }
 
 void GUI::ActionsList::setError(std::string error)

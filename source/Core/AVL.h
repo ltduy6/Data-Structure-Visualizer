@@ -43,9 +43,11 @@ namespace Algorithms {
 		void traverse(Node::Ptr& root, Vector2 pos, int level, int& count); 
 		void modifyDistance();
 		void BalanceTree();
+		void addEdge(); 
 		float Height(Node::Ptr root);
 		float Width(Node::Ptr root);
 		int countNode(Node::Ptr root);
+		void sceneReset();
 		void sceneInit(); 
 		void newScene(std::vector<int> lines); 
 	};

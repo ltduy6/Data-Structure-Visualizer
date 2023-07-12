@@ -31,6 +31,12 @@ namespace Visualize {
 		void removeCirNode(int id);
 		Vector2 getCirNodePosition(int id) const;
 
+		int createEdge(Vector2 source, Vector2 des);
+		void moveEdgeSource(int id, Vector2 source);
+		void moveEdgeDes(int id, Vector2 des);
+		void moveEdgeDelta(int id, Vector2 source, Vector2 des);
+		void removeEdge(int id);
+
 
 	private:
 		std::vector<VisualScene> mContainer; 
