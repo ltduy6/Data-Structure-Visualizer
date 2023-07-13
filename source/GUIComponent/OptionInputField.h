@@ -12,7 +12,7 @@ namespace GUI {
 	public:
 		OptionInputField(); 
 		~OptionInputField();
-		void SetOption(std::string content, std::vector<GUI::InputBox::Ptr> fields,
+		void SetOption(std::string content,std::vector<GUI::InputBox::Ptr> fields,
 			std::function<void(std::map<std::string, std::string>)> CallBack); 
 		void SetNoFieldOption(std::string content, std::function<void()> CallBack);
 		void drawCurrent(Vector2 base);

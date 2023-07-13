@@ -129,6 +129,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Visualization\ControlScene.cpp" />
+    <ClCompile Include="source\States\AVLState.cpp" />
     <ClCompile Include="source\Visualization\Edge.cpp" />
     <ClCompile Include="source\Core\AVL.cpp" />
     <ClCompile Include="source\Core\Algorithm.cpp" />
@@ -157,6 +159,8 @@
     <ClCompile Include="source\Visualization\Visualization.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Visualization\ControlScene.h" />
+    <ClInclude Include="source\States\AVLState.h" />
     <ClInclude Include="source\Visualization\Edge.h" />
     <ClInclude Include="source\Core\AVL.h" />
     <ClInclude Include="source\Core\Algorithm.h" />

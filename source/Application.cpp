@@ -11,7 +11,7 @@ Application::Application() : mStateStack{State::Context()}
 	this->loadColor();
 
 	registerStates(); 
-	mStateStack.pushState(StateIDs::BST);
+	mStateStack.pushState(StateIDs::AVL);
 }
 
 Application::~Application()
@@ -44,6 +44,7 @@ void Application::update(float dt)
 void Application::registerStates()
 {
 	this->mStateStack.registerState<BSTState>(StateIDs::BST); 
+	this->mStateStack.registerState<AVLState>(StateIDs::AVL);
 }
 
 void Application::loadTextures()

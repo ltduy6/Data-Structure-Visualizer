@@ -22,6 +22,8 @@ bool Helper::checkExist(std::vector<int>& nums, int value)
 
 bool Helper::checkValidNumber(std::string& num, int minValue, int maxValue)
 {
+    if (num.size() == 0)
+        return false; 
     for (int i = 0; i < num.size(); ++i)
     {
         if (i == 0 && num[i] == '-')
@@ -33,6 +35,12 @@ bool Helper::checkValidNumber(std::string& num, int minValue, int maxValue)
     if (sum >= minValue && sum <= maxValue)
         return true; 
     return false;
+}
+
+float Helper::EaseCircInOut(float t, float b, float c, float d)
+{
+    if ((t /= d / 2.0f) < 1.0f) return (-c / 2.0f * (sqrtf(1.0f - t * t) - 1.0f) + b);
+    t -= 2.0f; return (c / 2.0f * (sqrtf(1.0f - t * t) + 1.0f) + b);
 }
 
 Vector2 operator+(const Vector2& a, const Vector2& b)

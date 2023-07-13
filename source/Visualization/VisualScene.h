@@ -3,9 +3,11 @@
 #include "CircularNode.h"
 #include "Edge.h"
 #include "../Helper/ColorSetting.h"
+#include "../Helper/Helper.h"
 
 #include <map>
 #include <vector>
+#include <set>
 
 namespace Visualize
 {
@@ -15,6 +17,11 @@ namespace Visualize
 		VisualScene(); 
 		~VisualScene(); 
 
+		static VisualScene transitionScene(const VisualScene& fromScene, const VisualScene& toScene,
+			float time, float tottalTime); 
+
+		static float easeInOut(float from, float to, float time, float totalTime);
+		
 		void draw(); 
 
 		int createCirNode(int value); 
@@ -39,6 +46,15 @@ namespace Visualize
 
 		Visualize::Edge& getEdge(int id); 
 		const Visualize::Edge& getEdge(int id) const;
+
+		static Color easeInOutColor(Color fromColor, Color toColor,
+			float time, float totalTime);
+
+		static void transitionCirNode(const VisualScene& fromScene, const VisualScene& toScene,
+			float time, float totalTime, VisualScene& sceneRes); 
+
+		static void transitionEdge(const VisualScene& fromScene, const VisualScene& toScene,
+			float time, float totalTime, VisualScene& sceneRes);
 	private: 
 		std::map<int,CircularNode> mCirNodeMap;
 		std::map<int, Edge> mEdgeMap;

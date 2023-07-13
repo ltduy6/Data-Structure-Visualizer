@@ -1,5 +1,4 @@
 #include "Edge.h"
-#include "../Helper/ColorSetting.h"
 
 Visualize::Edge::Edge()
 {
@@ -16,9 +15,10 @@ void Visualize::Edge::draw()
     float y = scaleDes.y - this->mSource.y;
 
     Vector2 unitVector = (Vector2{ x, y } / std::sqrt(x * x + y * y)) * OFFSET;
+    Vector2 inverseVector = Vector2{ unitVector.y, -unitVector.x };
 
     
-    DrawLineEx(this->mSource + unitVector, this->mDes - unitVector, THICKNESS, BLACK);
+    DrawLineEx(this->mSource + unitVector, this->mDes - unitVector, THICKNESS, this->mColor);
 }
 
 
@@ -41,4 +41,14 @@ void Visualize::Edge::SetDestination(Vector2 pos)
 Vector2 Visualize::Edge::GetDestination() const
 {
     return this->mDes;
+}
+
+void Visualize::Edge::SetColor(Color color)
+{
+    this->mColor = color; 
+}
+
+Color Visualize::Edge::GetColor() const
+{
+    return this->mColor;
 }

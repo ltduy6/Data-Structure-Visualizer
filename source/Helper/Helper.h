@@ -10,6 +10,7 @@ namespace Helper {
 	int rand(int minValue, int maxValue);
 	bool checkExist(std::vector<int>& nums, int value);
 	bool checkValidNumber(std::string& num, int minValue, int maxValue);
+	float EaseCircInOut(float t, float b, float c, float d); 
 };
 
 Vector2 operator + (const Vector2& a, const Vector2& b);

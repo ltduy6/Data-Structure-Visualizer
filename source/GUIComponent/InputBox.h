@@ -25,6 +25,8 @@ namespace GUI {
 		bool IntegerValidator(int number) const; 
 		bool IntegerSpaceValidator() const; 
 
+		void SetRange(int minValue, int maxValue);
+
 		void resetLabel(); 
 
 	private:
@@ -36,8 +38,8 @@ namespace GUI {
 		int ind_start{ 0 };
 		int ind_end{ 0 };
 		int ind_mouse{ 0 };
-		int minValue{0}; 
-		int maxValue{100};
+		int minValue{1}; 
+		int maxValue{99};
 	private:
 		std::string mInputText;
 		Color mTextColor{ BLACK }; 

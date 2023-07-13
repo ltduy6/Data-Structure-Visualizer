@@ -2,5 +2,6 @@
 enum class StateIDs {
 	None,
 	Home,
-	BST
+	BST,
+	AVL
 };

@@ -9,6 +9,21 @@ Visualize::VisualScene::~VisualScene()
 {
 }
 
+Visualize::VisualScene Visualize::VisualScene::transitionScene(const VisualScene& fromScene, const VisualScene& toScene, float time, float tottalTime)
+{
+	VisualScene ret; 
+
+	transitionCirNode(fromScene, toScene, time, tottalTime, ret); 
+	transitionEdge(fromScene, toScene, time, tottalTime, ret); 
+
+	return ret; 
+}
+
+float Visualize::VisualScene::easeInOut(float from, float to, float time, float totalTime)
+{
+	return Helper::EaseCircInOut(time, from, to - from, totalTime); 
+}
+
 void Visualize::VisualScene::draw()
 {
 	for (auto obj : this->mCirNodeMap)
@@ -152,4 +167,139 @@ const Visualize::Edge& Visualize::VisualScene::getEdge(int id) const
 	assert(found != this->mEdgeMap.end());
 
 	return found->second;
+}
+
+Color Visualize::VisualScene::easeInOutColor(Color fromColor, Color toColor, float time, float totalTime)
+{
+	Color res; 
+	res.r = easeInOut(fromColor.r, toColor.r, time, totalTime);
+	res.g = easeInOut(fromColor.g, toColor.g, time, totalTime); 
+	res.b = easeInOut(fromColor.b, toColor.b, time, totalTime); 
+	res.a = easeInOut(fromColor.a, toColor.a, time, totalTime);
+
+	return res; 
+}
+
+void Visualize::VisualScene::transitionCirNode(const VisualScene& fromScene, const VisualScene& toScene,
+	float time, float totalTime, VisualScene& sceneRes)
+{
+	std::set<int> mId; 
+
+	for (const auto& p : fromScene.mCirNodeMap)
+		mId.insert(p.first); 
+	for (const auto& p : toScene.mCirNodeMap)
+		mId.insert(p.first); 
+
+	for (int id : mId)
+	{
+		CircularNode from, to; 
+
+		auto fromFound = fromScene.mCirNodeMap.find(id); 
+		auto toFound = toScene.mCirNodeMap.find(id); 
+
+		assert(fromFound != fromScene.mCirNodeMap.end() || toScene.mCirNodeMap.find(id) != toScene.mCirNodeMap.end()); 
+
+		if (fromFound != fromScene.mCirNodeMap.end())
+			from = fromFound->second; 
+		if (toFound != toScene.mCirNodeMap.end())
+			to = toFound->second; 
+		if (fromFound == fromScene.mCirNodeMap.end())
+		{
+			from.SetPosition(to.GetPosition()); 
+			from.SetScale(0); 
+			from.SetValue(to.GetValue()); 
+			from.SetColor(to.GetColor()); 
+			from.SetOutlineColor(to.GetOutlineColor());
+			from.SetValueColor(to.GetValueColor());
+		}
+		if (toFound == toScene.mCirNodeMap.end())
+		{
+			to.SetPosition(from.GetPosition()); 
+			to.SetScale(0); 
+			to.SetValue(from.GetValue()); 
+			to.SetColor(from.GetColor()); 
+			to.SetOutlineColor(from.GetOutlineColor()); 
+			to.SetValueColor(from.GetValueColor());
+		}
+
+		CircularNode newObj = to; 
+		int objID = newObj.getObjectId(); 
+
+		Vector2 newPos; 
+		newPos.x = easeInOut(from.GetPosition().x, to.GetPosition().x, time, totalTime); 
+		newPos.y = easeInOut(from.GetPosition().y, to.GetPosition().y, time, totalTime);
+
+		newObj.SetPosition(newPos); 
+
+		newObj.SetScale(easeInOut(from.GetScale(), to.GetScale(), time, totalTime)); 
+
+		newObj.SetValue((int)easeInOut(from.GetValue(), to.GetValue(), time, totalTime)); 
+
+		newObj.SetColor(easeInOutColor(from.GetColor(), to.GetColor(), time, totalTime)); 
+		newObj.SetOutlineColor(easeInOutColor(from.GetOutlineColor(), to.GetOutlineColor(), time, totalTime)); 
+		newObj.SetValueColor(easeInOutColor(from.GetValueColor(), to.GetValueColor(), time, totalTime)); 
+
+		auto insert = sceneRes.mCirNodeMap.emplace(objID, newObj); 
+
+		assert(insert.second == true); 
+	}
+}
+
+void Visualize::VisualScene::transitionEdge(const VisualScene& fromScene, const VisualScene& toScene, 
+	float time, float totalTime, VisualScene& sceneRes)
+{
+	std::set<int> mId; 
+
+	for (const auto& p : fromScene.mEdgeMap)
+		mId.insert(p.first); 
+	for (const auto& p : toScene.mEdgeMap)
+		mId.insert(p.first); 
+
+	for (int id : mId)
+	{
+		Edge from, to; 
+
+		auto fromFound = fromScene.mEdgeMap.find(id); 
+		auto toFound = toScene.mEdgeMap.find(id); 
+
+		assert(fromFound != fromScene.mEdgeMap.end() || toFound != toScene.mEdgeMap.end()); 
+
+		if (fromFound != fromScene.mEdgeMap.end())
+			from = fromFound->second; 
+		if (toFound != toScene.mEdgeMap.end())
+			to = toFound->second; 
+		if (fromFound == fromScene.mEdgeMap.end())
+		{
+			from.SetSource(to.GetSource()); 
+			from.SetDestination(to.GetDestination()); 
+			from.SetScale(0);
+		}
+		if (toFound == toScene.mEdgeMap.end())
+		{
+			to.SetSource(from.GetSource()); 
+			to.SetDestination(from.GetDestination()); 
+			to.SetScale(0);
+		}
+
+		Edge newObj = to; 
+		int idObj = newObj.getObjectId(); 
+		
+		Vector2 newSource; 
+		newSource.x = easeInOut(from.GetSource().x, to.GetSource().x, time, totalTime); 
+		newSource.y = easeInOut(from.GetSource().y, to.GetSource().y, time, totalTime); 
+
+		Vector2 newDes; 
+		newDes.x = easeInOut(from.GetDestination().x, to.GetDestination().x, time, totalTime); 
+		newDes.y = easeInOut(from.GetDestination().y, to.GetDestination().y, time, totalTime); 
+
+		newObj.SetSource(newSource); 
+		newObj.SetDestination(newDes); 
+
+		newObj.SetScale(easeInOut(from.GetScale(), to.GetScale(), time, totalTime)); 
+
+		auto insert = sceneRes.mEdgeMap.emplace(idObj, newObj); 
+		
+		assert(insert.second == true); 
+	}
+
 }

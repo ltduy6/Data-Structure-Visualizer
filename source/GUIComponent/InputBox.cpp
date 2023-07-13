@@ -100,6 +100,12 @@ bool GUI::InputBox::IntegerSpaceValidator() const
 	return std::regex_match(this->mInputText, pattern);
 }
 
+void GUI::InputBox::SetRange(int minValue, int maxValue)
+{
+	this->minValue = minValue; 
+	this->maxValue = maxValue; 
+}
+
 void GUI::InputBox::resetLabel()
 {
 	this->mCursorVisible = false;

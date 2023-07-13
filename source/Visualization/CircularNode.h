@@ -17,7 +17,11 @@ namespace Visualize {
 		void SetValueColor(Color color);
 		void SetColor(Color color);
 		void SetOutlineColor(Color color);
+
 		Color GetOutlineColor() const; 
+		Color GetValueColor() const; 
+		Color GetColor() const; 
+
 	private:
 		float mRadius{ 30 };
 		int mValue{ 0 };

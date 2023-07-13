@@ -8,6 +8,10 @@ namespace Algorithms
 	public:
 		Algorithm(Visualize::Visualization& visualization); 
 		~Algorithm(); 
+	protected:
+		void sceneReset();
+		void sceneInit();
+		void newScene(std::vector<int> lines);
 	protected: 
 		Visualize::Visualization& mVisualization;
 	};

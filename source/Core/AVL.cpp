@@ -41,7 +41,15 @@ void Algorithms::AVL::Init(std::vector<int>& list)
 	this->BalanceTree();
 }
 
-Algorithms::AVL::Node::Ptr Algorithms::AVL::InitUntil(Node::Ptr& root, int value, int Alignment)
+void Algorithms::AVL::Insert(int value)
+{
+	this->newScene({});
+	this->InitUntil(this->mRoot, value);
+	this->modifyDistance(); 
+	this->BalanceTree(); 
+}
+
+Algorithms::AVL::Node::Ptr Algorithms::AVL::InitUntil(Node::Ptr& root, int value)
 {
 	if (root == nullptr)
 	{
@@ -49,14 +57,17 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::InitUntil(Node::Ptr& root, int value
 		root->value = value;
 		root->id = this->mVisualization.createCirNode(value);
 		root->height = 1; 
-		root->Alignment = Alignment;
 		return root; 
 	}
 	
 	if (root->value < value)
-		root->right =  this->InitUntil(root->right, value, 1);
+	{
+		root->right =  this->InitUntil(root->right, value);
+	}
 	else if (root->value > value)
-		root->left =  this->InitUntil(root->left, value, -1);
+	{
+		root->left =  this->InitUntil(root->left, value);
+	}
 
 	return root; 
 }
@@ -77,12 +88,34 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::SortedArrayToAVL(std::vector<int>& n
 	return root; 
 }
 
+Algorithms::AVL::Node::Ptr Algorithms::AVL::rotateLeft(Node::Ptr root)
+{
+	Node::Ptr right = root->right; 
+	Node::Ptr right_left = right->left; 
+
+	right->left = root; 
+	root->right = right_left; 
+
+	return right; 
+}
+
+Algorithms::AVL::Node::Ptr Algorithms::AVL::rotateRight(Node::Ptr root)
+{
+	Node::Ptr left = root->left; 
+	Node::Ptr left_right = left->right; 
+
+	left->right = root; 
+	root->left = left_right; 
+
+	return left; 
+}
+
 void Algorithms::AVL::traverse(Node::Ptr& root, Vector2 pos, int level, int& count)
 {
 	if (root == nullptr)
 		return;
-	
-	traverse(root->left, Vector2 {pos.x, pos.y + VERTICAL_SPACE}, level + 1, count);
+
+	traverse(root->left, Vector2{ pos.x, pos.y + VERTICAL_SPACE }, level + 1, count);
 
 	while (pos.x + 2 * (count + MODIFIER) * HORIZONTAL_SPACE - RADIUS < 0)
 		MODIFIER++;
@@ -104,6 +137,14 @@ void Algorithms::AVL::modifyDistance()
 		this->HORIZONTAL_SPACE = 30;
 	else if (numNode <= 50)
 		this->HORIZONTAL_SPACE = 20;
+
+	int height = this->Height(this->mRoot); 
+	if (height < 10)
+		this->VERTICAL_SPACE = 100;
+	else if (height <= 20)
+		this->VERTICAL_SPACE = 60;
+	else if (height <= 50)
+		this->VERTICAL_SPACE = 30;
 }
 
 void Algorithms::AVL::BalanceTree()
@@ -126,27 +167,41 @@ void Algorithms::AVL::addEdge()
 		q.pop(); 
 		if (curr->left)
 		{
-			this->mVisualization.createEdge(this->mVisualization.getCirNodePosition(curr->id), 
-				this->mVisualization.getCirNodePosition(curr->left->id));
+			if (curr->idEdgeLeft != 0)
+			{
+				this->mVisualization.moveEdgeSource(curr->idEdgeLeft, this->mVisualization.getCirNodePosition(curr->id));
+				this->mVisualization.moveEdgeDes(curr->idEdgeLeft, this->mVisualization.getCirNodePosition(curr->left->id));
+			}
+			else {
+				curr->idEdgeLeft = this->mVisualization.createEdge(this->mVisualization.getCirNodePosition(curr->id),
+					this->mVisualization.getCirNodePosition(curr->left->id));
+			}
 			q.push(curr->left);
 		}
 		if (curr->right)
 		{
-			this->mVisualization.createEdge(this->mVisualization.getCirNodePosition(curr->id),
-				this->mVisualization.getCirNodePosition(curr->right->id)); 
+			if (curr->idEdgeRight != 0)
+			{
+				this->mVisualization.moveEdgeSource(curr->idEdgeRight, this->mVisualization.getCirNodePosition(curr->id));
+				this->mVisualization.moveEdgeDes(curr->idEdgeRight, this->mVisualization.getCirNodePosition(curr->right->id));
+			}
+			else {
+				curr->idEdgeRight = this->mVisualization.createEdge(this->mVisualization.getCirNodePosition(curr->id),
+					this->mVisualization.getCirNodePosition(curr->right->id));
+			}
 			q.push(curr->right);
 		}
 	}
 }
 
-float Algorithms::AVL::Height(Node::Ptr root)
+int Algorithms::AVL::Height(Node::Ptr root)
 {
 	if (root == nullptr)
 		return 0; 
 	return std::max(Height(root->left), Height(root->right)) + 1; 
 }
 
-float Algorithms::AVL::Width(Node::Ptr root)
+int Algorithms::AVL::Width(Node::Ptr root)
 {
 	if (root == nullptr)
 		return 0; 
@@ -169,7 +224,7 @@ float Algorithms::AVL::Width(Node::Ptr root)
 		}
 		width = std::max(width, (int)q.size()); 
 	}
-	return (float)width; 
+	return width; 
 }
 
 int Algorithms::AVL::countNode(Node::Ptr root)
@@ -177,19 +232,4 @@ int Algorithms::AVL::countNode(Node::Ptr root)
 	if (root == nullptr)
 		return 0; 
 	return countNode(root->left) + countNode(root->right) + 1;
-}
-
-void Algorithms::AVL::sceneReset()
-{
-	this->mVisualization.reset();
-}
-
-void Algorithms::AVL::sceneInit()
-{
-	mVisualization.reset(mVisualization.getLastScene());
-}
-
-void Algorithms::AVL::newScene(std::vector<int> lines)
-{
-	mVisualization.createNewScene(); 
 }

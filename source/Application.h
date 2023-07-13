@@ -5,6 +5,7 @@
 #include "ResourceHolder/FontHolder.h";
 #include "Helper/ColorSetting.h"
 #include "States/BSTState.h"
+#include "States/AVLState.h"
 #include "StateStack.h"
 
 class Application

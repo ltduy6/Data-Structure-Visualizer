@@ -10,8 +10,8 @@ Visualize::CircularNode::~CircularNode()
 
 void Visualize::CircularNode::draw()
 {	
-	int x = this->GetPosition().x;
-	int y = this->GetPosition().y;
+	float x = this->GetPosition().x;
+	float y = this->GetPosition().y;
 
 	float DisplayRadius = this->mRadius * this->GetScale(); 
 	float DisplayOutlineThickness = this->OUTLINE_THICKNESS * this->GetScale();
@@ -56,4 +56,14 @@ void Visualize::CircularNode::SetOutlineColor(Color color)
 Color Visualize::CircularNode::GetOutlineColor() const
 {
 	return this->mOutlineColor;
+}
+
+Color Visualize::CircularNode::GetValueColor() const
+{
+	return this->mValueColor; 
+}
+
+Color Visualize::CircularNode::GetColor() const
+{
+	return this->mColor;
 }

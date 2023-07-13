@@ -2,6 +2,7 @@
 
 #include "VisualScene.h"
 #include "SceneNode.h"
+#include "ControlScene.h"
 
 #include "raylib.h"
 
@@ -41,6 +42,7 @@ namespace Visualize {
 	private:
 		std::vector<VisualScene> mContainer; 
 		VisualScene mDisplayScene; 
+		ControlScene mControl; 
 	};
 }
 

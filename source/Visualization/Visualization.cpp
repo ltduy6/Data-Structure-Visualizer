@@ -1,6 +1,9 @@
 #include "Visualization.h"
+#include <iostream>
 
-Visualize::Visualization::Visualization() : mContainer{{VisualScene()}}
+Visualize::Visualization::Visualization() : 
+	mContainer{{VisualScene()}},
+	mControl{mContainer, mDisplayScene}
 {
 	this->mDisplayScene = this->mContainer.front(); 
 }
@@ -11,12 +14,13 @@ Visualize::Visualization::~Visualization()
 
 void Visualize::Visualization::draw()
 {
-	this->mDisplayScene = this->mContainer.front();
+	/*this->mDisplayScene = this->mContainer.front();*/
 	this->mDisplayScene.draw(); 
 }
 
 void Visualize::Visualization::update(float dt)
 {
+	this->mControl.update(dt);
 }
 
 void Visualize::Visualization::createNewScene()
