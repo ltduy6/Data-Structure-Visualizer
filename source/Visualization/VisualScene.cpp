@@ -69,13 +69,16 @@ void Visualize::VisualScene::colorCirNode(int id, Color color)
 void Visualize::VisualScene::highlightCirNode(int id)
 {
 	CircularNode& node = this->getCirNode(id); 
-	node.SetColor(node.GetOutlineColor());
+	node.SetOutlineColor(ColorSetting::GetInstance().get(ColorThemeID::HIGHLIGHT)); 
+	node.SetValueColor(node.GetColor()); 
+	node.SetColor(node.GetOutlineColor()); 
 }
 
 void Visualize::VisualScene::unhighlightCirNode(int id)
 {
 	CircularNode& node = this->getCirNode(id); 
-	node.SetColor(ColorSetting::GetInstance().get(ColorThemeID::NODE_BACKGROUND));
+	node.SetColor(node.GetValueColor()); 
+	node.SetValueColor(node.GetOutlineColor());
 }
 
 void Visualize::VisualScene::updateCirNode(int id, int value)
@@ -85,6 +88,8 @@ void Visualize::VisualScene::updateCirNode(int id, int value)
 
 void Visualize::VisualScene::removeCirNode(int id)
 {
+	Edge& edge = this->getEdge(id); 
+	edge.SetDestination(edge.GetSource());
 	this->mCirNodeMap.erase(id);
 }
 
@@ -124,9 +129,29 @@ void Visualize::VisualScene::moveEdgeDelta(int id, Vector2 source, Vector2 des)
 	edge.SetDestination(edge.GetDestination() + des); 
 }
 
+void Visualize::VisualScene::highlightEdge(int id)
+{
+	Edge& edge = this->getEdge(id);
+	edge.SetColor(ColorSetting::GetInstance().get(ColorThemeID::HIGHLIGHT)); 
+}
+
+void Visualize::VisualScene::unhighlightEdge(int id)
+{
+	Edge& edge = this->getEdge(id); 
+	edge.SetColor(ColorSetting::GetInstance().get(ColorThemeID::EDGE)); 
+}
+
 void Visualize::VisualScene::removeEdge(int id)
 {
 	this->mEdgeMap.erase(id);
+}
+
+void Visualize::VisualScene::resetColor()
+{
+	for (auto& obj : this->mCirNodeMap)
+		obj.second.resetColor(); 
+	for (auto& obj : this->mEdgeMap)
+		obj.second.resetColor(); 
 }
 
 Visualize::CircularNode& Visualize::VisualScene::getCirNode(int id)
@@ -272,12 +297,14 @@ void Visualize::VisualScene::transitionEdge(const VisualScene& fromScene, const 
 		{
 			from.SetSource(to.GetSource()); 
 			from.SetDestination(to.GetDestination()); 
+			from.SetColor(to.GetColor()); 
 			from.SetScale(0);
 		}
 		if (toFound == toScene.mEdgeMap.end())
 		{
 			to.SetSource(from.GetSource()); 
 			to.SetDestination(from.GetDestination()); 
+			to.SetColor(from.GetColor()); 
 			to.SetScale(0);
 		}
 
@@ -295,7 +322,8 @@ void Visualize::VisualScene::transitionEdge(const VisualScene& fromScene, const 
 		newObj.SetSource(newSource); 
 		newObj.SetDestination(newDes); 
 
-		newObj.SetScale(easeInOut(from.GetScale(), to.GetScale(), time, totalTime)); 
+		newObj.SetScale(easeInOut(from.GetScale(), to.GetScale(), time, totalTime));
+		newObj.SetColor(easeInOutColor(from.GetColor(), to.GetColor(), time, totalTime)); 
 
 		auto insert = sceneRes.mEdgeMap.emplace(idObj, newObj); 
 		

@@ -36,8 +36,11 @@ namespace Visualize {
 		void moveEdgeSource(int id, Vector2 source);
 		void moveEdgeDes(int id, Vector2 des);
 		void moveEdgeDelta(int id, Vector2 source, Vector2 des);
+		void highlightEdge(int id);
+		void unhighlightEdge(int id);
 		void removeEdge(int id);
 
+		void resetColor();
 
 	private:
 		std::vector<VisualScene> mContainer; 

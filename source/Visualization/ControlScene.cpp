@@ -13,8 +13,12 @@ Visualize::ControlScene::~ControlScene()
 
 void Visualize::ControlScene::update(float dt)
 {
-	std::cout << this->currentIndScene << '\n';
 	updateDisplayingScene(dt);
+}
+
+void Visualize::ControlScene::reset()
+{
+	this->resetScene();
 }
 
 void Visualize::ControlScene::updateDisplayingScene(float dt)
@@ -60,4 +64,10 @@ void Visualize::ControlScene::nextScene()
 		this->currentIndScene++; 
 		this->mTime = 0;
 	}
+}
+
+void Visualize::ControlScene::resetScene()
+{
+	*this->mDisplayScene = (*this->mContainer).front(); 
+	this->currentIndScene = 0;
 }

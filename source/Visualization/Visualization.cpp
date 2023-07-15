@@ -38,6 +38,7 @@ void Visualize::Visualization::reset(VisualScene initScene)
 {
 	this->mContainer.clear(); 
 	this->mContainer.push_back(initScene);
+	this->mControl.reset();
 }
 
 int Visualize::Visualization::createCirNode(int value)
@@ -105,7 +106,22 @@ void Visualize::Visualization::moveEdgeDelta(int id, Vector2 source, Vector2 des
 	this->mContainer.back().moveEdgeDelta(id, source, des);
 }
 
+void Visualize::Visualization::highlightEdge(int id)
+{
+	this->mContainer.back().highlightEdge(id); 
+}
+
+void Visualize::Visualization::unhighlightEdge(int id)
+{
+	this->mContainer.back().unhighlightEdge(id);
+}
+
 void Visualize::Visualization::removeEdge(int id)
 {
 	this->mContainer.back().removeEdge(id);
+}
+
+void Visualize::Visualization::resetColor()
+{
+	this->mContainer.back().resetColor();
 }

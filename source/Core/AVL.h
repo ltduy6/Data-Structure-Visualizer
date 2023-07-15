@@ -22,7 +22,7 @@ namespace Algorithms {
 		class Node {
 		public:
 			typedef std::shared_ptr<Node> Ptr; 
-			Node() : left{ nullptr }, right{ nullptr } {};
+			Node() : left{ nullptr }, right{ nullptr }, parent{ nullptr } {};
 		public:
 			int value{ 0 };
 			int id{ 0 };
@@ -33,6 +33,7 @@ namespace Algorithms {
 
 			Node::Ptr left; 
 			Node::Ptr right; 
+			Node::Ptr parent;
 
 			std::map<int, std::string> references; 
 		};
@@ -40,17 +41,23 @@ namespace Algorithms {
 		int mSize{ 0 }; 
 		int mHeight{ 0 };
 		Node::Ptr mRoot{ nullptr };
+		Node::Ptr mTarget{ nullptr };
 	private:
-		Node::Ptr InitUntil(Node::Ptr& root, int value);
+		void sceneReset();
+	private:
+		Node::Ptr InitUntil(Node::Ptr& root, Node::Ptr& parent, int value);
 		Node::Ptr SortedArrayToAVL(std::vector<int>& nums, int start, int end);
-		Node::Ptr rotateLeft(Node::Ptr root); 
-		Node::Ptr rotateRight(Node::Ptr root); 
+		void Rotation(Node::Ptr& root, Node::Ptr& target); 
+		Node::Ptr rotateLeft(Node::Ptr& root); 
+		Node::Ptr rotateRight(Node::Ptr& root); 
+		Node::Ptr searchValue(Node::Ptr root, int value);
 		void traverse(Node::Ptr& root, Vector2 pos, int level, int& count); 
-		void modifyDistance();
-		void BalanceTree();
-		void addEdge(); 
+		void modifyDistance(Node::Ptr& root);
+		void BalanceTree(Node::Ptr& root);
+		void addEdge(Node::Ptr& root); 
 		int Height(Node::Ptr root);
 		int Width(Node::Ptr root);
 		int countNode(Node::Ptr root);
+		int getBalance(Node::Ptr root);
 	};
 }

@@ -67,3 +67,10 @@ Color Visualize::CircularNode::GetColor() const
 {
 	return this->mColor;
 }
+
+void Visualize::CircularNode::resetColor()
+{
+	this->mColor = ColorSetting::GetInstance().get(ColorThemeID::NODE_BACKGROUND); 
+	this->mOutlineColor = ColorSetting::GetInstance().get(ColorThemeID::NODE_OUTLINE); 
+	this->mValueColor = ColorSetting::GetInstance().get(ColorThemeID::NODE_LABEL); 
+}

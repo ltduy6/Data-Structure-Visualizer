@@ -24,6 +24,8 @@ namespace Visualize {
 		void SetColor(Color color);
 		Color GetColor() const;
 
+		void resetColor(); 
+
 	private:
 		Vector2 mSource{ Vector2 {50, 50} };
 		Vector2 mDes{ Vector2 {100, 100} };

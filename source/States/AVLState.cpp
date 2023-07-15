@@ -21,7 +21,7 @@ void AVLState::AddInitializeOperation()
 
     AddNoFieldInput(container, "Empty", [this]() {
         actionList.setError("");
-        mAlgo.InitRandomFixSize(5);
+        mAlgo.InitRandomFixSize(0);
         actionList.hideAllOptions();
         });
 

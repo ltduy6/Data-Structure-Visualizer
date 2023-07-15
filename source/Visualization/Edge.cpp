@@ -52,3 +52,8 @@ Color Visualize::Edge::GetColor() const
 {
     return this->mColor;
 }
+
+void Visualize::Edge::resetColor()
+{
+    this->mColor = ColorSetting::GetInstance().get(ColorThemeID::EDGE);
+}

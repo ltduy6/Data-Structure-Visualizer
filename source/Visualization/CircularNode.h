@@ -22,6 +22,7 @@ namespace Visualize {
 		Color GetValueColor() const; 
 		Color GetColor() const; 
 
+		void resetColor(); 
 	private:
 		float mRadius{ 30 };
 		int mValue{ 0 };
