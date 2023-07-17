@@ -37,14 +37,17 @@ void Algorithms::AVL::Init(std::vector<int>& list)
 	if (list.size() == 0)
 		return; 
 	this->mRoot = this->SortedArrayToAVL(list, 0, list.size() - 1);
-	this->BalanceTree(this->mRoot);
+	this->mVisual = this->copyTree(this->mRoot);
+	this->BalanceTree(this->mVisual);
 }
 
 void Algorithms::AVL::Insert(int value)
 {
-	this->newScene({});
+	this->sceneInit();
 	this->InitUntil(this->mRoot, this->mRoot, value);
 	this->BalanceTree(this->mRoot);
+	this->newScene({}); 
+	this->mVisualization.resetColor();
 }
 
 void Algorithms::AVL::sceneReset()
@@ -60,6 +63,7 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::InitUntil(Node::Ptr& root, Node::Ptr
 		root = std::make_shared<Node>(); 
 		root->value = value;
 		root->id = this->mVisualization.createCirNode(value);
+		std::cout << root->id << '\n';
 		root->height = 1; 
 		if (root != parent)
 		{
@@ -72,6 +76,7 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::InitUntil(Node::Ptr& root, Node::Ptr
 						this->mVisualization.getCirNodePosition(parent->id),
 						this->mVisualization.getCirNodePosition(root->id)
 					);
+					root->idEdge = parent->idEdgeRight;
 					this->mVisualization.highlightEdge(parent->idEdgeRight);
 				}
 				else {
@@ -79,6 +84,7 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::InitUntil(Node::Ptr& root, Node::Ptr
 						this->mVisualization.getCirNodePosition(parent->id),
 						this->mVisualization.getCirNodePosition(root->id)
 					);
+					root->idEdge = parent->idEdgeLeft;
 					this->mVisualization.highlightEdge(parent->idEdgeLeft);
 				}
 				std::cout << parent->value << '\n';
@@ -88,6 +94,7 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::InitUntil(Node::Ptr& root, Node::Ptr
 		this->BalanceTree(this->mRoot);
 		this->newScene({});
 		this->mVisualization.resetColor();
+		this->finishRotation = true; 
 		return root; 
 	}
 	
@@ -104,7 +111,7 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::InitUntil(Node::Ptr& root, Node::Ptr
 			this->newScene({});
 			this->mVisualization.highlightEdge(root->idEdgeRight);
 		}
-		root->right = this->InitUntil(root->right, root, value);
+		this->InitUntil(root->right, root, value);
 	}
 	else if (root->value > value)
 	{
@@ -113,7 +120,7 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::InitUntil(Node::Ptr& root, Node::Ptr
 			this->newScene({});
 			this->mVisualization.highlightEdge(root->idEdgeLeft);
 		}
-		root->left = this->InitUntil(root->left, root, value);
+		this->InitUntil(root->left, root, value);
 	}
 	else {
 		this->newScene({}); 
@@ -123,28 +130,42 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::InitUntil(Node::Ptr& root, Node::Ptr
 
 	int balanceFactor = Height(root->right) - Height(root->left);
 
+	Node::Ptr target = this->searchValue(this->mVisual, root->value); 
+
+	if (this->finishRotation)
+	{
+		newScene({});
+		this->mVisualization.highlightCirNode(root->id);
+	}
+
 	if (balanceFactor > 1)
 	{
+		finishRotation = false; 
 		if (value > root->right->value)
 		{
-			return root = rotateLeft(root); 
+			root = rotateLeft(root); 
 		}
 		else if (value < root->right->value)
 		{
 			root->right = rotateRight(root->right); 
-			return root = rotateLeft(root); 
+			root = rotateLeft(root); 
 		}
 	}
 	else if (balanceFactor < -1)
 	{
+		finishRotation = false; 
 		if (value < root->left->value)
-			return root = rotateRight(root); 
+			root = rotateRight(root); 
 		else if (value > root->left->value)
 		{
 			root->left = rotateLeft(root->left); 
-			return root = rotateRight(root);
+			root = rotateRight(root);
 		}
 	}
+
+	newScene({});
+	this->mVisualization.resetColorCirNode(root->id);
+
 	return root; 
 }
 
@@ -164,51 +185,9 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::SortedArrayToAVL(std::vector<int>& n
 	return root; 
 }
 
-void Algorithms::AVL::Rotation(Node::Ptr& root, Node::Ptr& target)
-{
-	if (target == nullptr)
-		return ; 
-	while (target)
-	{
-		int balanceFactor = getBalance(target);
-
-		this->newScene({});
-		this->mVisualization.highlightCirNode(target->id);
-
-		if (balanceFactor > 1)
-		{
-			int balanceRight = getBalance(target->right);
-			if (balanceRight > 0)
-				target = rotateLeft(target);
-			else if (balanceRight < 0)
-			{
-				target->right = rotateRight(target->right);
-				target = rotateLeft(target);
-			}
-			this->BalanceTree(root);
-		}
-		else if (balanceFactor < -1)
-		{
-			int balanceLeft = getBalance(target->left);
-			if (balanceLeft < 0)
-				target = rotateRight(target);
-			else if (balanceLeft > 0)
-			{
-				target->left = rotateLeft(target->left);
-				target = rotateRight(target);
-			}
-			this->BalanceTree(root);
-		}
-
-		this->newScene({}); 
-		this->mVisualization.unhighlightCirNode(target->id);
-
-		target = target->parent; 
-	}
-}
-
 Algorithms::AVL::Node::Ptr Algorithms::AVL::rotateLeft(Node::Ptr& root)
 {
+	this->newScene({}); 
 	Node::Ptr right = root->right; 
 	Node::Ptr right_left = right->left; 
 
@@ -254,17 +233,25 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::rotateLeft(Node::Ptr& root)
 			);
 		}
 	}
-
-	this->newScene({});
-
-	if(root->right)
+	
+	/*this->newScene({});*/
+	if (root->right)
+	{
+		this->mVisualization.highlightEdge(root->idEdgeRight);
 		this->mVisualization.moveEdgeDes(root->idEdgeRight, this->mVisualization.getCirNodePosition(root->right->id)); 
+	}
 
+	
 	if (right->idEdgeLeft)
+	{
+		this->mVisualization.highlightEdge(right->idEdgeLeft);
 		this->mVisualization.moveEdgeDes(right->idEdgeLeft, this->mVisualization.getCirNodePosition(root->id));
+	}
 
+	
 	if (right->parent)
 	{
+		this->mVisualization.highlightEdge((isLeft) ? right->parent->idEdgeLeft : right->parent->idEdgeRight);
 		this->mVisualization.moveEdgeDes((isLeft) ? right->parent->idEdgeLeft : right->parent->idEdgeRight, 
 			this->mVisualization.getCirNodePosition(right->id)); 
 	}
@@ -274,6 +261,7 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::rotateLeft(Node::Ptr& root)
 
 Algorithms::AVL::Node::Ptr Algorithms::AVL::rotateRight(Node::Ptr& root)
 {
+	this->newScene({});
 	Node::Ptr left = root->left; 
 	Node::Ptr left_right = left->right; 
 
@@ -320,17 +308,29 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::rotateRight(Node::Ptr& root)
 		}
 	}
 
-	this->newScene({});
-
-	if(left_right)
+	
+	/*this->newScene({});*/
+	if (left_right)
+	{
+		this->mVisualization.highlightEdge(root->idEdgeLeft);
 		this->mVisualization.moveEdgeDes(root->idEdgeLeft, this->mVisualization.getCirNodePosition(left_right->id));
+	}
+
+	
 
 	if (left->idEdgeRight)
+	{
+		this->mVisualization.highlightEdge(left->idEdgeRight);
 		this->mVisualization.moveEdgeDes(left->idEdgeRight, this->mVisualization.getCirNodePosition(root->id));
+	}
 
+	
 	if (left->parent)
+	{
+		this->mVisualization.highlightEdge((isLeft) ? left->parent->idEdgeLeft : left->parent->idEdgeRight);
 		this->mVisualization.moveEdgeDes((isLeft) ? left->parent->idEdgeLeft : left->parent->idEdgeRight,
 			this->mVisualization.getCirNodePosition(left->id)); 
+	}
 
 	return root = left; 
 }
@@ -343,6 +343,24 @@ Algorithms::AVL::Node::Ptr Algorithms::AVL::searchValue(Node::Ptr root, int valu
 		return searchValue(root->right, value); 
 	else
 		return searchValue(root->left, value);
+}
+
+Algorithms::AVL::Node::Ptr Algorithms::AVL::copyTree(Node::Ptr root)
+{
+	if (root == nullptr)
+		return nullptr; 
+
+	Node::Ptr newNode = std::make_shared<Node>(); 
+	newNode->value = root->value; 
+	newNode->id = root->id; 
+	newNode->idEdgeLeft = root->idEdgeLeft; 
+	newNode->idEdgeRight = root->idEdgeRight; 
+	newNode->parent = root->parent; 
+
+	newNode->left = this->copyTree(root->left); 
+	newNode->right = this->copyTree(root->right); 
+
+	return newNode; 
 }
 
 void Algorithms::AVL::traverse(Node::Ptr& root, Vector2 pos, int level, int& count)
@@ -385,9 +403,9 @@ void Algorithms::AVL::modifyDistance(Node::Ptr& root)
 void Algorithms::AVL::BalanceTree(Node::Ptr& root)
 {
 	this->modifyDistance(root); 
-	Vector2 pos = Vector2{ STARTING_POINT.x - HORIZONTAL_SPACE * this->countNode(this->mRoot), STARTING_POINT.y };
+	Vector2 pos = Vector2{ STARTING_POINT.x - HORIZONTAL_SPACE * this->countNode(root), STARTING_POINT.y };
 	int count = 0;
-	this->traverse(this->mRoot, pos, 1, count);
+	this->traverse(root, pos, 1, count);
 	this->addEdge(root);
 }
 
@@ -401,9 +419,19 @@ void Algorithms::AVL::addEdge(Node::Ptr& root)
 	{
 		Node::Ptr curr = q.front(); 
 		q.pop(); 
+		if (curr->idEdge != 0)
+		{
+			this->mVisualization.moveEdgeSource(curr->idEdge, this->mVisualization.getCirNodePosition(curr->parent->id));
+			this->mVisualization.moveEdgeDes(curr->idEdge, this->mVisualization.getCirNodePosition(curr->id));
+		}
+		else if (curr->parent != nullptr)
+		{
+			curr->idEdge = this->mVisualization.createEdge(this->mVisualization.getCirNodePosition(curr->parent->id),
+				this->mVisualization.getCirNodePosition(curr->id));
+		}
 		if (curr->left)
 		{
-			if (curr->idEdgeLeft != 0)
+			/*if (curr->idEdgeLeft != 0)
 			{
 				this->mVisualization.moveEdgeSource(curr->idEdgeLeft, this->mVisualization.getCirNodePosition(curr->id));
 				this->mVisualization.moveEdgeDes(curr->idEdgeLeft, this->mVisualization.getCirNodePosition(curr->left->id));
@@ -411,12 +439,12 @@ void Algorithms::AVL::addEdge(Node::Ptr& root)
 			else {
 				curr->idEdgeLeft = this->mVisualization.createEdge(this->mVisualization.getCirNodePosition(curr->id),
 					this->mVisualization.getCirNodePosition(curr->left->id));
-			}
+			}*/
 			q.push(curr->left);
 		}
 		if (curr->right)
 		{
-			if (curr->idEdgeRight != 0)
+			/*if (curr->idEdgeRight != 0)
 			{
 				this->mVisualization.moveEdgeSource(curr->idEdgeRight, this->mVisualization.getCirNodePosition(curr->id));
 				this->mVisualization.moveEdgeDes(curr->idEdgeRight, this->mVisualization.getCirNodePosition(curr->right->id));
@@ -424,7 +452,7 @@ void Algorithms::AVL::addEdge(Node::Ptr& root)
 			else {
 				curr->idEdgeRight = this->mVisualization.createEdge(this->mVisualization.getCirNodePosition(curr->id),
 					this->mVisualization.getCirNodePosition(curr->right->id));
-			}
+			}*/
 			q.push(curr->right);
 		}
 	}

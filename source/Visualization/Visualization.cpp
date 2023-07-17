@@ -16,6 +16,7 @@ void Visualize::Visualization::draw()
 {
 	/*this->mDisplayScene = this->mContainer.front();*/
 	this->mDisplayScene.draw(); 
+	this->mControl.draw();
 }
 
 void Visualize::Visualization::update(float dt)
@@ -69,6 +70,11 @@ void Visualize::Visualization::highlightCirNode(int id)
 void Visualize::Visualization::unhighlightCirNode(int id)
 {
 	this->mContainer.back().unhighlightCirNode(id);
+}
+
+void Visualize::Visualization::resetColorCirNode(int id)
+{
+	this->mContainer.back().resetColorCirNode(id);
 }
 
 void Visualize::Visualization::updateCirNode(int id, int value)

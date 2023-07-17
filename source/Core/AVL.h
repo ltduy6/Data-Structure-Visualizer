@@ -30,6 +30,7 @@ namespace Algorithms {
 			int Alignment{ 0 };
 			int idEdgeLeft{ 0 }; 
 			int idEdgeRight{ 0 };
+			int idEdge{ 0 }; 
 
 			Node::Ptr left; 
 			Node::Ptr right; 
@@ -41,16 +42,18 @@ namespace Algorithms {
 		int mSize{ 0 }; 
 		int mHeight{ 0 };
 		Node::Ptr mRoot{ nullptr };
-		Node::Ptr mTarget{ nullptr };
+		Node::Ptr mVisual{ nullptr };
+		bool finishRotation{ true };
 	private:
 		void sceneReset();
 	private:
 		Node::Ptr InitUntil(Node::Ptr& root, Node::Ptr& parent, int value);
 		Node::Ptr SortedArrayToAVL(std::vector<int>& nums, int start, int end);
-		void Rotation(Node::Ptr& root, Node::Ptr& target); 
 		Node::Ptr rotateLeft(Node::Ptr& root); 
 		Node::Ptr rotateRight(Node::Ptr& root); 
 		Node::Ptr searchValue(Node::Ptr root, int value);
+		Node::Ptr copyTree(Node::Ptr root);
+		void RotateUntil(Node::Ptr& root, Node::Ptr& visual, int value);
 		void traverse(Node::Ptr& root, Vector2 pos, int level, int& count); 
 		void modifyDistance(Node::Ptr& root);
 		void BalanceTree(Node::Ptr& root);

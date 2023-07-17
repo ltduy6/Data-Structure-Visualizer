@@ -1,7 +1,9 @@
 #pragma once
 
 #include "../Helper/ColorSetting.h"
+#include "../Helper/GlobalVar.h"
 #include "../GUIComponent/Button.h"
+#include "../GUIComponent/ActionsContainer.h"
 #include "VisualScene.h"
 
 #include <vector>
@@ -31,6 +33,13 @@ namespace Visualize {
 
 		void nextScene(); 
 		void resetScene(); 
+		void prevScene(); 
+		void forwardScene(); 
+
+		void togglePause();
+		void setPause(bool isPause); 
+		void loadButton(GUI::Button::Ptr& button, std::string title); 
+
 	private:
 		std::vector<VisualScene>* mContainer; 
 		VisualScene* mDisplayScene; 
@@ -42,6 +51,9 @@ namespace Visualize {
 		bool isPaused{ false };
 
 		float mTime{ 0 };
+
+		GUI::ActionsContainer mButtonContainer; 
+
 
 	};
 }

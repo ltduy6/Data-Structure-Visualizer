@@ -81,6 +81,12 @@ void Visualize::VisualScene::unhighlightCirNode(int id)
 	node.SetValueColor(node.GetOutlineColor());
 }
 
+void Visualize::VisualScene::resetColorCirNode(int id)
+{
+	CircularNode& node = this->getCirNode(id); 
+	node.resetColor();
+}
+
 void Visualize::VisualScene::updateCirNode(int id, int value)
 {
 	this->getCirNode(id).SetValue(value);

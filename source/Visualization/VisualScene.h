@@ -30,6 +30,7 @@ namespace Visualize
 		void colorCirNode(int id, Color color);
 		void highlightCirNode(int id); 
 		void unhighlightCirNode(int id); 
+		void resetColorCirNode(int id);
 		void updateCirNode(int id, int value); 
 		void removeCirNode(int id); 
 		Vector2 getCirNodePosition(int id) const;

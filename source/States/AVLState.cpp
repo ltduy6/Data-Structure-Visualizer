@@ -10,7 +10,7 @@ void AVLState::AddOperation()
 	this->AddInitializeOperation();
 	this->AddInsertOperation();
 
-	actionList.SetPos(Vector2{ 50, Constant::WINDOW_HEIGHT - actionList.GetSize().y - 60 });
+	actionList.SetPos(Vector2{ 50, Constant::WINDOW_HEIGHT - actionList.GetSize().y - 100 });
 }
 
 void AVLState::AddInitializeOperation()
@@ -45,9 +45,9 @@ void AVLState::AddInsertOperation()
     GUI::Button::Ptr button(new GUI::Button()); 
     button->setText("Insert(v)"); 
     AddIntFieldInput(container, "", { {400, "v = ", 1, 99} }, [this](std::map<std::string, std::string> input) {
-        if (Helper::checkValidNumber(input["v = "], 1, 99) == false)
+        if (Helper::checkValidNumber(input["v = "], 1, 200) == false)
         {
-            actionList.setError("Please input an integer number from 1 to 99");
+            actionList.setError("Please input an integer number from 1 to 200");
             return;
         }
         int value = std::stoi(input["v = "]); 
