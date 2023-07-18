@@ -33,6 +33,7 @@ namespace Visualize
 		void resetColorCirNode(int id);
 		void updateCirNode(int id, int value); 
 		void removeCirNode(int id); 
+		void setLabel(int id, std::string label);
 		Vector2 getCirNodePosition(int id) const;
 
 		int createEdge(Vector2 source, Vector2 des); 
@@ -61,7 +62,7 @@ namespace Visualize
 		static void transitionEdge(const VisualScene& fromScene, const VisualScene& toScene,
 			float time, float totalTime, VisualScene& sceneRes);
 	private: 
-		std::map<int,CircularNode> mCirNodeMap;
+		std::map<int, CircularNode> mCirNodeMap;
 		std::map<int, Edge> mEdgeMap;
 	};
 }

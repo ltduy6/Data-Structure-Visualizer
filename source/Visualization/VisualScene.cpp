@@ -34,7 +34,7 @@ void Visualize::VisualScene::draw()
 
 int Visualize::VisualScene::createCirNode(int value)
 {
-	CircularNode newObject; 
+	CircularNode newObject;
 	newObject.SetValue(value);
 
 	int objectID = newObject.getObjectId(); 
@@ -94,9 +94,12 @@ void Visualize::VisualScene::updateCirNode(int id, int value)
 
 void Visualize::VisualScene::removeCirNode(int id)
 {
-	Edge& edge = this->getEdge(id); 
-	edge.SetDestination(edge.GetSource());
 	this->mCirNodeMap.erase(id);
+}
+
+void Visualize::VisualScene::setLabel(int id, std::string label)
+{
+	this->getCirNode(id).SetLabel(label);
 }
 
 Vector2 Visualize::VisualScene::getCirNodePosition(int id) const
@@ -240,6 +243,7 @@ void Visualize::VisualScene::transitionCirNode(const VisualScene& fromScene, con
 			from.SetScale(0); 
 			from.SetValue(to.GetValue()); 
 			from.SetColor(to.GetColor()); 
+			from.SetLabel("");
 			from.SetOutlineColor(to.GetOutlineColor());
 			from.SetValueColor(to.GetValueColor());
 		}
@@ -249,6 +253,7 @@ void Visualize::VisualScene::transitionCirNode(const VisualScene& fromScene, con
 			to.SetScale(0); 
 			to.SetValue(from.GetValue()); 
 			to.SetColor(from.GetColor()); 
+			to.SetLabel("");
 			to.SetOutlineColor(from.GetOutlineColor()); 
 			to.SetValueColor(from.GetValueColor());
 		}
@@ -265,6 +270,7 @@ void Visualize::VisualScene::transitionCirNode(const VisualScene& fromScene, con
 		newObj.SetScale(easeInOut(from.GetScale(), to.GetScale(), time, totalTime)); 
 
 		newObj.SetValue((int)easeInOut(from.GetValue(), to.GetValue(), time, totalTime)); 
+
 
 		newObj.SetColor(easeInOutColor(from.GetColor(), to.GetColor(), time, totalTime)); 
 		newObj.SetOutlineColor(easeInOutColor(from.GetOutlineColor(), to.GetOutlineColor(), time, totalTime)); 
@@ -305,6 +311,7 @@ void Visualize::VisualScene::transitionEdge(const VisualScene& fromScene, const 
 			from.SetDestination(to.GetDestination()); 
 			from.SetColor(to.GetColor()); 
 			from.SetScale(0);
+			from.SetSideOffset(to.GetSideOffset()); 
 		}
 		if (toFound == toScene.mEdgeMap.end())
 		{
@@ -312,6 +319,7 @@ void Visualize::VisualScene::transitionEdge(const VisualScene& fromScene, const 
 			to.SetDestination(from.GetDestination()); 
 			to.SetColor(from.GetColor()); 
 			to.SetScale(0);
+			to.SetSideOffset(from.GetSideOffset());
 		}
 
 		Edge newObj = to; 

@@ -1,10 +1,10 @@
 #include "SceneNode.h"
 
-int Visualize::SceneNode::objectID = 0;
+int Visualize::SceneNode::objectID_EDGE = 0;
+int Visualize::SceneNode::objectID_CIRNODE = 0;
 
 Visualize::SceneNode::SceneNode()
 {
-	this->objectID++;
 }
 
 Visualize::SceneNode::~SceneNode()
@@ -31,7 +31,3 @@ float Visualize::SceneNode::GetScale() const
 	return this->mScale;
 }
 
-int Visualize::SceneNode::getObjectId() const
-{
-	return this->objectID;
-}

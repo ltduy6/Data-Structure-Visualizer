@@ -56,7 +56,6 @@ Visualize::ControlScene::~ControlScene()
 
 void Visualize::ControlScene::update(float dt)
 {
-	std::cout << this->currentIndScene << '\n';
 	updateDisplayingScene(dt);
 	this->mButtonContainer.update(dt);
 }

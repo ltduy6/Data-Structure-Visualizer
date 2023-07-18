@@ -25,8 +25,14 @@ namespace Visualize {
 		Color GetColor() const;
 
 		void resetColor(); 
+		int getObjectId() const;
+
+		void SetSideOffset(int sideOffset); 
+		int GetSideOffset() const; 
 
 	private:
+		int mSideOffset{ 0 };
+		int mThickness{ THICKNESS };
 		Vector2 mSource{ Vector2 {50, 50} };
 		Vector2 mDes{ Vector2 {100, 100} };
 		Color mColor{ColorSetting::GetInstance().get(ColorThemeID::EDGE)};

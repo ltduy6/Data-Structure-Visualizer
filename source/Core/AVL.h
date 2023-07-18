@@ -18,11 +18,15 @@ namespace Algorithms {
 		void InitRandomFixSize(int size); 
 		void Init(std::vector<int>& list);
 		void Insert(int value); 
+		void Remove(int value);
 	private:
 		class Node {
 		public:
-			typedef std::shared_ptr<Node> Ptr; 
 			Node() : left{ nullptr }, right{ nullptr }, parent{ nullptr } {};
+			~Node() {
+				delete left; 
+				delete right; 
+			}
 		public:
 			int value{ 0 };
 			int id{ 0 };
@@ -32,35 +36,40 @@ namespace Algorithms {
 			int idEdgeRight{ 0 };
 			int idEdge{ 0 }; 
 
-			Node::Ptr left; 
-			Node::Ptr right; 
-			Node::Ptr parent;
+			Node*left; 
+			Node* right; 
+			Node* parent;
 
 			std::map<int, std::string> references; 
 		};
 	private:
 		int mSize{ 0 }; 
 		int mHeight{ 0 };
-		Node::Ptr mRoot{ nullptr };
-		Node::Ptr mVisual{ nullptr };
+		Node* mRoot{ nullptr };
+		Node* mVisual{ nullptr };
 		bool finishRotation{ true };
+		std::map<std::pair<int, int>, int> mEdgeMap;
 	private:
 		void sceneReset();
 	private:
-		Node::Ptr InitUntil(Node::Ptr& root, Node::Ptr& parent, int value);
-		Node::Ptr SortedArrayToAVL(std::vector<int>& nums, int start, int end);
-		Node::Ptr rotateLeft(Node::Ptr& root); 
-		Node::Ptr rotateRight(Node::Ptr& root); 
-		Node::Ptr searchValue(Node::Ptr root, int value);
-		Node::Ptr copyTree(Node::Ptr root);
-		void RotateUntil(Node::Ptr& root, Node::Ptr& visual, int value);
-		void traverse(Node::Ptr& root, Vector2 pos, int level, int& count); 
-		void modifyDistance(Node::Ptr& root);
-		void BalanceTree(Node::Ptr& root);
-		void addEdge(Node::Ptr& root); 
-		int Height(Node::Ptr root);
-		int Width(Node::Ptr root);
-		int countNode(Node::Ptr root);
-		int getBalance(Node::Ptr root);
+		Node* InitUntil(Node*& root, Node*& parent, int value);
+		Node* RemoveUntil(Node*& root, int value);
+		Node* SortedArrayToAVL(std::vector<int>& nums, int start, int end);
+		Node* rotateLeft(Node*& root); 
+		Node* rotateRight(Node*& root); 
+		Node* searchValue(Node* root, int value);
+		Node* copyTree(Node* root);
+
+		void removeAVL(Node*& root); 
+		void printBST(Node* root);
+		void RotateUntil(Node*& root);
+		void traverse(Node*& root, Vector2 pos, int level, int& count); 
+		void modifyDistance(Node*& root);
+		void BalanceTree(Node*& root);
+		void addEdge(Node*& root); 
+		int Height(Node* root);
+		int Width(Node* root);
+		int countNode(Node* root);
+		int getBalance(Node* root);
 	};
 }

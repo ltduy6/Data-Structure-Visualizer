@@ -31,6 +31,7 @@ namespace Visualize {
 		void resetColorCirNode(int id);
 		void updateCirNode(int id, int value);
 		void removeCirNode(int id);
+		void setLabel(int id, std::string label);
 		Vector2 getCirNodePosition(int id) const;
 
 		int createEdge(Vector2 source, Vector2 des);

@@ -87,6 +87,11 @@ void Visualize::Visualization::removeCirNode(int id)
 	this->mContainer.back().removeCirNode(id);
 }
 
+void Visualize::Visualization::setLabel(int id, std::string label)
+{
+	this->mContainer.back().setLabel(id, label);
+}
+
 Vector2 Visualize::Visualization::getCirNodePosition(int id) const
 {
 	return this->mContainer.back().getCirNodePosition(id);

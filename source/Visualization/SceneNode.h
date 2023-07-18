@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../NonCopyable.hpp"
 #include "raylib.h"
+#include "../Helper/GlobalVar.h"
 #include <memory>
 
 namespace Visualize {
@@ -11,6 +11,7 @@ namespace Visualize {
 		std::shared_ptr<SceneNode> Ptr;
 		float OUTLINE_THICKNESS = 5;
 		float ROUND_SEGMENT = 10; 
+		static constexpr int ELEMENT_SIZE = 60;
 	public:
 		SceneNode();
 		virtual ~SceneNode();
@@ -22,12 +23,12 @@ namespace Visualize {
 
 		virtual void SetScale(float scale);
 		float GetScale() const;
-
-		int getObjectId() const;
-	private:
+		virtual int getObjectId() const = 0;
+	protected:
 		Vector2 mPos{ Vector2 {0, 0} };
 		float mScale{ 1 };
-		static int objectID; 
+		static int objectID_CIRNODE;
+		static int objectID_EDGE; 
 	};
 }
 

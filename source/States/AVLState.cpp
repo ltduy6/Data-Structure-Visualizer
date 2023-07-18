@@ -9,6 +9,7 @@ void AVLState::AddOperation()
 {
 	this->AddInitializeOperation();
 	this->AddInsertOperation();
+    this->AddDeleteOperation();
 
 	actionList.SetPos(Vector2{ 50, Constant::WINDOW_HEIGHT - actionList.GetSize().y - 100 });
 }
@@ -61,4 +62,20 @@ void AVLState::AddInsertOperation()
 
 void AVLState::AddDeleteOperation()
 {
+    GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer());
+    GUI::Button::Ptr button(new GUI::Button());
+    button->setText("Remove(v)");
+    AddIntFieldInput(container, "", { {400, "v = ", 1, 99} }, [this](std::map<std::string, std::string> input) {
+        if (Helper::checkValidNumber(input["v = "], 1, 200) == false)
+        {
+            actionList.setError("Please input an integer number from 1 to 200");
+            return;
+        }
+        int value = std::stoi(input["v = "]);
+        mAlgo.Remove(value);
+        actionList.setError("");
+        actionList.hideAllOptions();
+        });
+
+    actionList.AddOperation(button, container);
 }

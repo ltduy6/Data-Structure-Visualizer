@@ -2,6 +2,7 @@
 
 Visualize::CircularNode::CircularNode()
 {
+	this->objectID_CIRNODE++;
 }
 
 Visualize::CircularNode::~CircularNode()
@@ -26,6 +27,10 @@ void Visualize::CircularNode::draw()
 	Vector2 textBounds = MeasureTextEx(font, Text.c_str(), TextSize, 0);
 
 	DrawTextEx(font, Text.c_str(), Vector2{x - textBounds.x / 2, y - textBounds.y / 2}, TextSize, 0, this->mValueColor);
+
+	Vector2 labelBounds = MeasureTextEx(font, this->mLabel.c_str(), TextSize , 0);
+
+	DrawTextEx(font, this->mLabel.c_str(), { x - labelBounds.x / 2, y + DisplayRadius + DisplayRadius * 1 / 3 }, TextSize , 0, this->mLabelColor);
 }
 
 void Visualize::CircularNode::SetValue(int value)
@@ -35,7 +40,17 @@ void Visualize::CircularNode::SetValue(int value)
 
 int Visualize::CircularNode::GetValue() const
 {
-	return this->mValue; 
+	return this->mValue;
+}
+
+void Visualize::CircularNode::SetLabel(std::string label)
+{
+	this->mLabel = label; 
+}
+
+std::string Visualize::CircularNode::GetLabel() const
+{
+	return this->mLabel;
 }
 
 void Visualize::CircularNode::SetValueColor(Color color)
@@ -73,4 +88,9 @@ void Visualize::CircularNode::resetColor()
 	this->mColor = ColorSetting::GetInstance().get(ColorThemeID::NODE_BACKGROUND); 
 	this->mOutlineColor = ColorSetting::GetInstance().get(ColorThemeID::NODE_OUTLINE); 
 	this->mValueColor = ColorSetting::GetInstance().get(ColorThemeID::NODE_LABEL); 
+}
+
+int Visualize::CircularNode::getObjectId() const
+{
+	return this->objectID_CIRNODE;
 }
