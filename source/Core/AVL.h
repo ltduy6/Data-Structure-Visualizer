@@ -48,6 +48,7 @@ namespace Algorithms {
 		Node* mRoot{ nullptr };
 		Node* mVisual{ nullptr };
 		bool finishRotation{ true };
+		bool helper{ false };
 		std::map<std::pair<int, int>, int> mEdgeMap;
 	private:
 		void sceneReset();
@@ -60,6 +61,7 @@ namespace Algorithms {
 		Node* searchValue(Node* root, int value);
 		Node* copyTree(Node* root);
 
+		void printParent(Node* root);
 		void removeAVL(Node*& root); 
 		void printBST(Node* root);
 		void RotateUntil(Node*& root);

@@ -16,6 +16,7 @@ enum class ColorThemeID
 	NODE_LABEL,
 	EDGE,
 	HIGHLIGHT,
+	CODE_HIGHLIGHT_BACKGROUND,
 	ERROR
 };
 

@@ -38,7 +38,8 @@ void ColorSetting::loadLightMode()
 
 	this->mColor[ColorThemeID::EDGE] = BLACK;
 
-	this->mColor[ColorThemeID::HIGHLIGHT] = { 253, 153, 51, 255 }; 
+	this->mColor[ColorThemeID::HIGHLIGHT] = { 253, 153, 51, 255 };
+	this->mColor[ColorThemeID::CODE_HIGHLIGHT_BACKGROUND] = { 255, 255, 0, 255 };
 	
 	this->mColor[ColorThemeID::ERROR] = RED; 
 }

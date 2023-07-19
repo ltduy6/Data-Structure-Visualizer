@@ -99,6 +99,9 @@
     <ClCompile Include="source\Visualization\ControlScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Visualization\CodeHighLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Application.h">
@@ -192,6 +195,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Visualization\ControlScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Visualization\CodeHighLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

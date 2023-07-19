@@ -58,8 +58,9 @@ void Algorithms::AVL::Remove(int value)
 {
 	this->sceneInit(); 
 	this->RemoveUntil(this->mRoot, value);
-	printBST(this->mRoot);
-	/*this->BalanceTree(this->mRoot);*/
+	this->finishRotation = true; 
+	this->BalanceTree(this->mRoot);
+	this->mVisualization.resetColor();
 }
 
 void Algorithms::AVL::sceneReset()
@@ -112,8 +113,8 @@ Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, in
 	this->newScene({});
 	this->mVisualization.highlightCirNode(root->id);
 
-	this->newScene({}); 
-	this->mVisualization.unhighlightCirNode(root->id); 
+	this->newScene({});
+	this->mVisualization.unhighlightCirNode(root->id);
 
 	if (root->value < value)
 	{
@@ -139,7 +140,7 @@ Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, in
 		return root; 
 	}
 
-	int balanceFactor = Height(root->right) - Height(root->left);
+	int balanceFactor = Height(root->left) - Height(root->right);
 
 	if (this->finishRotation)
 	{
@@ -150,7 +151,7 @@ Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, in
 		this->mVisualization.setLabel(root->id, "");
 	}
 
-	if (balanceFactor > 1)
+	if (balanceFactor < -1)
 	{ 
 		this->finishRotation = false; 
 		if (value > root->right->value)
@@ -164,7 +165,7 @@ Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, in
 		}
 		this->mVisual = root; 
 	}
-	else if (balanceFactor < -1)
+	else if (balanceFactor > 1)
 	{
 		this->finishRotation = false; 
 		if (value < root->left->value)
@@ -187,11 +188,17 @@ Algorithms::AVL::Node* Algorithms::AVL::RemoveUntil(Node*& root, int value)
 	if (root == nullptr)
 		return root; 
 
-	this->newScene({});
-	this->mVisualization.highlightCirNode(root->id);
+	if (!this->helper)
+	{
+		this->newScene({});
+		this->mVisualization.highlightCirNode(root->id);
+	}
 
-	this->newScene({});
-	this->mVisualization.unhighlightCirNode(root->id);
+	if (root->value != value && !this->helper)
+	{
+		this->newScene({});
+		this->mVisualization.unhighlightCirNode(root->id);
+	}
 
 	if (root->value > value)
 	{
@@ -201,6 +208,8 @@ Algorithms::AVL::Node* Algorithms::AVL::RemoveUntil(Node*& root, int value)
 			this->mVisualization.highlightEdge(root->idEdgeLeft);
 		}
 		root->left = this->RemoveUntil(root->left, value);
+		if (root->left)
+			root->left->parent = root; 
 	}
 	else if (root->value < value)
 	{
@@ -210,11 +219,24 @@ Algorithms::AVL::Node* Algorithms::AVL::RemoveUntil(Node*& root, int value)
 			this->mVisualization.highlightEdge(root->idEdgeRight);
 		}
 		root->right = this->RemoveUntil(root->right, value);
+		if (root->right)
+			root->right->parent = root;
 	}
 	else {
+		// Deletion 
+		if (this->helper == false)
+		{
+			this->mVisualization.setLabel(root->id, "Remove"); 
+		}
 		if (!root->left && !root->right)
 		{
 			this->newScene({});
+			if (this->helper)
+			{
+				this->mVisualization.highlightCirNode(root->id);
+				this->mVisualization.updateCirNode(this->mVisual->id, this->mVisual->value);
+			}
+			
 			if (root->parent)
 			{
 				bool isLeft = (root->value < root->parent->value); 
@@ -224,40 +246,111 @@ Algorithms::AVL::Node* Algorithms::AVL::RemoveUntil(Node*& root, int value)
 					root->parent->idEdgeLeft = 0;
 				else
 					root->parent->idEdgeRight = 0;
-				std::cout << "Yes\n";
 			}
 			this->mVisualization.removeCirNode(root->id);
-			return root = nullptr; 
+			delete root;
+			root = nullptr;
 		}
-		if (root->left && root->right)
+		else if (root->left && root->right)
 		{
 			this->newScene({}); 
 			Node* to_delete = root->right; 
-			Node* parent = root; 
+			this->mVisualization.highlightEdge(root->idEdgeRight);
+			
+			this->helper = true;
 			
 			while (to_delete->left)
 			{
 				this->mVisualization.highlightCirNode(to_delete->id);
 				this->newScene({});
 				this->mVisualization.unhighlightCirNode(to_delete->id);
-				parent = to_delete; 
-				to_delete = to_delete->left; 
+				this->mVisualization.highlightEdge(to_delete->idEdgeLeft);
+				to_delete = to_delete->left;
 			}
 
-			root->value = to_delete->value; 
-			this->mVisualization.updateCirNode(root->id, root->value);
+			this->mVisualization.highlightCirNode(to_delete->id);
 
-			if (parent == root)
-				root->right = to_delete->right;
-			else
-				parent->left = to_delete->right;
-			
-			this->mVisualization.removeCirNode(to_delete->id); 
-			if(to_delete->idEdgeRight)
-				this->mVisualization.removeEdge(to_delete->idEdgeRight);
+
+			root->value = to_delete->value; 
+
+			this->mVisual = root; 
+
+			this->mVisualization.setLabel(root->id, "");
+
+			root->right = RemoveUntil(root->right, to_delete->value);
+
+			this->helper = false;
+
+			if (root->right)
+				root->right->parent = root;
 		}
-		return root;
+		else {
+			this->newScene({});
+			Node* temp = (root->left) ? (root->left) : root->right; 
+
+			this->mVisualization.removeEdge((root->left) ? (root->idEdgeLeft) : (root->idEdgeRight));
+			this->mVisualization.removeCirNode(root->id);
+
+			if(this->helper)
+				this->mVisualization.updateCirNode(this->mVisual->id, this->mVisual->value);
+
+			if (temp)
+				temp->parent = root->parent;
+
+			*root = *temp; 
+			delete temp; 
+		}
+		this->BalanceTree(this->mRoot);
+		this->newScene({});
+		this->mVisualization.resetColor();
 	}
+
+	if (root == nullptr)
+		return root; 
+
+	/*this->newScene({});
+		this->mVisualization.resetColor();*/
+
+	printParent(root);
+
+	// rotation 
+	int balanceFactor = Height(root->left) - Height(root->right);
+
+	if (this->finishRotation)
+	{
+		newScene({});
+		this->mVisualization.highlightCirNode(root->id);
+		this->mVisualization.setLabel(root->id, "bf = " + std::to_string(balanceFactor));
+		newScene({});
+		this->mVisualization.setLabel(root->id, "");
+	}
+
+	if (balanceFactor < -1)
+	{
+		this->finishRotation = false;
+		if (this->getBalance(root->right) <= 0)
+		{
+			root = rotateLeft(root);
+		}
+		else
+		{
+			root->right = rotateRight(root->right);
+			root = rotateLeft(root);
+		}
+	}
+	else if (balanceFactor > 1)
+	{
+		this->finishRotation = false;
+		if (this->getBalance(root->left) >= 0)
+			root = rotateRight(root);
+		else
+		{
+			root->left = rotateLeft(root->left);
+			root = rotateRight(root);
+		}
+	}
+	this->mVisualization.resetColorCirNode(root->id);
+	return root;
 }
 
 Algorithms::AVL::Node* Algorithms::AVL::SortedArrayToAVL(std::vector<int>& nums, int start, int end)
@@ -470,6 +563,17 @@ Algorithms::AVL::Node* Algorithms::AVL::copyTree(Node* root)
 	return newNode; 
 }
 
+void Algorithms::AVL::printParent(Node* root)
+{
+	if (root == nullptr)
+		return;
+
+	printParent(root->left); 
+	if (root->parent)
+		std::cout << root->value << ' ' << root->parent->value << '\n';
+	printParent(root->right);
+}
+
 void Algorithms::AVL::removeAVL(Node*& root)
 {
 	if (root == nullptr)
@@ -632,5 +736,5 @@ int Algorithms::AVL::countNode(Node* root)
 
 int Algorithms::AVL::getBalance(Node* root)
 {
-	return Height(root->right) - Height(root->left); 
+	return Height(root->left) - Height(root->right); 
 }
