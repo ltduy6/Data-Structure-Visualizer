@@ -193,6 +193,9 @@
     <ClInclude Include="source\Visualization\VisualScene.h" />
     <ClInclude Include="source\Visualization\Visualization.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Test\AVL.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

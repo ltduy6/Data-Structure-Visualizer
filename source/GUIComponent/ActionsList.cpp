@@ -62,7 +62,7 @@ void GUI::ActionsList::AddOperation(GUI::Button::Ptr action, GUI::Container::Ptr
 	lastOperationPos.y += Constant::BUTTON_HEIGHT;
 
 	action.get()->SetPos(lastOperationPos); 
-	action.get()->SetSize(Vector2{Constant::BUTTON_WIDTH + 10, Constant::BUTTON_HEIGHT});
+	action.get()->SetSize(Vector2{Constant::BUTTON_WIDTH + 80, Constant::BUTTON_HEIGHT});
 	action.get()->setTextSize(36);
 
 	optionContainer.get()->SetPos(Vector2{ lastOperationPos.x + action.get()->GetSize().x, lastOperationPos.y});
@@ -106,6 +106,11 @@ void GUI::ActionsList::drawError()
 void GUI::ActionsList::setError(std::string error)
 {
 	this->mError = error;
+}
+
+void GUI::ActionsList::setButtonSize(Vector2 size)
+{
+	this->mButtonSize = size;
 }
 
 void GUI::ActionsList::updateMouseCursor()

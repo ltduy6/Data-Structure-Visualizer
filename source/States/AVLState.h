@@ -11,6 +11,8 @@ private:
 	virtual void AddInitializeOperation();
 	virtual void AddInsertOperation();
 	virtual void AddDeleteOperation();
+	virtual void AddSearchOperation();
+	virtual void AddUpdateOperation();
 private:
 	Algorithms::AVL mAlgo;
 };

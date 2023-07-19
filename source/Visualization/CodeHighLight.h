@@ -2,6 +2,8 @@
 
 #include "raylib.h"
 #include "../Helper/ColorSetting.h"
+#include "../Helper/GlobalVar.h"
+#include "../ResourceHolder/FontHolder.h"
 
 #include <string> 
 #include <vector>
@@ -25,10 +27,12 @@ namespace Visualize {
 
 		int mTracker{ 0 };
 
-		Rectangle mRect = { 0, 0, 0, 0 };
+		Rectangle mRect = { Constant::WINDOW_WIDTH - 900 - 5, Constant::WINDOW_HEIGHT - 3 * Constant::BUTTON_HEIGHT, 900, Constant::BUTTON_HEIGHT};
+		 
 		Color mColor{ ColorSetting::GetInstance().get(ColorThemeID::CODE_HIGHLIGHT_BACKGROUND) };
-		Color mText{ ColorSetting::GetInstance().get(ColorThemeID::NODE_LABEL) };
-		Color mTextHighLight{ ColorSetting::GetInstance().get(ColorThemeID::TEXT) };
+		Color mTextColor{ ColorSetting::GetInstance().get(ColorThemeID::NODE_LABEL) };
+
+		Font font{ FontHolder::getInstance().get(FontID::Roboto) };
 	};
 }
 

@@ -19,6 +19,8 @@ namespace Algorithms {
 		void Init(std::vector<int>& list);
 		void Insert(int value); 
 		void Remove(int value);
+		void Search(int value);
+		void Update(int oldValue, int newValue);
 	private:
 		class Node {
 		public:
@@ -53,18 +55,18 @@ namespace Algorithms {
 	private:
 		void sceneReset();
 	private:
-		Node* InitUntil(Node*& root, Node*& parent, int value);
+		Node* InitUntil(Node*& root, Node*& parent, int value, int indexCode);
 		Node* RemoveUntil(Node*& root, int value);
 		Node* SortedArrayToAVL(std::vector<int>& nums, int start, int end);
 		Node* rotateLeft(Node*& root); 
 		Node* rotateRight(Node*& root); 
-		Node* searchValue(Node* root, int value);
 		Node* copyTree(Node* root);
 
+		void searchValue(Node* root, int value);
 		void printParent(Node* root);
 		void removeAVL(Node*& root); 
 		void printBST(Node* root);
-		void RotateUntil(Node*& root);
+		void RotateUntil(Node*& root, int indexCode);
 		void traverse(Node*& root, Vector2 pos, int level, int& count); 
 		void modifyDistance(Node*& root);
 		void BalanceTree(Node*& root);

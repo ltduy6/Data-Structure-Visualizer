@@ -70,6 +70,11 @@ void Visualize::ControlScene::reset()
 	this->resetScene();
 }
 
+int Visualize::ControlScene::getCurrentIndex() const
+{
+	return this->currentIndScene;
+}
+
 void Visualize::ControlScene::updateDisplayingScene(float dt)
 {
 	float speed = dt * FACTORS[this->currentIndSpeed]; 

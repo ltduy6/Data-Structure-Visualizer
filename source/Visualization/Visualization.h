@@ -3,6 +3,7 @@
 #include "VisualScene.h"
 #include "SceneNode.h"
 #include "ControlScene.h"
+#include "CodeHighLight.h"
 
 #include "raylib.h"
 
@@ -43,11 +44,14 @@ namespace Visualize {
 		void removeEdge(int id);
 
 		void resetColor();
+		void addCode(std::string code); 
+		void highlightCode(std::vector<int> lines);
 
 	private:
 		std::vector<VisualScene> mContainer; 
 		VisualScene mDisplayScene; 
 		ControlScene mControl; 
+		CodeHighLight mCodeHighlight;
 	};
 }
 

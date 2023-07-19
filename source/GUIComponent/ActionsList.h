@@ -21,6 +21,7 @@ namespace GUI {
 		Vector2 GetSize();
 		void drawError(); 
 		void setError(std::string error);
+		void setButtonSize(Vector2 size);
 	private:
 		virtual void updateMouseCursor();
 	private:
@@ -31,6 +32,7 @@ namespace GUI {
 		std::size_t indActive{ 0 };
 		bool isVisible; 
 		std::string mError{ "" }; 
+		Vector2 mButtonSize = { 0, 0 };
 	};
 }
 

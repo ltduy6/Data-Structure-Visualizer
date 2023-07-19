@@ -21,6 +21,8 @@ namespace Visualize {
 		void update(float dt); 
 		void draw(); 
 		void reset(); 
+
+		int getCurrentIndex() const; 
 	private:
 		enum class Action {
 			None, 

@@ -21,4 +21,5 @@ void Algorithms::Algorithm::sceneInit()
 void Algorithms::Algorithm::newScene(std::vector<int> lines)
 {
 	mVisualization.createNewScene();
+	mVisualization.highlightCode(lines);
 }

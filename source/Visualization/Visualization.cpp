@@ -17,11 +17,13 @@ void Visualize::Visualization::draw()
 	/*this->mDisplayScene = this->mContainer.front();*/
 	this->mDisplayScene.draw(); 
 	this->mControl.draw();
+	this->mCodeHighlight.draw();
 }
 
 void Visualize::Visualization::update(float dt)
 {
 	this->mControl.update(dt);
+	this->mCodeHighlight.setTracker(this->mControl.getCurrentIndex());
 }
 
 void Visualize::Visualization::createNewScene()
@@ -40,6 +42,7 @@ void Visualize::Visualization::reset(VisualScene initScene)
 	this->mContainer.clear(); 
 	this->mContainer.push_back(initScene);
 	this->mControl.reset();
+	this->mCodeHighlight.reset();
 }
 
 int Visualize::Visualization::createCirNode(int value)
@@ -135,4 +138,14 @@ void Visualize::Visualization::removeEdge(int id)
 void Visualize::Visualization::resetColor()
 {
 	this->mContainer.back().resetColor();
+}
+
+void Visualize::Visualization::addCode(std::string code)
+{
+	this->mCodeHighlight.addCode(code); 
+}
+
+void Visualize::Visualization::highlightCode(std::vector<int> lines)
+{
+	this->mCodeHighlight.highlightCode(lines);
 }
