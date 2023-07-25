@@ -1,6 +1,7 @@
 #pragma once
 #include "Algorithm.h"
 #include "../Helper/GlobalVar.h"
+#include "Btree.h"
 
 namespace Algorithms {
 	class AVL : public Algorithm
@@ -41,8 +42,6 @@ namespace Algorithms {
 			Node*left; 
 			Node* right; 
 			Node* parent;
-
-			std::map<int, std::string> references; 
 		};
 	private:
 		int mSize{ 0 }; 
@@ -51,7 +50,6 @@ namespace Algorithms {
 		Node* mVisual{ nullptr };
 		bool finishRotation{ true };
 		bool helper{ false };
-		std::map<std::pair<int, int>, int> mEdgeMap;
 	private:
 		void sceneReset();
 	private:

@@ -9,6 +9,7 @@
 #include "../Visualization/VisualScene.h"
 #include "../Visualization/Visualization.h"
 #include "../Core/AVL.h"
+#include "../Core/Btree.h"
 
 class BSTState : public State
 {

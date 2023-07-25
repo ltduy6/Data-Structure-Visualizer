@@ -29,6 +29,7 @@ namespace Visualize {
 		float mScale{ 1 };
 		static int objectID_CIRNODE;
 		static int objectID_EDGE; 
+		static int objectID_SQUARE;
 	};
 }
 

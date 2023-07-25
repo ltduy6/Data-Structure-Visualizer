@@ -62,3 +62,8 @@ Vector2 operator/(const Vector2& a, float b)
 {
     return Vector2{ a.x / b, a.y / b };
 }
+
+bool operator!=(const Vector2& a, const Vector2& b)
+{
+    return (a.x != b.x || a.y != b.y);
+}

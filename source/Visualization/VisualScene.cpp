@@ -15,6 +15,7 @@ Visualize::VisualScene Visualize::VisualScene::transitionScene(const VisualScene
 
 	transitionCirNode(fromScene, toScene, time, tottalTime, ret); 
 	transitionEdge(fromScene, toScene, time, tottalTime, ret); 
+	transitionSquareNode(fromScene, toScene, time, tottalTime, ret);
 
 	return ret; 
 }
@@ -26,6 +27,8 @@ float Visualize::VisualScene::easeInOut(float from, float to, float time, float 
 
 void Visualize::VisualScene::draw()
 {
+	for (auto obj : this->mSquareMap)
+		obj.second.draw();
 	for (auto obj : this->mCirNodeMap)
 		obj.second.draw();
 	for (auto obj : this->mEdgeMap)
@@ -121,6 +124,21 @@ int Visualize::VisualScene::createEdge(Vector2 source, Vector2 des)
 	return obj;
 }
 
+int Visualize::VisualScene::createEdgeOffSet(Vector2 source, Vector2 des, int offset)
+{
+	Edge newEdge;
+	newEdge.SetSource(source);
+	newEdge.SetDestination(des);
+	newEdge.SetSideOffset(offset);
+
+	int obj = newEdge.getObjectId();
+	auto insert = this->mEdgeMap.emplace(obj, newEdge);
+
+	assert(insert.second == true);
+
+	return obj;
+}
+
 void Visualize::VisualScene::moveEdgeSource(int id, Vector2 source)
 {
 	this->getEdge(id).SetSource(source);
@@ -155,12 +173,100 @@ void Visualize::VisualScene::removeEdge(int id)
 	this->mEdgeMap.erase(id);
 }
 
+bool Visualize::VisualScene::isEdgeExist(int id)
+{
+	return (this->mEdgeMap.find(id) != this->mEdgeMap.end());
+}
+
+Vector2 Visualize::VisualScene::getEdgeSource(int id)
+{
+	return this->getEdge(id).GetSource(); 
+}
+
+Vector2 Visualize::VisualScene::getEdgeDes(int id)
+{
+	return this->getEdge(id).GetDestination();
+}
+
+int Visualize::VisualScene::createBlock(std::vector<int> list)
+{
+	SquareNode newBlock; 
+	for (auto value : list)
+		newBlock.SetValue(value); 
+
+	int objID = newBlock.getObjectId(); 
+
+	auto insert = this->mSquareMap.emplace(objID, newBlock); 
+	assert(insert.second == true); 
+
+	return objID; 
+}
+
+void Visualize::VisualScene::moveBlock(int id, Vector2 position)
+{
+	this->getSquareNode(id).SetPosition(position);
+}
+
+void Visualize::VisualScene::removeBlock(int id)
+{
+	this->mSquareMap.erase(id);
+}
+
+void Visualize::VisualScene::setLabelBlock(int id, std::string label)
+{
+	this->getSquareNode(id).SetLabel(label);
+}
+
+void Visualize::VisualScene::eraseValue(int id, int value)
+{
+	this->getSquareNode(id).EraseValue(value);
+}
+
+void Visualize::VisualScene::addValue(int id, int value)
+{
+	this->getSquareNode(id).SetValue(value);
+}
+
+void Visualize::VisualScene::updateValue(int id, int oldValue, int newValue)
+{
+	SquareNode& node = this->getSquareNode(id);
+	node.EraseValue(oldValue); 
+	node.SetValue(newValue);
+}
+
+void Visualize::VisualScene::highlightBlock(int id)
+{
+	SquareNode& node = this->getSquareNode(id);
+	node.SetOutlineColor(ColorSetting::GetInstance().get(ColorThemeID::HIGHLIGHT));
+	node.SetValueColor(node.GetColor());
+	node.SetColor(node.GetOutlineColor());
+}
+
+void Visualize::VisualScene::unhighlightBlock(int id)
+{
+	SquareNode& node = this->getSquareNode(id);
+	node.SetColor(node.GetValueColor());
+	node.SetValueColor(node.GetOutlineColor());
+}
+
+Vector2 Visualize::VisualScene::getBlockPos(int id, int index) const
+{
+	return this->getSquareNode(id).GetPosIndex(index);
+}
+
+Vector2 Visualize::VisualScene::getBlockMid(int id) const
+{
+	return this->getSquareNode(id).GetPosMid();
+}
+
 void Visualize::VisualScene::resetColor()
 {
 	for (auto& obj : this->mCirNodeMap)
 		obj.second.resetColor(); 
 	for (auto& obj : this->mEdgeMap)
 		obj.second.resetColor(); 
+	for (auto& obj : this->mSquareMap)
+		obj.second.resetColor();
 }
 
 Visualize::CircularNode& Visualize::VisualScene::getCirNode(int id)
@@ -199,6 +305,26 @@ const Visualize::Edge& Visualize::VisualScene::getEdge(int id) const
 	auto found = this->mEdgeMap.find(id);
 
 	assert(found != this->mEdgeMap.end());
+
+	return found->second;
+}
+
+Visualize::SquareNode& Visualize::VisualScene::getSquareNode(int id)
+{
+	// TODO: insert return statement here
+	auto found = this->mSquareMap.find(id); 
+
+	assert(found != this->mSquareMap.end()); 
+
+	return found->second;
+}
+
+const Visualize::SquareNode& Visualize::VisualScene::getSquareNode(int id) const
+{
+	// TODO: insert return statement here
+	auto found = this->mSquareMap.find(id);
+
+	assert(found != this->mSquareMap.end());
 
 	return found->second;
 }
@@ -269,8 +395,8 @@ void Visualize::VisualScene::transitionCirNode(const VisualScene& fromScene, con
 
 		newObj.SetScale(easeInOut(from.GetScale(), to.GetScale(), time, totalTime)); 
 
-		newObj.SetValue((int)easeInOut(from.GetValue(), to.GetValue(), time, totalTime)); 
-
+		/*newObj.SetValue((int)easeInOut(from.GetValue(), to.GetValue(), time, totalTime)); */
+		/*newObj.SetValue(to.GetValue());*/
 
 		newObj.SetColor(easeInOutColor(from.GetColor(), to.GetColor(), time, totalTime)); 
 		newObj.SetOutlineColor(easeInOutColor(from.GetOutlineColor(), to.GetOutlineColor(), time, totalTime)); 
@@ -344,4 +470,81 @@ void Visualize::VisualScene::transitionEdge(const VisualScene& fromScene, const 
 		assert(insert.second == true); 
 	}
 
+}
+
+void Visualize::VisualScene::transitionSquareNode(const VisualScene& fromScene, const VisualScene& toScene, float time, float totalTime, VisualScene& sceneRes)
+{
+	std::set<int> mId; 
+
+	for (const auto& p : fromScene.mSquareMap)
+		mId.insert(p.first); 
+	for (const auto& p : toScene.mSquareMap)
+		mId.insert(p.first); 
+
+	for (int id : mId)
+	{
+		SquareNode from, to; 
+
+		auto fromFound = fromScene.mSquareMap.find(id); 
+		auto toFound = toScene.mSquareMap.find(id); 
+
+		assert(fromFound != fromScene.mSquareMap.end() || toFound != toScene.mSquareMap.end());
+		
+		if (fromFound != fromScene.mSquareMap.end())
+			from = fromFound->second; 
+		else {
+			from.SetPosition(to.GetPosition()); 
+			from.SetScale(0); 
+			if (to.hasValue())
+			{
+				for (auto value : to.GetValue())
+					from.SetValue(value);
+			}
+			from.SetColor(to.GetColor()); 
+			from.SetOutlineColor(to.GetOutlineColor()); 
+			from.SetValueColor(to.GetValueColor());
+		}
+
+		if (toFound != toScene.mSquareMap.end())
+			to = toFound->second; 
+		else {
+			to.SetPosition(from.GetPosition());
+			to.SetScale(0);
+			if (from.hasValue())
+			{
+				for (auto value : from.GetValue())
+					to.SetValue(value);
+			}
+			to.SetColor(from.GetColor());
+			to.SetOutlineColor(from.GetOutlineColor());
+			to.SetValueColor(from.GetValueColor());
+		}
+
+		SquareNode newObj = to; 
+		int objID = newObj.getObjectId(); 
+
+		Vector2 newPos; 
+		newPos.x = easeInOut(from.GetPosition().x, to.GetPosition().x, time, totalTime); 
+		newPos.y = easeInOut(from.GetPosition().y, to.GetPosition().y, time, totalTime); 
+		newObj.SetPosition(newPos); 
+
+		newObj.SetScale(
+			easeInOut(from.GetScale(), to.GetScale(), time, totalTime)
+		); 
+		
+		newObj.SetColor(
+			easeInOutColor(from.GetColor(), to.GetColor(), time, totalTime)
+		);
+
+		newObj.SetOutlineColor(
+			easeInOutColor(from.GetOutlineColor(), to.GetOutlineColor(), time, totalTime)
+		);
+
+		newObj.SetValueColor(
+			easeInOutColor(from.GetValueColor(), to.GetValueColor(), time, totalTime)
+		);
+
+		auto insert = sceneRes.mSquareMap.emplace(objID, newObj);
+		assert(insert.second == true);
+	}
 }

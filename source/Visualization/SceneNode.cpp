@@ -2,6 +2,7 @@
 
 int Visualize::SceneNode::objectID_EDGE = 0;
 int Visualize::SceneNode::objectID_CIRNODE = 0;
+int Visualize::SceneNode::objectID_SQUARE = 0;
 
 Visualize::SceneNode::SceneNode()
 {

@@ -129,6 +129,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Core\Btree.cpp" />
+    <ClCompile Include="source\States\BTreeState.cpp" />
     <ClCompile Include="source\Visualization\CodeHighLight.cpp" />
     <ClCompile Include="source\Visualization\ControlScene.cpp" />
     <ClCompile Include="source\States\AVLState.cpp" />
@@ -158,8 +160,11 @@
     <ClCompile Include="source\States\State.cpp" />
     <ClCompile Include="source\Visualization\VisualScene.cpp" />
     <ClCompile Include="source\Visualization\Visualization.cpp" />
+    <ClCompile Include="source\Visualization\SquareNode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Core\Btree.h" />
+    <ClInclude Include="source\States\BTreeState.h" />
     <ClInclude Include="source\Visualization\CodeHighLight.h" />
     <ClInclude Include="source\Visualization\ControlScene.h" />
     <ClInclude Include="source\States\AVLState.h" />
@@ -192,9 +197,13 @@
     <ClInclude Include="source\States\StateIdentifiers.h" />
     <ClInclude Include="source\Visualization\VisualScene.h" />
     <ClInclude Include="source\Visualization\Visualization.h" />
+    <ClInclude Include="source\Visualization\SquareNode.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Test\AVL.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\Core\Btree.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

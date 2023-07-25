@@ -102,6 +102,15 @@
     <ClCompile Include="source\Visualization\CodeHighLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\States\BTreeState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Visualization\SquareNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Core\Btree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Application.h">
@@ -200,8 +209,22 @@
     <ClInclude Include="source\Visualization\CodeHighLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\States\BTreeState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Visualization\SquareNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Core\Btree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Test\AVL.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\Core\Btree.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

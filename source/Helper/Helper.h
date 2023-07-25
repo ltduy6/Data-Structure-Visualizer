@@ -18,6 +18,7 @@ Vector2 operator + (const Vector2& a, const Vector2& b);
 Vector2 operator - (const Vector2& a, const Vector2& b);
 Vector2 operator * (const Vector2& a, float b);
 Vector2 operator / (const Vector2& a, float b);
+bool operator != (const Vector2& a, const Vector2& b);
 
 template <typename T>
 std::vector<T> readListFromFile(std::string filePath)

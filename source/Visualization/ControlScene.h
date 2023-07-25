@@ -12,7 +12,7 @@ namespace Visualize {
 	class ControlScene
 	{
 	public:
-		static constexpr float ANIMATION_TIME = 0.6f;
+		static constexpr float ANIMATION_TIME = 0.8f;
 		static constexpr float FACTORS[] = { 0.25f, 0.5f, 1.0f, 2.0f }; 
 	public:
 		ControlScene(std::vector<VisualScene>& container, VisualScene& displayScene); 

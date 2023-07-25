@@ -6,6 +6,7 @@
 #include "Helper/ColorSetting.h"
 #include "States/BSTState.h"
 #include "States/AVLState.h"
+#include "States/BTreeState.h"
 #include "StateStack.h"
 
 class Application

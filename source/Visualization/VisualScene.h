@@ -2,6 +2,7 @@
 #include "SceneNode.h"
 #include "CircularNode.h"
 #include "Edge.h"
+#include "SquareNode.h"
 #include "../Helper/ColorSetting.h"
 #include "../Helper/Helper.h"
 
@@ -37,12 +38,28 @@ namespace Visualize
 		Vector2 getCirNodePosition(int id) const;
 
 		int createEdge(Vector2 source, Vector2 des); 
+		int createEdgeOffSet(Vector2 source, Vector2 des, int offset = 0); 
 		void moveEdgeSource(int id, Vector2 source);
 		void moveEdgeDes(int id, Vector2 des); 
 		void moveEdgeDelta(int id, Vector2 source, Vector2 des);
 		void highlightEdge(int id); 
 		void unhighlightEdge(int id);
 		void removeEdge(int id);
+		bool isEdgeExist(int id);
+		Vector2 getEdgeSource(int id); 
+		Vector2 getEdgeDes(int id);
+
+		int createBlock(std::vector<int> list);
+		void moveBlock(int id, Vector2 position);
+		void removeBlock(int id);
+		void setLabelBlock(int id, std::string label);
+		void eraseValue(int id, int value);
+		void addValue(int id, int value);
+		void updateValue(int id, int oldValue, int newValue);
+		void highlightBlock(int id);
+		void unhighlightBlock(int id);
+		Vector2 getBlockPos(int id, int index) const;
+		Vector2 getBlockMid(int id) const;
 
 		void resetColor(); 
 
@@ -53,6 +70,9 @@ namespace Visualize
 		Visualize::Edge& getEdge(int id); 
 		const Visualize::Edge& getEdge(int id) const;
 
+		Visualize::SquareNode& getSquareNode(int id); 
+		const Visualize::SquareNode& getSquareNode(int id) const;
+
 		static Color easeInOutColor(Color fromColor, Color toColor,
 			float time, float totalTime);
 
@@ -61,9 +81,13 @@ namespace Visualize
 
 		static void transitionEdge(const VisualScene& fromScene, const VisualScene& toScene,
 			float time, float totalTime, VisualScene& sceneRes);
+
+		static void transitionSquareNode(const VisualScene& fromScene, const VisualScene& toScene, 
+			float time, float totalTime, VisualScene& sceneRes);
 	private: 
 		std::map<int, CircularNode> mCirNodeMap;
 		std::map<int, Edge> mEdgeMap;
+		std::map<int, SquareNode> mSquareMap;
 	};
 }
 

@@ -105,6 +105,11 @@ int Visualize::Visualization::createEdge(Vector2 source, Vector2 des)
 	return this->mContainer.back().createEdge(source, des);
 }
 
+int Visualize::Visualization::createEdgeOffSet(Vector2 source, Vector2 des, int offset)
+{
+	return this->mContainer.back().createEdgeOffSet(source, des, offset);
+}
+
 void Visualize::Visualization::moveEdgeSource(int id, Vector2 source)
 {
 	this->mContainer.back().moveEdgeSource(id, source); 
@@ -133,6 +138,76 @@ void Visualize::Visualization::unhighlightEdge(int id)
 void Visualize::Visualization::removeEdge(int id)
 {
 	this->mContainer.back().removeEdge(id);
+}
+
+bool Visualize::Visualization::isEdgeExist(int id)
+{
+	return this->mContainer.back().isEdgeExist(id);
+}
+
+Vector2 Visualize::Visualization::getEdgeSource(int id)
+{
+	return this->mContainer.back().getEdgeSource(id);
+}
+
+Vector2 Visualize::Visualization::getEdgeDes(int id)
+{
+	return this->mContainer.back().getEdgeDes(id);
+}
+
+int Visualize::Visualization::createBlock(std::vector<int> list)
+{
+	return this->mContainer.back().createBlock(list);
+}
+
+void Visualize::Visualization::moveBlock(int id, Vector2 position)
+{
+	this->mContainer.back().moveBlock(id, position); 
+}
+
+void Visualize::Visualization::removeBlock(int id)
+{
+	this->mContainer.back().removeBlock(id);
+}
+
+void Visualize::Visualization::setLabelBlock(int id, std::string label)
+{
+	this->mContainer.back().setLabelBlock(id, label);
+}
+
+void Visualize::Visualization::highlightBlock(int id)
+{
+	this->mContainer.back().highlightBlock(id);
+}
+
+void Visualize::Visualization::unhighlightBlock(int id)
+{
+	this->mContainer.back().unhighlightBlock(id);
+}
+
+void Visualize::Visualization::eraseValue(int id, int value)
+{
+	this->mContainer.back().eraseValue(id, value);
+}
+
+void Visualize::Visualization::addValue(int id, int value)
+{
+	this->mContainer.back().addValue(id, value);
+}
+
+void Visualize::Visualization::updateValue(int id, int oldValue, int newValue)
+{
+	this->mContainer.back().updateValue(id, oldValue, newValue);
+}
+
+Vector2 Visualize::Visualization::getBlockPos(int id, int index) const
+{
+	return this->mContainer.back().getBlockPos(id, index);
+}
+
+Vector2 Visualize::Visualization::getBlockMid(int id) const
+{
+	return this->mContainer.back().getBlockMid(id);
 }
 
 void Visualize::Visualization::resetColor()

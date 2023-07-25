@@ -12,7 +12,7 @@ Visualize::Edge::~Edge()
 
 void Visualize::Edge::draw()
 {
-    float headOffset = (float)sqrt(ELEMENT_SIZE * ELEMENT_SIZE / 4.0);
+    float headOffset = (float)sqrt(ELEMENT_SIZE * ELEMENT_SIZE / 4.0) * this->mSideOffset;
 
     Vector2 scaleDes = this->mSource + (this->mDes - this->mSource) * this->GetScale();
     float x = scaleDes.x - this->mSource.x;
@@ -24,9 +24,12 @@ void Visualize::Edge::draw()
 
     
     /*DrawLineEx(this->mSource + unitVector, this->mDes - unitVector, THICKNESS, this->mColor);*/
-    Vector2 checkInterect = headDestination - this->mSource;
-    if (checkInterect.x * checkInterect.x + checkInterect.y + checkInterect.y < (ELEMENT_SIZE / 2) * (ELEMENT_SIZE/2))
-        headDestination = this->mSource + unitVector * headOffset;
+    if (headOffset)
+    {
+        Vector2 checkInterect = headDestination - this->mSource;
+        if (checkInterect.x * checkInterect.x + checkInterect.y + checkInterect.y < (ELEMENT_SIZE / 2) * (ELEMENT_SIZE / 2))
+            headDestination = this->mSource + unitVector * headOffset;
+    }
     DrawLineEx(this->mSource + unitVector * headOffset, headDestination, mThickness, mColor);
 }
 

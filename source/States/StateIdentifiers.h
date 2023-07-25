@@ -3,5 +3,6 @@ enum class StateIDs {
 	None,
 	Home,
 	BST,
-	AVL
+	AVL,
+	Btree
 };
