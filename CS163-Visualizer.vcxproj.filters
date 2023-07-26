@@ -221,6 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Test\AVL.txt" />
+    <Text Include="Test\Btree.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source\Core\Btree.inl">

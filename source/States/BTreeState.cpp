@@ -22,10 +22,23 @@ void BTreeState::AddInitializeOperation()
 	GUI::Button::Ptr buttonInit(new GUI::Button());
 	buttonInit->setText("Initialize");
 
-    AddIntFieldInput(container, "User define", { {400, "N = ", 1, 50} }, [this](std::map<std::string, std::string> input) {
-        if (Helper::checkValidNumber(input["N = "], 1, 50) == false)
+    AddNoFieldInput(container, "Empty", [this]() {
+        actionList.setError("");
+        mAlgo.InitRandomFixSize(0);
+        actionList.hideAllOptions();
+        });
+
+    AddNoFieldInput(container, "File", [this]() {
+        actionList.setError("");
+        std::vector<int> list = readListFromFile<int>("Test/Btree.txt");
+        mAlgo.Init(list);
+        actionList.hideAllOptions();
+        });
+
+    AddIntFieldInput(container, "User define", { {400, "N = ", 1, 20} }, [this](std::map<std::string, std::string> input) {
+        if (Helper::checkValidNumber(input["N = "], 1, 20) == false)
         {
-            actionList.setError("Please input an integer number from 1 to 50");
+            actionList.setError("Please input an integer number from 1 to 20");
             return;
         }
         int value = std::stoi(input["N = "]);

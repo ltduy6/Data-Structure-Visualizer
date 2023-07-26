@@ -22,6 +22,8 @@ Algorithms::Btree::~Btree()
 
 void Algorithms::Btree::InitRandomFixSize(int size)
 {
+	if (size == 0)
+		return;
 	this->sceneReset();
 
 	std::vector<int> list;
@@ -31,12 +33,10 @@ void Algorithms::Btree::InitRandomFixSize(int size)
 		int rand = Helper::rand(1, 99);
 		if (Helper::checkExist(list, rand) == false)
 		{
-			std::cout << rand << ' ';
 			list.push_back(rand);
 			i++;
 		}
 	}
-	std::cout << '\n';
 	this->Init(list);
 }
 
@@ -50,13 +50,14 @@ void Algorithms::Btree::Insert(int value)
 {
 	this->sceneInit();
 	this->mVisualization.addCode("if this is leaf"); 
-	this->mVisualization.addCode("insert v");			
+	this->mVisualization.addCode("	insert v");			
 	this->mVisualization.addCode("if this is full"); 
-	this->mVisualization.addCode("split this");
-	this->insertAnimation(value);
+	this->mVisualization.addCode("	split this");
+	std::vector<int> line = { 0, 1, 2, 3 };
+
+	this->insertAnimation(value, line);
 	this->newScene({}); 
 	this->mVisualization.resetColor();
-	this->setParent(this->mRoot, this->mRoot);
 }
 
 void Algorithms::Btree::Remove(int value)
@@ -64,8 +65,17 @@ void Algorithms::Btree::Remove(int value)
 	if (this->mRoot == nullptr || this->checkExist(value) == false)
 		return;
 	this->sceneInit();
+	this->mVisualization.addCode("Find v");
+	this->mVisualization.addCode("If v is in this and this is a leaf"); 
+	this->mVisualization.addCode("	remove v"); 
+	this->mVisualization.addCode("If v is in this and this is an internal node"); 
+	this->mVisualization.addCode("	replace v by its predecessor");
+	this->mVisualization.addCode("	replace v by its successor");
+	this->mVisualization.addCode("	merge children");
+	this->mVisualization.addCode("Fix size of this");
 
-	this->removeAnimation(value);
+	std::vector<int> line = { 0, 1, 2, 3, 4, 5, 6, 7};
+	this->removeAnimation(value, line);
 	this->balanceTree(this->mRoot);
 	this->newScene({});
 	this->mVisualization.resetColor();
@@ -76,6 +86,11 @@ void Algorithms::Btree::Search(int value)
 	if (this->mRoot == nullptr)
 		return;
 	this->sceneInit();
+	this->mVisualization.addCode("If v is in this"); 
+	this->mVisualization.addCode("	return v");
+	this->mVisualization.addCode("else if this is leaf");
+	this->mVisualization.addCode("	return null");
+	this->mVisualization.addCode("else search child");
 	this->search(value); 
 	this->newScene({});
 	this->mVisualization.resetColor();
@@ -84,11 +99,30 @@ void Algorithms::Btree::Search(int value)
 void Algorithms::Btree::Update(int oldValue, int newValue)
 {
 	this->sceneInit();
-	this->removeAnimation(oldValue); 
+	// Remove i
+	this->mVisualization.addCode("Find i");
+	this->mVisualization.addCode("If v is in this and this is a leaf");
+	this->mVisualization.addCode("	remove i");
+	this->mVisualization.addCode("If i is in this and this is an internal node");
+	this->mVisualization.addCode("	replace i by its predecessor");
+	this->mVisualization.addCode("	replace i by its successor");
+	this->mVisualization.addCode("	merge children");
+	this->mVisualization.addCode("Fix size of this");
+
+	// Insert newv
+	this->mVisualization.addCode("if this is leaf");
+	this->mVisualization.addCode("	insert newv");
+	this->mVisualization.addCode("if this is full");
+	this->mVisualization.addCode("	split this");
+
+	std::vector<int> lineRemove = {0, 1, 2, 3, 4, 5, 6, 7};
+	std::vector<int> lineInsert = { 8, 9, 10, 11 };
+
+	this->removeAnimation(oldValue, lineRemove); 
 	this->balanceTree(this->mRoot);
 	this->newScene({});
 	this->mVisualization.resetColor();
-	this->insertAnimation(newValue);
+	this->insertAnimation(newValue, lineInsert);
 	this->newScene({});
 	this->mVisualization.resetColor();
 }
@@ -152,7 +186,7 @@ void Algorithms::Btree::insertNonAni(int k)
 	this->balanceTree(this->mRoot);
 }
 
-void Algorithms::Btree::insertAnimation(int k)
+void Algorithms::Btree::insertAnimation(int k, std::vector<int> line)
 {
 	if (this->mRoot == nullptr)
 	{
@@ -163,17 +197,17 @@ void Algorithms::Btree::insertAnimation(int k)
 		this->mRoot->id = this->mVisualization.createBlock({ k });
 		this->mVisualization.highlightBlock(this->mRoot->id);
 		this->balanceTree(this->mRoot);
-		this->newScene({1}); 
+		this->newScene({line[1]});
 		this->mVisualization.unhighlightBlock(this->mRoot->id);
 		return;
 	}
 
 	if (mRoot->size == 2 * minDegree - 1)
 	{
-		this->newScene({2});
+		this->newScene({line[2]});
 		this->mVisualization.highlightBlock(this->mRoot->id);
 
-		this->newScene({2});
+		this->newScene({line[2]});
 		this->mVisualization.resetColor();
 
 		BtreeNode* newRoot = new BtreeNode();
@@ -182,21 +216,21 @@ void Algorithms::Btree::insertAnimation(int k)
 		this->mVisualization.moveBlock(newRoot->id, this->mVisualization.getBlockPos(this->mRoot->id, 0) - Vector2{ 0, 2 * HEIGHT });
 		newRoot->leaf = false;
 		newRoot->child[0] = mRoot;
-		splitChildAnimation(newRoot, 0);
+		splitChildAnimation(newRoot, 0, { line[3] });
 		newRoot->idEdge[0] = this->mVisualization.createEdgeOffSet(
 			this->mVisualization.getBlockPos(newRoot->id, 0), this->mVisualization.getBlockMid(mRoot->id)
 		);
 		mRoot = newRoot;
-		this->newScene({2});
+		this->newScene({line[2]});
 		this->balanceTree(this->mRoot);
 	}
 	BtreeNode* curr = mRoot;
 	while (!curr->leaf)
 	{
-		this->newScene({});
+		this->newScene({line[0]});
 		this->mVisualization.highlightBlock(curr->id);
 
-		this->newScene({});
+		this->newScene({line[0]});
 		this->mVisualization.unhighlightBlock(curr->id);
 
 		int index = curr->size - 1;
@@ -206,15 +240,15 @@ void Algorithms::Btree::insertAnimation(int k)
 
 		if (curr->idEdge[index])
 		{
-			this->newScene({});
+			this->newScene({line[0]});
 			this->mVisualization.highlightEdge(curr->idEdge[index]);
 		}
 
 		if (curr->child[index]->size == 2 * minDegree - 1)
 		{
-			splitChildAnimation(curr, index);
+			splitChildAnimation(curr, index, { line[2], line[3] });
 			this->createEdge(this->mRoot);
-			this->newScene({});
+			this->newScene({line[3]});
 			this->balanceTree(this->mRoot);
 			if (curr->key[index] < k)
 				index++;
@@ -222,27 +256,26 @@ void Algorithms::Btree::insertAnimation(int k)
 		curr = curr->child[index];
 	}
 
-	nodeInsertAnimation(curr, k);
+	nodeInsertAnimation(curr, k, { line[1] });
 
-	std::cout << "Size : " << mRoot->size << '\n';
-	this->newScene({});
+	this->newScene({line[1]});
 	this->balanceTree(this->mRoot);
-	this->newScene({}); 
+	this->newScene({line[1]});
 	this->mVisualization.highlightBlock(curr->id); 
-	this->newScene({}); 
+	this->newScene({line[1]});
 	this->mVisualization.unhighlightBlock(curr->id);
 }
 
-int Algorithms::Btree::removeAnimation(int k)
+int Algorithms::Btree::removeAnimation(int k, std::vector<int> line)
 {
 	BtreeNode* curr = this->mRoot; 
 	while (true)
 	{
 		if (curr->id)
 		{
-			this->newScene({});
+			this->newScene({line[0]});
 			this->mVisualization.highlightBlock(curr->id);
-			this->newScene({});
+			this->newScene({line[0]});
 			this->mVisualization.unhighlightBlock(curr->id);
 		}
 
@@ -255,7 +288,7 @@ int Algorithms::Btree::removeAnimation(int k)
 
 			if (curr->leaf)
 			{
-				nodeDelete(curr, i);
+				nodeDelete(curr, i, {line[1], line[2]});
 			}
 
 			else {
@@ -266,14 +299,14 @@ int Algorithms::Btree::removeAnimation(int k)
 				{
 					while (!(leftKid->leaf))
 					{
-						fixChildSize(leftKid, leftKid->size);
+						fixChildSize(leftKid, leftKid->size, line[4]);
 						leftKid = leftKid->child[leftKid->size];
 					}
 					int oldValue = curr->key[i];
-					curr->key[i] = this->nodeDelete(leftKid, leftKid->size - 1);
+					curr->key[i] = this->nodeDelete(leftKid, leftKid->size - 1, {line[4]});
 					if (curr->id)
 					{
-						this->newScene({});
+						this->newScene({line[4]});
 						this->mVisualization.updateValue(curr->id, oldValue, curr->key[i]);
 					}
 				}
@@ -282,20 +315,20 @@ int Algorithms::Btree::removeAnimation(int k)
 				{
 					while (!(rightKid->leaf))
 					{
-						fixChildSize(rightKid, 0);
+						fixChildSize(rightKid, 0, line[5]);
 						rightKid = rightKid->child[0];
 					}
 					int oldValue = curr->key[i];
-					curr->key[i] = this->nodeDelete(rightKid, 0);
+					curr->key[i] = this->nodeDelete(rightKid, 0, {line[5]});
 					if (curr->id)
 					{
-						this->newScene({});
+						this->newScene({line[5]});
 						this->mVisualization.updateValue(curr->id, oldValue, curr->key[i]);
 					}
 				}
 
 				else {
-					this->mergeChildren(curr, i);
+					this->mergeChildren(curr, i, line[6]);
 					curr = leftKid; 
 					this->mVisualization.resetColor();
 					continue;
@@ -312,19 +345,19 @@ int Algorithms::Btree::removeAnimation(int k)
 
 			if (this->mVisualization.isEdgeExist(curr->idEdge[i]))
 			{
-				this->newScene({});
+				this->newScene({line[0]});
 				this->mVisualization.highlightEdge(curr->idEdge[i]);
 			}
 
 			if (curr->child[i]->size < minDegree)
 			{
-				this->newScene({}); 
+				this->newScene({line[7]});
 				this->mVisualization.highlightBlock(curr->child[i]->id); 
-				this->newScene({}); 
+				this->newScene({line[7]});
 				this->mVisualization.unhighlightBlock(curr->child[i]->id);
 			}
 
-			char result = fixChildSize(curr, i);
+			char result = fixChildSize(curr, i, line[7]);
 			if (result == NEW_ROOT)
 			{
 				curr = this->mRoot; 
@@ -332,23 +365,6 @@ int Algorithms::Btree::removeAnimation(int k)
 			else {
 				curr = curr->child[this->findIndex(curr, k)];
 			}
-		}
-	}
-}
-
-void Algorithms::Btree::setParent(BtreeNode*& root, BtreeNode*& parent)
-{
-	if (root == nullptr)
-		return; 
-	if (!root->leaf)
-	{
-		for (int i = 0; i <= root->size; ++i)
-		{
-			if (root->child[i])
-			{
-				root->child[i]->parent = root;
-			}
-			setParent(root->child[i], root);
 		}
 	}
 }
@@ -380,11 +396,8 @@ void Algorithms::Btree::createNode(BtreeNode*& root)
 	std::vector<int> list;
 	for (int i = 0; i < root->size; ++i)
 	{
-		std::cout << root->key[i] << ' ';
 		list.push_back(root->key[i]);
 	}
-
-	std::cout << '\n';
 
 	if (root->id == 0)
 	{
@@ -424,7 +437,6 @@ void Algorithms::Btree::setNodePos(BtreeNode*& root)
 		mLevel.push_back(currLevel);
 	}
 	int levelSize = mLevel.size(); 
-	std::cout << levelSize << '\n';
 	Vector2 StartPos = { Constant::WINDOW_WIDTH / 2, (levelSize - 1) * VERTICAL_SPACE + 100};
 	for (auto child : mLevel.back())
 	{
@@ -567,7 +579,7 @@ void Algorithms::Btree::splitChild(BtreeNode* root, int index)
 	}
 }
 
-void Algorithms::Btree::splitChildAnimation(BtreeNode* root, int index)
+void Algorithms::Btree::splitChildAnimation(BtreeNode* root, int index, std::vector<int> line)
 {
 	BtreeNode* toSplit = root->child[index];
 	BtreeNode* newNode = new BtreeNode();
@@ -580,7 +592,7 @@ void Algorithms::Btree::splitChildAnimation(BtreeNode* root, int index)
 	for (unsigned j = 0; j < minDegree - 1; j++)
 	{
 		newNode->key[j] = toSplit->key[j + minDegree];
-		this->newScene({2});
+		this->newScene(line);
 		this->mVisualization.eraseValue(toSplit->id, toSplit->key[j + minDegree]);
 		this->mVisualization.addValue(newNode->id, newNode->key[j]);
 		this->mVisualization.moveBlock(newNode->id, this->mVisualization.getBlockPos(toSplit->id, toSplit->size - j - 1) - Vector2{ 0, HEIGHT });
@@ -600,7 +612,7 @@ void Algorithms::Btree::splitChildAnimation(BtreeNode* root, int index)
 	}
 	toSplit->size = minDegree - 1;
 
-	nodeInsertAnimation(root, toSplit->key[minDegree - 1]);
+	nodeInsertAnimation(root, toSplit->key[minDegree - 1], line);
 
 	this->mVisualization.eraseValue(toSplit->id, toSplit->key[minDegree - 1]);
 	if (root->idEdge[index])
@@ -670,7 +682,7 @@ unsigned Algorithms::Btree::nodeInsert(BtreeNode* root, int k)
 	return i;
 }
 
-unsigned Algorithms::Btree::nodeInsertAnimation(BtreeNode*& root, int k)
+unsigned Algorithms::Btree::nodeInsertAnimation(BtreeNode*& root, int k, std::vector<int> line)
 {
 	int i;
 	for (i = root->size; i > 0 && k < root->key[i - 1]; i--)
@@ -678,7 +690,7 @@ unsigned Algorithms::Btree::nodeInsertAnimation(BtreeNode*& root, int k)
 		root->key[i] = root->key[i - 1];
 		if (root->idEdge[i])
 		{
-			this->newScene({});
+			this->newScene(line);
 			this->mVisualization.removeEdge(root->idEdge[i]);
 			root->idEdge[i] = 0;
 		}
@@ -691,7 +703,7 @@ unsigned Algorithms::Btree::nodeInsertAnimation(BtreeNode*& root, int k)
 
 	if (root->id)
 	{
-		this->newScene({});
+		this->newScene(line);
 		this->mVisualization.addValue(root->id, k);
 
 		for (int j = root->size; j > i + 1; --j)
@@ -718,12 +730,12 @@ unsigned Algorithms::Btree::nodeInsertAnimation(BtreeNode*& root, int k)
 	return i;
 }
 
-unsigned Algorithms::Btree::nodeDelete(BtreeNode* root, int index)
+unsigned Algorithms::Btree::nodeDelete(BtreeNode* root, int index, std::vector<int> line)
 {
 	int toReturn = root->key[index];
 	if (root->id)
 	{
-		this->newScene({});
+		this->newScene(line);
 		this->mVisualization.eraseValue(root->id, toReturn);
 		if (root->idEdge[root->size])
 		{
@@ -765,23 +777,23 @@ unsigned Algorithms::Btree::findIndex(BtreeNode* root, int k)
 	return i;
 }
 
-char Algorithms::Btree::mergeChildren(BtreeNode*& root, int index)
+char Algorithms::Btree::mergeChildren(BtreeNode*& root, int index, int line)
 {
 	BtreeNode* leftKid = root->child[index]; 
 	BtreeNode* rightKid = root->child[index + 1];
 
 	// Move item from parent to left child
-	leftKid->key[leftKid->size] = this->nodeDelete(root, index);
+	leftKid->key[leftKid->size] = this->nodeDelete(root, index, {line});
 
 	if (leftKid->id)
 	{
-		this->newScene({});
+		this->newScene({line});
 		this->mVisualization.addValue(leftKid->id, leftKid->key[leftKid->size]);
 	}
 
 	if (rightKid->id)
 	{
-		this->newScene({});
+		this->newScene({line});
 		this->mVisualization.removeBlock(rightKid->id);
 	}
 
@@ -793,7 +805,7 @@ char Algorithms::Btree::mergeChildren(BtreeNode*& root, int index)
 		leftKid->key[j + k] = rightKid->key[k];
 		if (leftKid->id)
 		{
-			this->newScene({});
+			this->newScene({line});
 			this->mVisualization.addValue(leftKid->id, leftKid->key[j + k]);
 		}
 		leftKid->child[j + k] = rightKid->child[k];
@@ -808,15 +820,13 @@ char Algorithms::Btree::mergeChildren(BtreeNode*& root, int index)
 	if (root->size == 0)
 	{
 		this->mRoot = leftKid; 
-		std::cout << NEW_ROOT << '\n';
 		return NEW_ROOT;
 	}
 
-	std::cout << MODIFIED_NOT_ROOT << '\n';
 	return MODIFIED_NOT_ROOT;
 }
 
-char Algorithms::Btree::fixChildSize(BtreeNode* root, int index)
+char Algorithms::Btree::fixChildSize(BtreeNode* root, int index, int line)
 {
 	BtreeNode* kid = root->child[index];
 
@@ -827,7 +837,7 @@ char Algorithms::Btree::fixChildSize(BtreeNode* root, int index)
 		{
 			BtreeNode* leftKid = root->child[index - 1];
 
-			unsigned i = this->nodeInsertAnimation(kid, root->key[index - 1]);
+			unsigned i = this->nodeInsertAnimation(kid, root->key[index - 1], { line });
 			if(root->id)
 				this->mVisualization.eraseValue(root->id, root->key[index - 1]);
 
@@ -836,10 +846,10 @@ char Algorithms::Btree::fixChildSize(BtreeNode* root, int index)
 				kid->child[i] = kid->child[i - 1];
 			}
 			kid->child[0] = leftKid->child[leftKid->size];
-			root->key[index - 1] = this->nodeDelete(leftKid, leftKid->size - 1);
+			root->key[index - 1] = this->nodeDelete(leftKid, leftKid->size - 1, {line});
 			if (root->id)
 			{
-				this->newScene({});
+				this->newScene({line});
 				this->mVisualization.addValue(root->id, root->key[index - 1]);
 			}
 			if (kid->id)
@@ -862,7 +872,7 @@ char Algorithms::Btree::fixChildSize(BtreeNode* root, int index)
 		else if (index != root->size && root->child[index + 1]->size >= minDegree)
 		{
 			BtreeNode* rightKid = root->child[index + 1];
-			nodeInsertAnimation(kid, root->key[index]);
+			nodeInsertAnimation(kid, root->key[index], { line });
 			if (root->id)
 			{
 				this->mVisualization.eraseValue(root->id, root->key[index]);
@@ -870,22 +880,22 @@ char Algorithms::Btree::fixChildSize(BtreeNode* root, int index)
 			kid->child[kid->size] = rightKid->child[0];
 			if (kid->idEdge[kid->size] == 0 && kid->id && rightKid->child[0])
 			{
-				this->newScene({});
+				this->newScene({ line });
 				kid->idEdge[kid->size] = this->mVisualization.createEdgeOffSet(
 					this->mVisualization.getBlockPos(kid->id, kid->size), this->mVisualization.getBlockMid(rightKid->child[0]->id)
 				);
 			}
 			rightKid->child[0] = rightKid->child[1];
-			root->key[index] = nodeDelete(rightKid, 0);
+			root->key[index] = nodeDelete(rightKid, 0,{line});
 			if (root->id)
 				this->mVisualization.addValue(root->id, root->key[index]);
 		}
 
 		else if (index != 0)
-			return this->mergeChildren(root, index - 1);
+			return this->mergeChildren(root, index - 1, line);
 
 		else
-			mergeChildren(root, index);
+			mergeChildren(root, index, line);
 
 		return MODIFIED_NOT_ROOT;
 	}
@@ -896,7 +906,7 @@ void Algorithms::Btree::search(int k)
 	BtreeNode* x = this->mRoot; 
 	while (true)
 	{
-		this->newScene({}); 
+		this->newScene({0}); 
 		this->mVisualization.highlightBlock(x->id);
 
 		unsigned i = findIndex(x, k);
@@ -904,23 +914,24 @@ void Algorithms::Btree::search(int k)
 		if (i < x->size && x->key[i] == k)
 		{
 			this->mVisualization.setLabelBlock(x->id, "index " + std::to_string(i));
-			this->newScene({});
+			this->newScene({1});
 			this->mVisualization.setLabelBlock(x->id, "");
 			return; 
 		}
 		else if (x->leaf)
 		{
+			this->newScene({ 2 });
 			this->mVisualization.setLabelBlock(x->id, "not found");
-			this->newScene({});
+			this->newScene({3});
 			this->mVisualization.setLabelBlock(x->id, "");
 			return;
 		}
 		else {
-			this->newScene({}); 
+			this->newScene({4}); 
 			this->mVisualization.unhighlightBlock(x->id);
 			if (x->idEdge[i])
 			{
-				this->newScene({}); 
+				this->newScene({4}); 
 				this->mVisualization.highlightEdge(x->idEdge[i]);
 			}
 			x = x->child[i];
@@ -949,26 +960,6 @@ bool Algorithms::Btree::checkExist(int k)
 	}
 }
 
-void Algorithms::Btree::traverse(BtreeNode* root)
-{
-	if (root == nullptr)
-		return;
-	for (int i = 0; i < root->size; ++i)
-		std::cout << root->key[i] << ' '; 
-	if (root->parent)
-	{
-		std::cout << "Parent : "; 
-		for (int i = 0; i < root->parent->size; ++i)
-			std::cout << root->parent->key[i] << ' ';
-	}
-	std::cout << '\n'; 
-	if (!root->leaf)
-	{
-		for (int i = 0; i <= root->size; ++i)
-			traverse(root->child[i]);
-	}
-}
-
 void Algorithms::Btree::initializeNode(BtreeNode* node)
 {
 	node->idEdge = new int[4];
@@ -987,23 +978,6 @@ void Algorithms::Btree::freeNode(BtreeNode*& root)
 	}
 	delete root->idEdge;
 	delete (root);
-}
-
-int Algorithms::Btree::Height(BtreeNode* root)
-{
-	if (root == nullptr)
-		return 0; 
-	int maxHeight = 0; 
-	if(!root->leaf)
-	{
-		for (int i = 0; i <= root->size; ++i)
-		{
-			int childHeight = Height(root->child[i]);
-			maxHeight = std::max(maxHeight, childHeight);
-		}
-	}
-
-	return maxHeight + 1;
 }
 
 void Algorithms::Btree::modifyDistance(BtreeNode* root)
