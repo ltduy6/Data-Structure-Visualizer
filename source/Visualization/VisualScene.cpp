@@ -48,6 +48,20 @@ int Visualize::VisualScene::createCirNode(int value)
 	return objectID; 
 }
 
+int Visualize::VisualScene::createCharNode(std::string value)
+{
+	CircularNode newObject; 
+	newObject.SetCharValue(value);
+	newObject.SetType(false); 
+
+	int objectID = newObject.getObjectId();
+
+	auto insert = this->mCirNodeMap.emplace(objectID, newObject);
+	assert(insert.second == true);
+
+	return objectID;
+}
+
 void Visualize::VisualScene::moveCirNode(int id, Vector2 position)
 {
 	this->getCirNode(id).SetPosition(position);
@@ -66,7 +80,8 @@ void Visualize::VisualScene::colorCirNode(int id, Color color)
 {
 	CircularNode& node = this->getCirNode(id); 
 	node.SetOutlineColor(color); 
-	this->highlightCirNode(id);
+	node.SetValueColor(ColorSetting::GetInstance().get(ColorThemeID::TEXT)); 
+	node.SetColor(node.GetOutlineColor());
 }
 
 void Visualize::VisualScene::highlightCirNode(int id)
@@ -80,7 +95,8 @@ void Visualize::VisualScene::highlightCirNode(int id)
 void Visualize::VisualScene::unhighlightCirNode(int id)
 {
 	CircularNode& node = this->getCirNode(id); 
-	node.SetColor(node.GetValueColor()); 
+	node.resetColor();
+	node.SetOutlineColor(ColorSetting::GetInstance().get(ColorThemeID::HIGHLIGHT));
 	node.SetValueColor(node.GetOutlineColor());
 }
 
@@ -367,6 +383,8 @@ void Visualize::VisualScene::transitionCirNode(const VisualScene& fromScene, con
 		{
 			from.SetPosition(to.GetPosition()); 
 			from.SetScale(0); 
+			from.SetType(to.GetType());
+			from.SetCharValue(to.GetCharValue());
 			from.SetValue(to.GetValue()); 
 			from.SetColor(to.GetColor()); 
 			from.SetLabel("");
@@ -377,6 +395,8 @@ void Visualize::VisualScene::transitionCirNode(const VisualScene& fromScene, con
 		{
 			to.SetPosition(from.GetPosition()); 
 			to.SetScale(0); 
+			to.SetType(from.GetType());
+			to.SetCharValue(from.GetCharValue());
 			to.SetValue(from.GetValue()); 
 			to.SetColor(from.GetColor()); 
 			to.SetLabel("");

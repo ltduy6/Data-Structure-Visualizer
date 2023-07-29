@@ -22,9 +22,6 @@ namespace GUI {
 		virtual void updateField(float dt);
 		virtual std::string getInputText() const;
 
-		bool IntegerValidator(int number) const; 
-		bool IntegerSpaceValidator() const; 
-
 		void SetRange(int minValue, int maxValue);
 
 		void resetLabel(); 

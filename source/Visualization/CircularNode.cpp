@@ -23,7 +23,7 @@ void Visualize::CircularNode::draw()
 		1, ROUND_SEGMENT, DisplayOutlineThickness, this->mOutlineColor);
 
 	float TextSize = DisplayRadius; 
-	std::string Text = std::to_string(this->mValue);
+	std::string Text = (isNumber) ? std::to_string(this->mValue) : this->mCharValue;
 	Vector2 textBounds = MeasureTextEx(font, Text.c_str(), TextSize, 0);
 
 	DrawTextEx(font, Text.c_str(), Vector2{x - textBounds.x / 2, y - textBounds.y / 2}, TextSize, 0, this->mValueColor);
@@ -41,6 +41,26 @@ void Visualize::CircularNode::SetValue(int value)
 int Visualize::CircularNode::GetValue() const
 {
 	return this->mValue;
+}
+
+void Visualize::CircularNode::SetCharValue(std::string value)
+{
+	this->mCharValue = value;
+}
+
+std::string Visualize::CircularNode::GetCharValue() const
+{
+	return this->mCharValue; 
+}
+
+void Visualize::CircularNode::SetType(bool isNum)
+{
+	this->isNumber = isNum;
+}
+
+bool Visualize::CircularNode::GetType() const
+{
+	return this->isNumber;
 }
 
 void Visualize::CircularNode::SetLabel(std::string label)

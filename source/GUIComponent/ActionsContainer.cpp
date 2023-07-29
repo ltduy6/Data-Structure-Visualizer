@@ -13,13 +13,8 @@ GUI::ActionsContainer::~ActionsContainer()
 void GUI::ActionsContainer::drawCurrent(Vector2 base)
 {
 	this->updatePos(base);
-	DrawError(base);
 }
 
-
-void GUI::ActionsContainer::DrawError(Vector2 base)
-{
-}
 
 Vector2 GUI::ActionsContainer::GetSize()
 {

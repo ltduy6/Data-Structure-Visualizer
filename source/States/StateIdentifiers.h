@@ -4,5 +4,8 @@ enum class StateIDs {
 	Home,
 	BST,
 	AVL,
-	Btree
+	Btree, 
+	Trie,
+	Heap,
+	Graph,
 };

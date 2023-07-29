@@ -31,22 +31,32 @@ void AVLState::AddInitializeOperation()
 
     AddNoFieldInput(container, "File", [this]() {
         actionList.setError("");
-        std::vector<int> list = readListFromFile<int>("Test/AVL.txt"); 
-        mAlgo.Init(list); 
+        std::vector<int> list = readListFromFile<int>("Test/Btree.txt");
+        mAlgo.Init(list);
         actionList.hideAllOptions();
         });
 
-    AddIntFieldInput(container, "User define", { {400, "N = ", 1, 50} }, [this](std::map<std::string, std::string> input) {
-        if (Helper::checkValidNumber(input["N = "], 1, 50) == false)
+    AddIntFieldInput(container, "User define", { {400, "N = ", 1, 20}, {500, "List ", 1, 20} }, [this](std::map<std::string, std::string> input) {
+        if (Helper::checkValidNumber(input["N = "], 1, 20) == true)
         {
-            actionList.setError("Please input an integer number from 1 to 50");
-            return;
+            int value = std::stoi(input["N = "]);
+            mAlgo.InitRandomFixSize(value);
         }
-        int value = std::stoi(input["N = "]);
+        else {
+            std::vector<int> list = extractString<int>(input["List "]);
+            if (list.empty() == false)
+            {
+                mAlgo.Init(list);
+            }
+            else {
+                actionList.setError("Please input a sequence of integer number from 1 to 200 seperated by space");
+                return;
+            }
+        }
         actionList.setError("");
-        mAlgo.InitRandomFixSize(value);
         actionList.hideAllOptions();
         });
+
     actionList.AddOperation(buttonInit, container);
 }
 

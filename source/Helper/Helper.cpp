@@ -37,10 +37,37 @@ bool Helper::checkValidNumber(std::string& num, int minValue, int maxValue)
     return false;
 }
 
+bool Helper::checkValidString(std::string& input)
+{
+    int length = input.length();
+    if (length == 0)
+        return false; 
+    for (int i = 0; i < length; ++i)
+    {
+        if (input[i] < 'A' || (input[i] > 'Z' && input[i] < 'a') || (input[i] > 'z'))
+            return false; 
+    }
+    return true; 
+}
+
 float Helper::EaseCircInOut(float t, float b, float c, float d)
 {
     if ((t /= d / 2.0f) < 1.0f) return (-c / 2.0f * (sqrtf(1.0f - t * t) - 1.0f) + b);
     t -= 2.0f; return (c / 2.0f * (sqrtf(1.0f - t * t) + 1.0f) + b);
+}
+
+std::vector<std::string> Helper::extractStringInput(const std::string& input)
+{
+    std::vector<std::string> res; 
+    std::istringstream iss(input); 
+    std::string word; 
+
+    while (iss >> word)
+    {
+        if (checkValidString(word))
+            res.push_back(word); 
+    }
+    return res;
 }
 
 Vector2 operator+(const Vector2& a, const Vector2& b)

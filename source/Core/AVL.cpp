@@ -149,7 +149,6 @@ Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, in
 		root->value = value;
 		root->id = this->mVisualization.createCirNode(value);
 		std::cout << root->id << '\n';
-		root->height = 1; 
 		if (root != parent)
 		{
 			root->parent = parent; 

@@ -14,6 +14,12 @@ namespace Visualize {
 		void SetValue(int value);
 		int GetValue() const;
 
+		void SetCharValue(std::string value);
+		std::string GetCharValue() const;
+
+		void SetType(bool isNum);
+		bool GetType() const;
+
 		void SetLabel(std::string label); 
 		std::string GetLabel() const; 
 
@@ -30,7 +36,10 @@ namespace Visualize {
 	private:
 		float mRadius{ ELEMENT_SIZE / 2 };
 		int mValue{ 0 };
+		bool isNumber{ true };
+
 		std::string mLabel{ "" };
+		std::string mCharValue{ "" };
 
 		Color mValueColor{ ColorSetting::GetInstance().get(ColorThemeID::NODE_LABEL) };
 		Color mColor{ ColorSetting::GetInstance().get(ColorThemeID::NODE_BACKGROUND) };

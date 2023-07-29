@@ -1,13 +1,7 @@
 #include "InputField.h"
 
-GUI::InputField::InputField() : mRandom(new GUI::Button())
+GUI::InputField::InputField()
 {
-	this->mRandom->SetSize(Vector2{ Constant::BUTTON_WIDTH - 40, Constant::BUTTON_HEIGHT }); 
-	this->mRandom->setText("Random"); 
-	this->mRandom->setTextAlignment(GUI::Button::TextAlignMent::Center); 
-	this->mRandom->setCallBack([this]() {
-		this->Random();
-		});
 }
 
 GUI::InputField::~InputField()
@@ -19,7 +13,6 @@ void GUI::InputField::update(float dt)
 	if (this->GetActive())
 	{
 		this->UpdateMouseCursor();
-		this->mRandom->update(dt);
 	}
 	this->updateField(dt);
 }
@@ -34,9 +27,7 @@ void GUI::InputField::draw(Vector2 base)
 
 	DrawTextEx(this->font, this->label.c_str(), pos, this->FontSize, 0, this->mLabelColor); 
 
-	this->mRandom->draw(Vector2{ this->mRect.x + this->mRect.width - this->mRandom->GetSize().x - 5, this->mRect.y});
-
-	this->setSizeBox(Vector2{ this->mRect.width - boundLabel.x - 15 - this->mRandom->GetSize().x, this->mRect.height - 5});
+	this->setSizeBox(Vector2{ this->mRect.width - boundLabel.x - 15, this->mRect.height - 5});
 	drawField(Vector2{ this->mRect.x + 5 + boundLabel.x, this->mRect.y + 2 });
 }
 

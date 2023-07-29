@@ -7,6 +7,9 @@
 #include "States/BSTState.h"
 #include "States/AVLState.h"
 #include "States/BTreeState.h"
+#include "States/HeapState.h"
+#include "States/TrieState.h"
+#include "States/GraphState.h"
 #include "StateStack.h"
 
 class Application

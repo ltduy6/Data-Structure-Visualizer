@@ -88,18 +88,6 @@ std::string GUI::InputBox::getInputText() const
 	return this->mInputText;
 }
 
-bool GUI::InputBox::IntegerValidator(int number) const
-{
-	return number >= this->minValue && number <= this->maxValue; 
-}
-
-bool GUI::InputBox::IntegerSpaceValidator() const
-{
-	std::regex pattern("(?:-?\\d+)?(?:\\s+-?\\d+)*\\s*");
-
-	return std::regex_match(this->mInputText, pattern);
-}
-
 void GUI::InputBox::SetRange(int minValue, int maxValue)
 {
 	this->minValue = minValue; 

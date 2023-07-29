@@ -23,9 +23,10 @@ Algorithms::Btree::~Btree()
 void Algorithms::Btree::InitRandomFixSize(int size)
 {
 	if (size == 0)
+	{
+		this->sceneReset();
 		return;
-	this->sceneReset();
-
+	}
 	std::vector<int> list;
 	int i = 0;
 	while (i < size)
@@ -42,6 +43,7 @@ void Algorithms::Btree::InitRandomFixSize(int size)
 
 void Algorithms::Btree::Init(std::vector<int>& list)
 {
+	this->sceneReset();
 	for (int value : list)
 		this->insertNonAni(value);
 }

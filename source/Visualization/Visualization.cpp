@@ -50,6 +50,11 @@ int Visualize::Visualization::createCirNode(int value)
 	return this->mContainer.back().createCirNode(value);
 }
 
+int Visualize::Visualization::createCharNode(std::string value)
+{
+	return this->mContainer.back().createCharNode(value);
+}
+
 void Visualize::Visualization::moveCirNode(int id, Vector2 position)
 {
 	this->mContainer.back().moveCirNode(id, position);

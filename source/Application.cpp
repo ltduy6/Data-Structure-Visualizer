@@ -11,7 +11,7 @@ Application::Application() : mStateStack{State::Context()}
 	this->loadColor();
 
 	registerStates(); 
-	mStateStack.pushState(StateIDs::Btree);
+	mStateStack.pushState(StateIDs::Trie);
 }
 
 Application::~Application()
@@ -45,6 +45,8 @@ void Application::registerStates()
 {
 	this->mStateStack.registerState<AVLState>(StateIDs::AVL);
 	this->mStateStack.registerState<BTreeState>(StateIDs::Btree); 
+	this->mStateStack.registerState<HeapState>(StateIDs::Heap);
+	this->mStateStack.registerState<TrieState>(StateIDs::Trie);
 }
 
 void Application::loadTextures()

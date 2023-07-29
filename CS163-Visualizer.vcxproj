@@ -129,6 +129,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\States\GraphState.cpp" />
+    <ClCompile Include="source\Core\Graph.cpp" />
+    <ClCompile Include="source\Core\Heap.cpp" />
+    <ClCompile Include="source\States\HeapState.cpp" />
     <ClCompile Include="source\Core\Btree.cpp" />
     <ClCompile Include="source\States\BTreeState.cpp" />
     <ClCompile Include="source\Visualization\CodeHighLight.cpp" />
@@ -161,8 +165,14 @@
     <ClCompile Include="source\Visualization\VisualScene.cpp" />
     <ClCompile Include="source\Visualization\Visualization.cpp" />
     <ClCompile Include="source\Visualization\SquareNode.cpp" />
+    <ClCompile Include="source\Core\Trie.cpp" />
+    <ClCompile Include="source\States\TrieState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\States\GraphState.h" />
+    <ClInclude Include="source\Core\Graph.h" />
+    <ClInclude Include="source\Core\Heap.h" />
+    <ClInclude Include="source\States\HeapState.h" />
     <ClInclude Include="source\Core\Btree.h" />
     <ClInclude Include="source\States\BTreeState.h" />
     <ClInclude Include="source\Visualization\CodeHighLight.h" />
@@ -198,10 +208,13 @@
     <ClInclude Include="source\Visualization\VisualScene.h" />
     <ClInclude Include="source\Visualization\Visualization.h" />
     <ClInclude Include="source\Visualization\SquareNode.h" />
+    <ClInclude Include="source\Core\Trie.h" />
+    <ClInclude Include="source\States\TrieState.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Test\AVL.txt" />
     <Text Include="Test\Btree.txt" />
+    <Text Include="Test\Word.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source\Core\Btree.inl" />

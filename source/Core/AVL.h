@@ -33,11 +33,9 @@ namespace Algorithms {
 		public:
 			int value{ 0 };
 			int id{ 0 };
-			int height{ 1 };
 			int Alignment{ 0 };
 			int idEdgeLeft{ 0 }; 
 			int idEdgeRight{ 0 };
-			int idEdge{ 0 }; 
 
 			Node*left; 
 			Node* right; 

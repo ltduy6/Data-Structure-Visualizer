@@ -10,6 +10,9 @@
 #include "../Visualization/Visualization.h"
 #include "../Core/AVL.h"
 #include "../Core/Btree.h"
+#include "../Core/Heap.h"
+#include "../Core/Trie.h"
+#include "../Core/Graph.h"
 
 class BSTState : public State
 {

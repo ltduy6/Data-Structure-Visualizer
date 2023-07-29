@@ -24,6 +24,7 @@ namespace Visualize {
 		void reset(VisualScene initScene = VisualScene());
 
 		int createCirNode(int value);
+		int createCharNode(std::string value);
 		void moveCirNode(int id, Vector2 position);
 		void moveCirNodeDelta(int id, Vector2 position);
 		void colorCirNode(int id, Color color);

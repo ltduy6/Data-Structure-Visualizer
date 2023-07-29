@@ -22,8 +22,6 @@ namespace GUI
 		std::string GetLabel() const; 
 		void UpdateMouseCursor();
 	private:
-		GUI::Button::Ptr mRandom;
-	private:
 		std::string label; 
 		Color mLabelColor{ BLACK }; 
 		Font font{ FontHolder::getInstance().get(FontID::Roboto) };

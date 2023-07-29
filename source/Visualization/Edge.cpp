@@ -1,5 +1,6 @@
 #include "Edge.h"
 #include <cmath>
+#include <iostream>
 
 Visualize::Edge::Edge()
 {
@@ -26,9 +27,12 @@ void Visualize::Edge::draw()
     /*DrawLineEx(this->mSource + unitVector, this->mDes - unitVector, THICKNESS, this->mColor);*/
     if (headOffset)
     {
-        Vector2 checkInterect = headDestination - this->mSource;
-        if (checkInterect.x * checkInterect.x + checkInterect.y + checkInterect.y < (ELEMENT_SIZE / 2) * (ELEMENT_SIZE / 2))
+        float disX = headDestination.x - this->mSource.x; 
+        float disY = headDestination.y - this->mSource.y; 
+        if ((disX) * (disX) + (disY) * (disY) < (ELEMENT_SIZE / 2) * (ELEMENT_SIZE / 2))
+        {
             headDestination = this->mSource + unitVector * headOffset;
+        }
     }
     DrawLineEx(this->mSource + unitVector * headOffset, headDestination, mThickness, mColor);
 }
