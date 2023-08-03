@@ -70,12 +70,12 @@ void Algorithms::Heap::Remove(int index)
 		this->mVisualization.addCode("swap(A[i], L); i = L's index");				// 6
 	}
 	else {
-		this->mVisualization.addCode("A[i] = A[1]+1; shiftup(i); // new max/root"); // 0
+		this->mVisualization.addCode("A[i] = A[1]-1; shiftup(i); // new min/root"); // 0
 		this->mVisualization.addCode("take out A[1]");								// 1
 		this->mVisualization.addCode("A[1] = A[A.length-1]");						// 2
 		this->mVisualization.addCode("i = 1; A.length--");							// 3
 		this->mVisualization.addCode("while (i < A.length)");						// 4
-		this->mVisualization.addCode("if A[i] > (L = the larger of i's children)"); // 5
+		this->mVisualization.addCode("if A[i] > (L = the smaller of i's children)"); // 5
 		this->mVisualization.addCode("swap(A[i], L); i = L's index");				// 6
 	}
 	this->deleteAnimation(index);
@@ -83,8 +83,31 @@ void Algorithms::Heap::Remove(int index)
 	this->mVisualization.resetColor();
 }
 
-void Algorithms::Heap::Search(int value)
+void Algorithms::Heap::ExtractTop()
 {
+	if (this->getSize() == 0)
+		return;
+	this->sceneInit();
+	if (this->isMaxHeap)
+	{
+		this->mVisualization.addCode("take out A[1]");								// 0
+		this->mVisualization.addCode("A[1] = A[A.length-1]");						// 1
+		this->mVisualization.addCode("i = 1; A.length--");							// 2
+		this->mVisualization.addCode("while (i < A.length)");						// 3
+		this->mVisualization.addCode("if A[i] < (L = the larger of i's children)"); // 4
+		this->mVisualization.addCode("swap(A[i], L); i = L's index");				// 5
+	}
+	else {
+		this->mVisualization.addCode("take out A[1]");								// 0
+		this->mVisualization.addCode("A[1] = A[A.length-1]");						// 1
+		this->mVisualization.addCode("i = 1; A.length--");							// 2
+		this->mVisualization.addCode("while (i < A.length)");						// 3
+		this->mVisualization.addCode("if A[i] > (L = the larger of i's children)"); // 4
+		this->mVisualization.addCode("swap(A[i], L); i = L's index");				// 5
+	}
+	this->extractMax({0, 1, 2, 3, 4, 5});
+	this->newScene({});
+	this->mVisualization.resetColor();
 }
 
 int Algorithms::Heap::getSize() const
@@ -193,10 +216,12 @@ void Algorithms::Heap::deleteAnimation(int index)
 	this->newScene({0});
 	Node* currNode = this->mHeap[index - 1];
 	this->mVisualization.highlightCirNode(currNode->id); 
-	this->mVisualization.updateCirNode(currNode->id, this->mHeap[0]->value + 1); 
-	this->mHeap[index - 1]->value = this->mHeap[0]->value + 1;
+	this->mVisualization.updateCirNode(currNode->id, (this->isMaxHeap) ? this->mHeap[0]->value + 1 : this->mHeap[0]->value - 1);
+	this->mHeap[index - 1]->value = (this->isMaxHeap) ? this->mHeap[0]->value + 1 : this->mHeap[0]->value - 1;
+	if (this->mHeap.size() == 1)
+		return;
 	this->upHeapAnimation(index - 1, {0, 0});
-	this->extractMax();
+	this->extractMax({1, 2, 3, 4, 5, 6});
 }
 
 void Algorithms::Heap::upHeapAnimation(int index, std::vector<int> line)
@@ -256,7 +281,7 @@ void Algorithms::Heap::upHeapNonAnimation(int index)
 	}
 }
 
-void Algorithms::Heap::downHeapAnimation(int index)
+void Algorithms::Heap::downHeapAnimation(int index, std::vector<int> line)
 {
 	int largest = index; 
 	int leftChild = left(index); 
@@ -272,10 +297,10 @@ void Algorithms::Heap::downHeapAnimation(int index)
 	{
 		std::swap(this->mHeap[index]->value, this->mHeap[largest]->value); 
 
-		this->newScene({5}); 
+		this->newScene({line[4]});
 		this->mVisualization.unhighlightCirNode(this->mHeap[largest]->id); 
 
-		this->newScene({6}); 
+		this->newScene({line[5]});
 		Vector2 tempPos = this->getPos(index); 
 		this->mVisualization.moveCirNode(this->mHeap[index]->id, this->getPos(largest)); 
 		this->mVisualization.moveCirNode(this->mHeap[largest]->id, tempPos);
@@ -289,21 +314,21 @@ void Algorithms::Heap::downHeapAnimation(int index)
 		std::swap(this->mHeap[index]->id, this->mHeap[largest]->id);
 
 
-		this->downHeapAnimation(largest);
+		this->downHeapAnimation(largest, line);
 	}
 }
 
-void Algorithms::Heap::extractMax()
+void Algorithms::Heap::extractMax(std::vector<int> line)
 {
 	int lastIndex = this->mHeap.size() - 1; 
 	Vector2 rootPos = this->getPos(0);
-	this->newScene({1}); 
+	this->newScene({line[0]});
 	this->mVisualization.removeCirNode(this->mHeap[0]->id);
 
-	this->newScene({1});
+	this->newScene({line[0]});
 	this->mVisualization.highlightCirNode(this->mHeap[lastIndex]->id);
 
-	this->newScene({2, 3});
+	this->newScene({line[1], line[2]});
 	if (lastIndex & 1)
 	{
 		this->mVisualization.removeEdge(this->mHeap[parent(lastIndex)]->idEdgeLeft); 
@@ -320,7 +345,7 @@ void Algorithms::Heap::extractMax()
 	this->mHeap[0]->id = this->mHeap[lastIndex]->id;
 	this->mHeap.pop_back();
 
-	this->downHeapAnimation(0);
+	this->downHeapAnimation(0, line);
 }
 
 Vector2 Algorithms::Heap::getPos(int i)
@@ -345,13 +370,16 @@ int Algorithms::Heap::right(int i)
 
 void Algorithms::Heap::setMaxHeap()
 {
+	this->sceneReset();
 	this->largerThan = [this](int a, int b) -> bool {
 		return a > b;
 	};
+	this->isMaxHeap = true;
 }
 
 void Algorithms::Heap::setMinHeap()
 {
+	this->sceneReset();
 	this->largerThan = [this](int a, int b) -> bool {
 		return a < b;
 	};

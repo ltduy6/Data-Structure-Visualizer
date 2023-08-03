@@ -9,8 +9,6 @@ namespace Algorithms {
 	class Heap : public Algorithm
 	{
 	public:
-		static constexpr Vector2 STARTING_POINT = Vector2{ Constant::WINDOW_WIDTH / 2, 100 };
-		static constexpr float RADIUS = 20;
 		float VERTICAL_SPACE = 100;
 		float HORIZONTAL_SPACE = 700;
 		float MODIFIER = 0;
@@ -22,7 +20,7 @@ namespace Algorithms {
 		void Init(std::vector<int>& list);
 		void Insert(int value);
 		void Remove(int index);
-		void Search(int value);
+		void ExtractTop();
 		void setMaxHeap();
 		void setMinHeap();
 		int getSize() const;
@@ -50,8 +48,8 @@ namespace Algorithms {
 		void deleteAnimation(int index);
 		void upHeapAnimation(int index, std::vector<int> line);
 		void upHeapNonAnimation(int index);
-		void downHeapAnimation(int index);
-		void extractMax();
+		void downHeapAnimation(int index, std::vector<int> line);
+		void extractMax(std::vector<int> line);
 
 		Vector2 getPos(int i);
 		int parent(int i);

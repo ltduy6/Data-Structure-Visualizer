@@ -223,7 +223,6 @@ void Algorithms::Btree::insertAnimation(int k, std::vector<int> line)
 			this->mVisualization.getBlockPos(newRoot->id, 0), this->mVisualization.getBlockMid(mRoot->id)
 		);
 		mRoot = newRoot;
-		this->newScene({line[2]});
 		this->balanceTree(this->mRoot);
 	}
 	BtreeNode* curr = mRoot;
@@ -260,7 +259,6 @@ void Algorithms::Btree::insertAnimation(int k, std::vector<int> line)
 
 	nodeInsertAnimation(curr, k, { line[1] });
 
-	this->newScene({line[1]});
 	this->balanceTree(this->mRoot);
 	this->newScene({line[1]});
 	this->mVisualization.highlightBlock(curr->id); 
@@ -273,6 +271,8 @@ int Algorithms::Btree::removeAnimation(int k, std::vector<int> line)
 	BtreeNode* curr = this->mRoot; 
 	while (true)
 	{
+		this->balanceTree(this->mRoot);
+
 		if (curr->id)
 		{
 			this->newScene({line[0]});
@@ -281,7 +281,6 @@ int Algorithms::Btree::removeAnimation(int k, std::vector<int> line)
 			this->mVisualization.unhighlightBlock(curr->id);
 		}
 
-		this->balanceTree(this->mRoot);
 		unsigned i = findIndex(curr, k);
 		
 		if (i < curr->size && k == curr->key[i])

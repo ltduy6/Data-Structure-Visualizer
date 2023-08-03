@@ -6,7 +6,6 @@ namespace Algorithms {
 	class Trie : public Algorithm
 	{
 	public:
-		static constexpr Vector2 STARTING_POINT = Vector2{ Constant::WINDOW_WIDTH / 2, 100 };
 		static constexpr int ELEMENT_SIZE = 60;
 		static constexpr int ALPHABET_SIZE = 26;
 		float VERTICAL_SPACE = 100;

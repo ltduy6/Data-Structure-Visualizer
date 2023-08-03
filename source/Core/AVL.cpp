@@ -385,9 +385,6 @@ Algorithms::AVL::Node* Algorithms::AVL::RemoveUntil(Node*& root, int value)
 	if (root == nullptr)
 		return root; 
 
-	/*this->newScene({});
-		this->mVisualization.resetColor();*/
-
 	printParent(root);
 
 	// rotation 

@@ -71,7 +71,7 @@ Vector2 Algorithms::Trie::getPos(int id)
 
 void Algorithms::Trie::balanceTree()
 {
-	Vector2 bound = { 200, 50 };
+	Vector2 bound = { 200, 200 };
 	this->modifyDistance();
 	this->setNodePos(this->mRoot, bound);
 	this->setEdgePos(this->mRoot);
@@ -209,11 +209,11 @@ void Algorithms::Trie::deleteWordAnimation(Node* node, const std::string& word, 
 		return; 
 	if (depth == word.length())
 	{
+		this->newScene({});
+		this->mVisualization.resetColorCirNode(node->id);
 		if (node->isEndOfWord)
 		{
 			node->isEndOfWord = false;
-			this->newScene({}); 
-			this->mVisualization.resetColorCirNode(node->id);
 		}
 		return;
 	}

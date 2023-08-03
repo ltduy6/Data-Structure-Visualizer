@@ -9,8 +9,10 @@ namespace Algorithms
 		Algorithm(Visualize::Visualization& visualization); 
 		~Algorithm(); 
 	protected:
-		void sceneReset();
-		void sceneInit();
+		static constexpr Vector2 STARTING_POINT = Vector2{ Constant::WINDOW_WIDTH / 2, 200 };
+	protected:
+		virtual void sceneReset();
+		virtual void sceneInit();
 		void newScene(std::vector<int> lines);
 	protected: 
 		Visualize::Visualization& mVisualization;

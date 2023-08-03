@@ -5,7 +5,6 @@ namespace Algorithms {
 	class Btree : public Algorithm
 	{
 	public:
-		static constexpr Vector2 STARTING_POINT = Vector2{ Constant::WINDOW_WIDTH / 2, 100 };
 		static constexpr float WIDTH = 100; 
 		static constexpr float HEIGHT = 60;
 		float VERTICAL_SPACE = 100;
