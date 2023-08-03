@@ -35,6 +35,20 @@ void Visualize::Edge::draw()
         }
     }
     DrawLineEx(this->mSource + unitVector * headOffset, headDestination, mThickness, mColor);
+
+    if (this->mWeight != "")
+    {
+        float displaySize = this->textSize * GetScale(); 
+        float u_x = headDestination.x - (this->mSource.x + unitVector.x * headOffset); 
+        float u_y = headDestination.y - (this->mSource.y + unitVector.y * headOffset);
+        Vector2 textBound = MeasureTextEx(font, this->mWeight.c_str(), displaySize, 0);
+        Vector2 textPos = (this->mSource + unitVector * headOffset) * 3 / 4 + (headDestination) / 4 - Vector2{-10, textBound.y};
+        if (u_x * u_y < 0)
+        {
+            textPos.y += textBound.y;
+        }
+        DrawTextEx(font, this->mWeight.c_str(), textPos, displaySize, 0, this->mColor);
+    }
 }
 
 
@@ -87,4 +101,14 @@ void Visualize::Edge::SetSideOffset(int sideOffset)
 int Visualize::Edge::GetSideOffset() const
 {
     return this->mSideOffset;
+}
+
+void Visualize::Edge::SetWeight(std::string weight)
+{
+    this->mWeight = weight; 
+}
+
+std::string Visualize::Edge::GetWeight() const
+{
+    return this->mWeight;
 }

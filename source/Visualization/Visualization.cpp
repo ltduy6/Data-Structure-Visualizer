@@ -115,6 +115,16 @@ int Visualize::Visualization::createEdgeOffSet(Vector2 source, Vector2 des, int 
 	return this->mContainer.back().createEdgeOffSet(source, des, offset);
 }
 
+void Visualize::Visualization::colorEdge(int id, Color color)
+{
+	this->mContainer.back().colorEdge(id, color);
+}
+
+void Visualize::Visualization::setWeight(int id, std::string weight)
+{
+	this->mContainer.back().setWeight(id, weight);
+}
+
 void Visualize::Visualization::moveEdgeSource(int id, Vector2 source)
 {
 	this->mContainer.back().moveEdgeSource(id, source); 
@@ -148,6 +158,11 @@ void Visualize::Visualization::removeEdge(int id)
 bool Visualize::Visualization::isEdgeExist(int id)
 {
 	return this->mContainer.back().isEdgeExist(id);
+}
+
+Color Visualize::Visualization::getEdgeColor(int id) const
+{
+	return this->mContainer.back().getEdgeColor(id);
 }
 
 Vector2 Visualize::Visualization::getEdgeSource(int id)
@@ -220,6 +235,11 @@ void Visualize::Visualization::resetColor()
 	this->mContainer.back().resetColor();
 }
 
+void Visualize::Visualization::resetLabel()
+{
+	this->mContainer.back().resetLabel();
+}
+
 void Visualize::Visualization::addCode(std::string code)
 {
 	this->mCodeHighlight.addCode(code); 
@@ -228,4 +248,9 @@ void Visualize::Visualization::addCode(std::string code)
 void Visualize::Visualization::highlightCode(std::vector<int> lines)
 {
 	this->mCodeHighlight.highlightCode(lines);
+}
+
+bool Visualize::Visualization::getHoverStatus() const
+{
+	return this->mControl.getHoverStatus();
 }

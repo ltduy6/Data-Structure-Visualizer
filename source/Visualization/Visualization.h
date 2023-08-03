@@ -38,6 +38,8 @@ namespace Visualize {
 
 		int createEdge(Vector2 source, Vector2 des);
 		int createEdgeOffSet(Vector2 source, Vector2 des, int offset = 0);
+		void colorEdge(int id, Color color);
+		void setWeight(int id, std::string weight);
 		void moveEdgeSource(int id, Vector2 source);
 		void moveEdgeDes(int id, Vector2 des);
 		void moveEdgeDelta(int id, Vector2 source, Vector2 des);
@@ -45,6 +47,7 @@ namespace Visualize {
 		void unhighlightEdge(int id);
 		void removeEdge(int id);
 		bool isEdgeExist(int id);
+		Color getEdgeColor(int id) const;
 		Vector2 getEdgeSource(int id);
 		Vector2 getEdgeDes(int id);
 
@@ -61,8 +64,11 @@ namespace Visualize {
 		Vector2 getBlockMid(int id) const;
 
 		void resetColor();
+		void resetLabel();
 		void addCode(std::string code); 
 		void highlightCode(std::vector<int> lines);
+
+		bool getHoverStatus() const;
 
 	private:
 		std::vector<VisualScene> mContainer; 

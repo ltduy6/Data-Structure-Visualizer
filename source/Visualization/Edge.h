@@ -2,6 +2,7 @@
 #include "SceneNode.h"
 #include "../Helper/Helper.h"
 #include "../Helper/ColorSetting.h"
+#include "../ResourceHolder/FontHolder.h"
 
 namespace Visualize {
 	class Edge : public SceneNode
@@ -30,9 +31,16 @@ namespace Visualize {
 		void SetSideOffset(int sideOffset); 
 		int GetSideOffset() const; 
 
+		void SetWeight(std::string weight);
+		std::string GetWeight() const; 
+
 	private:
 		int mSideOffset{ 1 };
 		int mThickness{ THICKNESS };
+		float textSize{ 36 };
+		std::string mWeight{ "" };
+
+		Font font{ FontHolder::getInstance().get(FontID::Roboto) };
 		Vector2 mSource{ Vector2 {50, 50} };
 		Vector2 mDes{ Vector2 {100, 100} };
 		Color mColor{ColorSetting::GetInstance().get(ColorThemeID::EDGE)};

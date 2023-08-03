@@ -40,13 +40,16 @@ namespace Visualize
 
 		int createEdge(Vector2 source, Vector2 des); 
 		int createEdgeOffSet(Vector2 source, Vector2 des, int offset = 0); 
+		void colorEdge(int id, Color color);
 		void moveEdgeSource(int id, Vector2 source);
 		void moveEdgeDes(int id, Vector2 des); 
+		void setWeight(int id, std::string weight);
 		void moveEdgeDelta(int id, Vector2 source, Vector2 des);
 		void highlightEdge(int id); 
 		void unhighlightEdge(int id);
 		void removeEdge(int id);
 		bool isEdgeExist(int id);
+		Color getEdgeColor(int id) const;
 		Vector2 getEdgeSource(int id); 
 		Vector2 getEdgeDes(int id);
 
@@ -63,6 +66,7 @@ namespace Visualize
 		Vector2 getBlockMid(int id) const;
 
 		void resetColor(); 
+		void resetLabel();
 
 	private:
 		Visualize::CircularNode& getCirNode(int id); 

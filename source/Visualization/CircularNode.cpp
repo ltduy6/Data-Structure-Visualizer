@@ -10,7 +10,8 @@ Visualize::CircularNode::~CircularNode()
 }
 
 void Visualize::CircularNode::draw()
-{	
+{
+
 	float x = this->GetPosition().x;
 	float y = this->GetPosition().y;
 
@@ -23,14 +24,17 @@ void Visualize::CircularNode::draw()
 		1, ROUND_SEGMENT, DisplayOutlineThickness, this->mOutlineColor);
 
 	float TextSize = DisplayRadius; 
-	std::string Text = (isNumber) ? std::to_string(this->mValue) : this->mCharValue;
+	std::string Text = (isNumber && this->mValue != -1) ? std::to_string(this->mValue) : this->mCharValue;
+	if (this->mValue == -2)
+		Text = "DEL";
+
 	Vector2 textBounds = MeasureTextEx(font, Text.c_str(), TextSize, 0);
 
 	DrawTextEx(font, Text.c_str(), Vector2{x - textBounds.x / 2, y - textBounds.y / 2}, TextSize, 0, this->mValueColor);
 
-	Vector2 labelBounds = MeasureTextEx(font, this->mLabel.c_str(), TextSize , 0);
+	Vector2 labelBounds = MeasureTextEx(fontLabel, this->mLabel.c_str(), TextSize , 0);
 
-	DrawTextEx(font, this->mLabel.c_str(), { x - labelBounds.x / 2, y + DisplayRadius + DisplayRadius * 1 / 3 }, TextSize , 0, this->mLabelColor);
+	DrawTextEx(fontLabel, this->mLabel.c_str(), { x - labelBounds.x / 2, y + DisplayRadius + DisplayRadius * 1 / 3 }, TextSize , 0, this->mLabelColor);
 }
 
 void Visualize::CircularNode::SetValue(int value)

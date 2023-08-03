@@ -58,6 +58,7 @@ void Visualize::ControlScene::update(float dt)
 {
 	updateDisplayingScene(dt);
 	this->mButtonContainer.update(dt);
+	this->isHover = this->mButtonContainer.getHoverStatus();
 }
 
 void Visualize::ControlScene::draw()
@@ -68,6 +69,11 @@ void Visualize::ControlScene::draw()
 void Visualize::ControlScene::reset()
 {
 	this->resetScene();
+}
+
+bool Visualize::ControlScene::getHoverStatus() const
+{
+	return this->isHover;
 }
 
 int Visualize::ControlScene::getCurrentIndex() const

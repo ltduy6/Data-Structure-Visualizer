@@ -27,11 +27,11 @@ float Visualize::VisualScene::easeInOut(float from, float to, float time, float 
 
 void Visualize::VisualScene::draw()
 {
+	for (auto obj : this->mEdgeMap)
+		obj.second.draw();
 	for (auto obj : this->mSquareMap)
 		obj.second.draw();
 	for (auto obj : this->mCirNodeMap)
-		obj.second.draw();
-	for (auto obj : this->mEdgeMap)
 		obj.second.draw();
 }
 
@@ -80,15 +80,14 @@ void Visualize::VisualScene::colorCirNode(int id, Color color)
 {
 	CircularNode& node = this->getCirNode(id); 
 	node.SetOutlineColor(color); 
-	node.SetValueColor(ColorSetting::GetInstance().get(ColorThemeID::TEXT)); 
-	node.SetColor(node.GetOutlineColor());
+	node.SetValueColor(color); 
 }
 
 void Visualize::VisualScene::highlightCirNode(int id)
 {
 	CircularNode& node = this->getCirNode(id); 
 	node.SetOutlineColor(ColorSetting::GetInstance().get(ColorThemeID::HIGHLIGHT)); 
-	node.SetValueColor(node.GetColor()); 
+	node.SetValueColor(ColorSetting::GetInstance().get(ColorThemeID::TEXT)); 
 	node.SetColor(node.GetOutlineColor()); 
 }
 
@@ -155,6 +154,11 @@ int Visualize::VisualScene::createEdgeOffSet(Vector2 source, Vector2 des, int of
 	return obj;
 }
 
+void Visualize::VisualScene::colorEdge(int id, Color color)
+{
+	this->getEdge(id).SetColor(color);
+}
+
 void Visualize::VisualScene::moveEdgeSource(int id, Vector2 source)
 {
 	this->getEdge(id).SetSource(source);
@@ -163,6 +167,12 @@ void Visualize::VisualScene::moveEdgeSource(int id, Vector2 source)
 void Visualize::VisualScene::moveEdgeDes(int id, Vector2 des)
 {
 	this->getEdge(id).SetDestination(des);
+}
+
+void Visualize::VisualScene::setWeight(int id, std::string weight)
+{
+	Edge& edge = this->getEdge(id); 
+	edge.SetWeight(weight);
 }
 
 void Visualize::VisualScene::moveEdgeDelta(int id, Vector2 source, Vector2 des)
@@ -181,7 +191,7 @@ void Visualize::VisualScene::highlightEdge(int id)
 void Visualize::VisualScene::unhighlightEdge(int id)
 {
 	Edge& edge = this->getEdge(id); 
-	edge.SetColor(ColorSetting::GetInstance().get(ColorThemeID::EDGE)); 
+	edge.SetColor(ColorSetting::GetInstance().get(ColorThemeID::HIDE_EDGE)); 
 }
 
 void Visualize::VisualScene::removeEdge(int id)
@@ -192,6 +202,11 @@ void Visualize::VisualScene::removeEdge(int id)
 bool Visualize::VisualScene::isEdgeExist(int id)
 {
 	return (this->mEdgeMap.find(id) != this->mEdgeMap.end());
+}
+
+Color Visualize::VisualScene::getEdgeColor(int id) const
+{
+	return (this->getEdge(id).GetColor());
 }
 
 Vector2 Visualize::VisualScene::getEdgeSource(int id)
@@ -283,6 +298,14 @@ void Visualize::VisualScene::resetColor()
 		obj.second.resetColor(); 
 	for (auto& obj : this->mSquareMap)
 		obj.second.resetColor();
+}
+
+void Visualize::VisualScene::resetLabel()
+{
+	for (auto& obj : this->mCirNodeMap)
+		obj.second.SetLabel(""); 
+	for (auto& obj : this->mSquareMap)
+		obj.second.SetLabel("");
 }
 
 Visualize::CircularNode& Visualize::VisualScene::getCirNode(int id)
@@ -455,6 +478,7 @@ void Visualize::VisualScene::transitionEdge(const VisualScene& fromScene, const 
 		{
 			from.SetSource(to.GetSource()); 
 			from.SetDestination(to.GetDestination()); 
+			from.SetWeight(to.GetWeight());
 			from.SetColor(to.GetColor()); 
 			from.SetScale(0);
 			from.SetSideOffset(to.GetSideOffset()); 
@@ -463,6 +487,7 @@ void Visualize::VisualScene::transitionEdge(const VisualScene& fromScene, const 
 		{
 			to.SetSource(from.GetSource()); 
 			to.SetDestination(from.GetDestination()); 
+			to.SetWeight(from.GetWeight());
 			to.SetColor(from.GetColor()); 
 			to.SetScale(0);
 			to.SetSideOffset(from.GetSideOffset());

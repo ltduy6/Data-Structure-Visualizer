@@ -32,7 +32,7 @@ namespace Visualize {
 		Color mColor{ ColorSetting::GetInstance().get(ColorThemeID::CODE_HIGHLIGHT_BACKGROUND) };
 		Color mTextColor{ ColorSetting::GetInstance().get(ColorThemeID::NODE_LABEL) };
 
-		Font font{ FontHolder::getInstance().get(FontID::Roboto) };
+		Font font{ FontHolder::getInstance().get(FontID::Courier) };
 	};
 }
 

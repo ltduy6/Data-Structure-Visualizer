@@ -47,6 +47,7 @@ namespace Visualize {
 		Color mLabelColor{ ColorSetting::GetInstance().get(ColorThemeID::ERROR) };
 
 		Font font{ FontHolder::getInstance().get(FontID::Roboto) };
+		Font fontLabel{ FontHolder::getInstance().get(FontID::Roboto_Bold) };
 	};
 }
 

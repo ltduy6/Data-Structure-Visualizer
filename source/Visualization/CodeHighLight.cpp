@@ -10,7 +10,7 @@ void Visualize::CodeHighLight::draw()
 {
 	for (auto index : this->mIndex[this->mTracker])
 		this->mCode[index].second = true; 
-	int textSize = this->mRect.height * 2 / 3;
+	float textSize = this->mRect.height * 2 / 3;
 	int textAlignment = 10; 
 	int numCode = this->mCode.size(); 
 	for (int i = numCode - 1 ; i >= 0 ; --i)

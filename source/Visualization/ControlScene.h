@@ -22,6 +22,7 @@ namespace Visualize {
 		void draw(); 
 		void reset(); 
 
+		bool getHoverStatus() const;
 		int getCurrentIndex() const; 
 	private:
 		enum class Action {
@@ -42,6 +43,8 @@ namespace Visualize {
 		void setPause(bool isPause); 
 		void loadButton(GUI::Button::Ptr& button, std::string title); 
 
+
+
 	private:
 		std::vector<VisualScene>* mContainer; 
 		VisualScene* mDisplayScene; 
@@ -51,11 +54,11 @@ namespace Visualize {
 
 		Action mActionStatus{ Action::None }; 
 		bool isPaused{ false };
+		bool isHover{ false };
 
 		float mTime{ 0 };
 
 		GUI::ActionsContainer mButtonContainer; 
-
 
 	};
 }
