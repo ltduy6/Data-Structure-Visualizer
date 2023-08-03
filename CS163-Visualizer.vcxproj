@@ -129,6 +129,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\Include\tinyfiledialogs.c" />
+    <ClCompile Include="source\GUIComponent\Matrix.cpp" />
+    <ClCompile Include="source\GUIComponent\Card.cpp" />
+    <ClCompile Include="source\GUIComponent\NavigationBar.cpp" />
+    <ClCompile Include="source\States\HashState.cpp" />
+    <ClCompile Include="source\Core\HashTable.cpp" />
     <ClCompile Include="source\States\GraphState.cpp" />
     <ClCompile Include="source\Core\Graph.cpp" />
     <ClCompile Include="source\Core\Heap.cpp" />
@@ -169,6 +175,12 @@
     <ClCompile Include="source\States\TrieState.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Include\tinyfiledialogs.h" />
+    <ClInclude Include="source\GUIComponent\Matrix.h" />
+    <ClInclude Include="source\GUIComponent\Card.h" />
+    <ClInclude Include="source\GUIComponent\NavigationBar.h" />
+    <ClInclude Include="source\States\HashState.h" />
+    <ClInclude Include="source\Core\HashTable.h" />
     <ClInclude Include="source\States\GraphState.h" />
     <ClInclude Include="source\Core\Graph.h" />
     <ClInclude Include="source\Core\Heap.h" />
@@ -214,6 +226,7 @@
   <ItemGroup>
     <Text Include="Test\AVL.txt" />
     <Text Include="Test\Btree.txt" />
+    <Text Include="Test\Hash.txt" />
     <Text Include="Test\Word.txt" />
   </ItemGroup>
   <ItemGroup>

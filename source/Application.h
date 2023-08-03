@@ -4,12 +4,14 @@
 #include "ResourceHolder/TextureHolder.h"; 
 #include "ResourceHolder/FontHolder.h";
 #include "Helper/ColorSetting.h"
+#include "States/HomeState.h"
 #include "States/BSTState.h"
 #include "States/AVLState.h"
 #include "States/BTreeState.h"
 #include "States/HeapState.h"
 #include "States/TrieState.h"
 #include "States/GraphState.h"
+#include "States/HashState.h"
 #include "StateStack.h"
 
 class Application
