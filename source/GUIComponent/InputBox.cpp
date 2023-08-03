@@ -37,7 +37,7 @@ void GUI::InputBox::drawField(Vector2 base)
 	DrawRectangle(base.x, base.y, this->mBound.width, this->mBound.height, this->mColor); 
 	DrawRectangleLines(base.x, base.y, this->mBound.width, this->mBound.height, this->mBorderColor);
 
-	int textSize = this->mBound.height * 2 / 3; 
+	float textSize = this->mBound.height * 2 / 3; 
 	std::string DisplayText = mInputText.substr(this->ind_start, this->ind_end - this->ind_start + 1); 
 
 	Vector2 textBounds = MeasureTextEx(font, DisplayText.c_str(), fontSize, 0.5);

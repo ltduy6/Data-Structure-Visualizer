@@ -25,10 +25,17 @@ void GUI::InputField::draw(Vector2 base)
 	Vector2 boundLabel = MeasureTextEx(font, label.c_str(), this->FontSize, 0); 
 	Vector2 pos = { this->mRect.x, this->mRect.y + this->mRect.height / 2 - boundLabel.y / 2 }; 
 
-	DrawTextEx(this->font, this->label.c_str(), pos, this->FontSize, 0, this->mLabelColor); 
+	if (label != "")
+	{
+		DrawTextEx(this->font, this->label.c_str(), pos, this->FontSize, 0, this->mLabelColor);
 
-	this->setSizeBox(Vector2{ this->mRect.width - boundLabel.x - 15, this->mRect.height - 5});
-	drawField(Vector2{ this->mRect.x + 5 + boundLabel.x, this->mRect.y + 2 });
+		this->setSizeBox(Vector2{ this->mRect.width - boundLabel.x - 15, this->mRect.height - 5 });
+		drawField(Vector2{ this->mRect.x + 5 + boundLabel.x, this->mRect.y + 2 });
+	}
+	else {
+		this->setSizeBox(Vector2{ this->mRect.width, this->mRect.height});
+		drawField(this->mPos);
+	}
 }
 
 void GUI::InputField::SetLabel(const std::string label)

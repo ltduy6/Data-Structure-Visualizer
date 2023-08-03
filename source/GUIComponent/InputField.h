@@ -22,7 +22,7 @@ namespace GUI
 		std::string GetLabel() const; 
 		void UpdateMouseCursor();
 	private:
-		std::string label; 
+		std::string label{ "" };
 		Color mLabelColor{ BLACK }; 
 		Font font{ FontHolder::getInstance().get(FontID::Roboto) };
 		float FontSize{ 36 };

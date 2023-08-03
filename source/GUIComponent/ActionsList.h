@@ -22,6 +22,7 @@ namespace GUI {
 		void drawError(); 
 		void setError(std::string error);
 		void setButtonSize(Vector2 size);
+		bool getHoverStatus() const;
 	private:
 		virtual void updateMouseCursor();
 	private:
@@ -30,8 +31,9 @@ namespace GUI {
 		// list of operations for an action
 		GUI::Container optionContainers; 
 		std::size_t indActive{ 0 };
-		bool isVisible; 
 		std::string mError{ "" }; 
+		bool isVisible; 
+		bool isHover;
 		Vector2 mButtonSize = { 0, 0 };
 	};
 }

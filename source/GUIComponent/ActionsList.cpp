@@ -1,7 +1,7 @@
 #include "ActionsList.h"
 #include "../Helper/GlobalVar.h"
 
-GUI::ActionsList::ActionsList() : isVisible{true}
+GUI::ActionsList::ActionsList() : isVisible{true}, isHover{false}
 {
 }
 
@@ -62,7 +62,7 @@ void GUI::ActionsList::AddOperation(GUI::Button::Ptr action, GUI::Container::Ptr
 	lastOperationPos.y += Constant::BUTTON_HEIGHT;
 
 	action.get()->SetPos(lastOperationPos); 
-	action.get()->SetSize(Vector2{Constant::BUTTON_WIDTH + 80, Constant::BUTTON_HEIGHT});
+	action.get()->SetSize(Vector2{Constant::BUTTON_WIDTH + 90, Constant::BUTTON_HEIGHT});
 	action.get()->setTextSize(36);
 
 	optionContainer.get()->SetPos(Vector2{ lastOperationPos.x + action.get()->GetSize().x, lastOperationPos.y});
@@ -113,11 +113,18 @@ void GUI::ActionsList::setButtonSize(Vector2 size)
 	this->mButtonSize = size;
 }
 
+bool GUI::ActionsList::getHoverStatus() const
+{
+	return this->isHover;
+}
+
 void GUI::ActionsList::updateMouseCursor()
 {
 	bool hoverButton = this->buttons.getHoverStatus(); 
 	bool hoverOption = this->optionContainers.getChildren().at(this->indActive)->getHoverStatus();
 	if (hoverButton == false && hoverOption == false)
-		SetMouseCursor(MOUSE_CURSOR_DEFAULT); 
+		this->isHover = false;
+	else
+		this->isHover = true;
 }	
 
