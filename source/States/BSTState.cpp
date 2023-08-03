@@ -3,18 +3,24 @@
 
 BSTState::BSTState(StateStack& stack, Context context) : State(stack, context)
 {
+    this->IniNavBar();
 }
 
 void BSTState::draw()
 {
     actionList.draw(); 
     mVisualization.draw();
+    matrix.draw();
+    navBar.draw();
 }
 
 bool BSTState::update(float dt)
 {
     actionList.update(dt); 
     mVisualization.update(dt);
+    navBar.update(dt);
+    matrix.update(dt);
+    this->UpdateMouseCurrsor();
     return true; 
 }
 
@@ -45,5 +51,24 @@ void BSTState::AddIntFieldInput(GUI::ActionsContainer::Ptr container, std::strin
     }
     button->SetOption(title, fields, action);
     container->pack(button);
+}
+
+void BSTState::IniNavBar()
+{
+    navBar.SetDirectLink([this](StateIDs stateID) {
+        requestStackPop();
+        requestStackPush(stateID); });
+    navBar.InsertTitle(StateIDs::AVL, "AVL TREE"); 
+    navBar.InsertTitle(StateIDs::Btree, "2-3-4 TREE");
+    navBar.InsertTitle(StateIDs::Hash, "HASH TABLE");
+    navBar.InsertTitle(StateIDs::Trie, "TRIE");
+    navBar.InsertTitle(StateIDs::Heap, "BINARY HEAP");
+    navBar.InsertTitle(StateIDs::Graph, "GRAPH");
+}
+
+void BSTState::UpdateMouseCurrsor()
+{
+    if (!this->navBar.getHoverStatus() && !this->actionList.getHoverStatus() && !this->mVisualization.getHoverStatus() && !this->matrix.getHoverStatus())
+        SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 }
 

@@ -2,6 +2,7 @@
 
 HeapState::HeapState(StateStack& stack, Context context) : BSTState(stack, context), mAlgo(mVisualization)
 {
+    this->navBar.SetActiveTitle(StateIDs::Heap);
     this->AddOperation();
 }
 
@@ -11,7 +12,7 @@ void HeapState::AddOperation()
     this->AddInitializeOperation();
     this->AddInsertOperation();
     this->AddDeleteOperation();
-    this->AddSearchOperation();
+    this->AddExtractTopOperation();
 
     actionList.SetPos(Vector2{ 50, Constant::WINDOW_HEIGHT - actionList.GetSize().y - 100 });
 }
@@ -103,24 +104,41 @@ void HeapState::AddDeleteOperation()
     actionList.AddOperation(button, container);
 }
 
-void HeapState::AddSearchOperation()
+void HeapState::AddExtractTopOperation()
 {
+    GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer());
+    GUI::Button::Ptr button(new GUI::Button());
+    button->setText("Extractop");
+
+    button->setCallBack([this]() {
+        if (mAlgo.getSize() == 0 || mAlgo.getSize() == 1)
+        {
+            actionList.setError("Not enough values to extract top");
+            return;
+        }
+        actionList.setError("");
+        mAlgo.ExtractTop();
+        actionList.hideAllOptions();
+        });
+    actionList.AddOperation(button, container);
 }
 
 void HeapState::AddToggleType()
 {
     GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer());
     GUI::Button::Ptr button(new GUI::Button());
-    button->setText("Type Heap");
+    button->setText("Max Heap");
 
-    AddNoFieldInput(container, "Max Heap", [this]() {
+    AddNoFieldInput(container, "Max Heap", [this, button]() {
         actionList.setError("");
+        button->setText("Max Heap");
         mAlgo.setMaxHeap();
         actionList.hideAllOptions();
         });
 
-    AddNoFieldInput(container, "Min Heap", [this]() {
+    AddNoFieldInput(container, "Min Heap", [this, button]() {
         actionList.setError("");
+        button->setText("Min Heap");
         mAlgo.setMinHeap();
         actionList.hideAllOptions();
         });

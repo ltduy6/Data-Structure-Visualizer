@@ -8,4 +8,5 @@ enum class StateIDs {
 	Trie,
 	Heap,
 	Graph,
+	Hash,
 };

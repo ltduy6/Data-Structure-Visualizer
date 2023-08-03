@@ -10,7 +10,7 @@ private:
 	virtual void AddInitializeOperation();
 	virtual void AddInsertOperation();
 	virtual void AddDeleteOperation();
-	virtual void AddSearchOperation();
+	virtual void AddExtractTopOperation();
 	virtual void AddToggleType();
 private:
 	Algorithms::Heap mAlgo;

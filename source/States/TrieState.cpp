@@ -2,6 +2,7 @@
 
 TrieState::TrieState(StateStack& stack, Context context) : BSTState(stack, context), mAlgo(mVisualization)
 {
+    this->navBar.SetActiveTitle(StateIDs::Trie);
     this->AddOperation();
 }
 
