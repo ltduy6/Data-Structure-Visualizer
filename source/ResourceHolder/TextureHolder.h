@@ -13,6 +13,7 @@ public:
 	TextureHolder(); 
 	~TextureHolder(); 
 
+	static TextureHolder& getInstance();
 	void load(TextureID id, const std::string& filename);
 	Texture2D& get(TextureID id); 
 	const Texture2D& get(TextureID id) const; 

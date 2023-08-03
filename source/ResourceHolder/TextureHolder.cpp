@@ -1,6 +1,7 @@
 #include "TextureHolder.h"
 
 #include <utility>
+#include <iostream>
 
 TextureHolder::TextureHolder()
 {
@@ -13,12 +14,19 @@ TextureHolder::~TextureHolder()
 		UnloadTexture(*texture.second);
 }
 
+TextureHolder& TextureHolder::getInstance()
+{
+	// TODO: insert return statement here
+	static TextureHolder instance; 
+	return instance;
+}
+
 void TextureHolder::load(TextureID id, const std::string& filename)
 {
 	std::unique_ptr<Texture2D> resource(new Texture()); 
 	*resource = LoadTexture(filename.c_str()); 
-	auto inserted = this->mResourceMap.insert(std::make_pair(id, std::move(resource)));
-	assert(inserted.second); 
+	auto inserted = this->mResourceMap.emplace(id, std::move(resource));
+	assert(inserted.second == true); 
 }
 
 Texture2D& TextureHolder::get(TextureID id)
@@ -29,7 +37,6 @@ Texture2D& TextureHolder::get(TextureID id)
 	{
 		return *mResourceMap[TextureID::None];
 	}
-	SetTextureFilter(*found->second, TEXTURE_FILTER_BILINEAR);
 	return *found->second; 
 }
 
@@ -41,6 +48,5 @@ const Texture2D& TextureHolder::get(TextureID id) const
 	{
 		return *mResourceMap.at(TextureID::None);
 	}
-	SetTextureFilter(*found->second, TEXTURE_FILTER_BILINEAR);
 	return *found->second;
 }
