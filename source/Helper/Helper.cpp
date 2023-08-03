@@ -12,6 +12,20 @@ int Helper::rand(int minValue, int maxValue)
     return mt() % (maxValue - minValue + 1) + minValue;
 }
 
+Color Helper::randColor()
+{
+    std::mt19937 mt{
+        static_cast<std::mt19937::result_type>(
+            std::chrono::steady_clock::now().time_since_epoch().count()) };
+    Color res; 
+    res.r = mt() % 255 + 1; 
+    res.g = mt() % 255 + 1; 
+    res.b = mt() % 255 + 1;
+    res.a = 255;
+
+    return res;
+}
+
 bool Helper::checkExist(std::vector<int>& nums, int value)
 {
     for (auto num : nums)
@@ -70,6 +84,52 @@ std::vector<std::string> Helper::extractStringInput(const std::string& input)
     return res;
 }
 
+listEdge Helper::getEdgeList(const std::string& input, bool& success)
+{
+    listEdge res; 
+    std::istringstream iss(input); 
+    std::string edge; 
+    while (std::getline(iss, edge, ' '))
+    {
+        int u, v, w; 
+        char dash1, dash2; 
+
+        std::istringstream tokenStream(edge); 
+        if (tokenStream >> u >> dash1 >> v >> dash2 >> w && dash1 == '-' && dash2 == '-')
+        {
+            res.push_back(std::make_pair(std::make_pair(u, v), w));
+        }
+        else {
+            success = false;
+        }
+    }
+    return res;
+}
+
+std::vector<std::vector<int>> Helper::getMatrix(std::map<std::string, std::string>& inputs, int size)
+{
+    std::vector<std::vector<int>> res;
+    for (int i = 0; i < size; ++i)
+    {
+        std::vector<int> row; 
+        for (int j = 0; j < size; ++j)
+        {
+            if (checkValidNumber(inputs[std::to_string(i) + std::to_string(j)], 1, 200))
+            {
+                row.push_back(std::stoi(inputs[std::to_string(i) + std::to_string(j)]));
+            }
+            else if (checkValidNumber(inputs[std::to_string(j) + std::to_string(i)], 1, 200))
+            {
+                row.push_back(std::stoi(inputs[std::to_string(j) + std::to_string(i)]));
+            }
+            else
+                row.push_back(-1);
+        }
+        res.push_back(row);
+    }
+    return res;
+}
+
 Vector2 operator+(const Vector2& a, const Vector2& b)
 {
     return Vector2{ a.x + b.x, a.y + b.y};
@@ -93,4 +153,9 @@ Vector2 operator/(const Vector2& a, float b)
 bool operator!=(const Vector2& a, const Vector2& b)
 {
     return (a.x != b.x || a.y != b.y);
+}
+
+bool operator==(const Color& a, const Color& b)
+{
+    return (a.r == b.r && a.g == b.g && a.b == b.b);
 }

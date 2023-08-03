@@ -37,6 +37,7 @@ void ColorSetting::loadLightMode()
 	this->mColor[ColorThemeID::NODE_OUTLINE] = BLACK;
 
 	this->mColor[ColorThemeID::EDGE] = BLACK;
+	this->mColor[ColorThemeID::HIDE_EDGE] = {224, 224, 224, 255};
 
 	this->mColor[ColorThemeID::HIGHLIGHT] = { 253, 153, 51, 255 };
 	this->mColor[ColorThemeID::CODE_HIGHLIGHT_BACKGROUND] = { 255, 255, 0, 255 };
@@ -45,6 +46,9 @@ void ColorSetting::loadLightMode()
 	this->mColor[ColorThemeID::END_OF_WORD] = { 0, 204, 204, 255 };
 	
 	this->mColor[ColorThemeID::ERROR] = RED; 
+
+	this->mColor[ColorThemeID::NAVBAR_UNSELECT] = { 190, 190, 190, 255 };
+	this->mColor[ColorThemeID::NAVBAR_SELECT] = WHITE;
 }
 
 void ColorSetting::loadDarkMode()
@@ -54,9 +58,20 @@ void ColorSetting::loadDarkMode()
 	this->mColor[ColorThemeID::BUTTON_HOVER] = BLACK; 
 	this->mColor[ColorThemeID::TEXT] = WHITE;
 
-	this->mColor[ColorThemeID::EDGE] = WHITE;
+	this->mColor[ColorThemeID::NODE_BACKGROUND] = Color{ 44, 54, 57, 255 };
+	this->mColor[ColorThemeID::NODE_LABEL] = WHITE; 
+	this->mColor[ColorThemeID::NODE_OUTLINE] = WHITE;
 
-	this->mColor[ColorThemeID::ERROR] = WHITE; 
+	this->mColor[ColorThemeID::EDGE] = WHITE;
+	this->mColor[ColorThemeID::HIDE_EDGE] = { 32, 32, 32, 255 };
+
+	this->mColor[ColorThemeID::HIGHLIGHT] = { 112, 146, 190, 255 };
+	this->mColor[ColorThemeID::CODE_HIGHLIGHT_BACKGROUND] = { 63, 78, 79, 255 };
+	this->mColor[ColorThemeID::CODE_HIGHLIGHT_HOVER] = BLACK;
+
+	this->mColor[ColorThemeID::END_OF_WORD] = { 0, 204, 204, 255 };
+
+	this->mColor[ColorThemeID::ERROR] = { 255, 127, 39, 255 };
 }
 
 void ColorSetting::load()

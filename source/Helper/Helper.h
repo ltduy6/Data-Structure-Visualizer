@@ -7,15 +7,21 @@
 #include <raylib.h>
 #include <fstream>
 #include <sstream>
+#include <map>
 #include <regex>
+
+typedef std::vector<std::pair<std::pair<int, int>, int>> listEdge;
 
 namespace Helper {
 	int rand(int minValue, int maxValue);
+	Color randColor();
 	bool checkExist(std::vector<int>& nums, int value);
 	bool checkValidNumber(std::string& num, int minValue, int maxValue);
 	bool checkValidString(std::string& input);
 	float EaseCircInOut(float t, float b, float c, float d);  
 	std::vector<std::string> extractStringInput(const std::string& input);
+	listEdge getEdgeList(const std::string& input, bool& success);
+	std::vector<std::vector<int>> getMatrix(std::map<std::string, std::string>& inputs, int size);
 };
 
 Vector2 operator + (const Vector2& a, const Vector2& b);
@@ -23,6 +29,7 @@ Vector2 operator - (const Vector2& a, const Vector2& b);
 Vector2 operator * (const Vector2& a, float b);
 Vector2 operator / (const Vector2& a, float b);
 bool operator != (const Vector2& a, const Vector2& b);
+bool operator == (const Color& a, const Color& b);
 
 template <typename T>
 std::vector<T> readListFromFile(std::string filePath)
