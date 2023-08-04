@@ -55,12 +55,9 @@ namespace Algorithms {
 		Node* SortedArrayToAVL(std::vector<int>& nums, int start, int end);
 		Node* rotateLeft(Node*& root); 
 		Node* rotateRight(Node*& root); 
-		Node* copyTree(Node* root);
 
 		void searchValue(Node* root, int value);
-		void printParent(Node* root);
 		void removeAVL(Node*& root); 
-		void printBST(Node* root);
 		void RotateUntil(Node*& root, int indexCode);
 		void traverse(Node*& root, Vector2 pos, int level, int& count); 
 		void modifyDistance(Node*& root);

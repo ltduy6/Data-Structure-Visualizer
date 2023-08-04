@@ -40,7 +40,6 @@ void GUI::Card::SetCard(StateIDs stateID, std::string title, TextureID textureID
 {
 	this->stateID = stateID; 
 	this->name = title;
-	std::cout << (int)textureID << '\n';
 	this->target = TextureHolder::getInstance().get(textureID);
 }
 

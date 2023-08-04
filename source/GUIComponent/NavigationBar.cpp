@@ -15,7 +15,6 @@ void GUI::NavigationBar::InsertTitle(StateIDs stateID, std::string titleName)
     this->hasTitle = true;
     auto insert = this->mTitles.insert(std::make_pair(stateID, titleName));
     assert(insert.second);
-    std::cout << this->mTitles.size() << '\n';
 }
 
 void GUI::NavigationBar::SetDirectLink(std::function<void(StateIDs)> link)

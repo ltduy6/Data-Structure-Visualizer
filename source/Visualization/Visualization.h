@@ -26,7 +26,6 @@ namespace Visualize {
 		int createCirNode(int value);
 		int createCharNode(std::string value);
 		void moveCirNode(int id, Vector2 position);
-		void moveCirNodeDelta(int id, Vector2 position);
 		void colorCirNode(int id, Color color);
 		void highlightCirNode(int id);
 		void unhighlightCirNode(int id);
@@ -42,7 +41,6 @@ namespace Visualize {
 		void setWeight(int id, std::string weight);
 		void moveEdgeSource(int id, Vector2 source);
 		void moveEdgeDes(int id, Vector2 des);
-		void moveEdgeDelta(int id, Vector2 source, Vector2 des);
 		void highlightEdge(int id);
 		void unhighlightEdge(int id);
 		void removeEdge(int id);

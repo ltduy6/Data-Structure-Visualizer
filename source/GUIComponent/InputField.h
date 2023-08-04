@@ -23,7 +23,7 @@ namespace GUI
 		void UpdateMouseCursor();
 	private:
 		std::string label{ "" };
-		Color mLabelColor{ BLACK }; 
+		Color mLabelColor{ ColorSetting::GetInstance().get(ColorThemeID::NODE_LABEL)};
 		Font font{ FontHolder::getInstance().get(FontID::Roboto) };
 		float FontSize{ 36 };
 	};

@@ -37,8 +37,7 @@ void Algorithms::AVL::Init(std::vector<int>& list)
 	if (list.size() == 0)
 		return; 
 	this->mRoot = this->SortedArrayToAVL(list, 0, list.size() - 1);
-	this->mVisual = this->copyTree(this->mRoot);
-	this->BalanceTree(this->mVisual);
+	this->BalanceTree(this->mRoot);
 }
 
 void Algorithms::AVL::Insert(int value)
@@ -148,7 +147,6 @@ Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, in
 		root = new Node(); 
 		root->value = value;
 		root->id = this->mVisualization.createCirNode(value);
-		std::cout << root->id << '\n';
 		if (root != parent)
 		{
 			root->parent = parent; 
@@ -160,7 +158,6 @@ Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, in
 						this->mVisualization.getCirNodePosition(parent->id),
 						this->mVisualization.getCirNodePosition(parent->id)
 					);
-					std::cout << parent->idEdgeRight << '\n';
 					this->mVisualization.highlightEdge(parent->idEdgeRight);
 				}
 				else {
@@ -168,7 +165,6 @@ Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, in
 						this->mVisualization.getCirNodePosition(parent->id),
 						this->mVisualization.getCirNodePosition(parent->id)
 					);
-					std::cout << parent->idEdgeLeft << '\n';
 					this->mVisualization.highlightEdge(parent->idEdgeLeft);
 				}
 			}
@@ -384,8 +380,6 @@ Algorithms::AVL::Node* Algorithms::AVL::RemoveUntil(Node*& root, int value)
 
 	if (root == nullptr)
 		return root; 
-
-	printParent(root);
 
 	// rotation 
 	int balanceFactor = Height(root->left) - Height(root->right);
@@ -655,38 +649,6 @@ void Algorithms::AVL::searchValue(Node* root, int value)
 	}
 }
 
-Algorithms::AVL::Node* Algorithms::AVL::copyTree(Node* root)
-{
-	if (root == nullptr)
-		return nullptr; 
-
-	Node* newNode = new Node(); 
-	newNode->value = root->value; 
-	newNode->id = root->id; 
-	newNode->idEdgeLeft = root->idEdgeLeft; 
-	newNode->idEdgeRight = root->idEdgeRight; 
-
-	newNode->left = this->copyTree(root->left); 
-	if (newNode->left)
-		newNode->left->parent = newNode; 
-	newNode->right = this->copyTree(root->right); 
-	if (newNode->right)
-		newNode->right->parent = newNode;
-
-	return newNode; 
-}
-
-void Algorithms::AVL::printParent(Node* root)
-{
-	if (root == nullptr)
-		return;
-
-	printParent(root->left); 
-	if (root->parent)
-		std::cout << root->value << ' ' << root->parent->value << '\n';
-	printParent(root->right);
-}
-
 void Algorithms::AVL::removeAVL(Node*& root)
 {
 	if (root == nullptr)
@@ -696,15 +658,6 @@ void Algorithms::AVL::removeAVL(Node*& root)
 	
 	delete root; 
 	root = nullptr;
-}
-
-void Algorithms::AVL::printBST(Node* root)
-{
-	if (root == nullptr)
-		return; 
-	printBST(root->left); 
-	std::cout << root->value << ' '; 
-	printBST(root->right);
 }
 
 void Algorithms::AVL::RotateUntil(Node*& root, int indexCode)

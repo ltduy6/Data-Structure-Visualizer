@@ -296,10 +296,7 @@
     <Text Include="Test\Btree.txt" />
     <Text Include="Test\Word.txt" />
     <Text Include="Test\Hash.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="source\Core\Btree.inl">
-      <Filter>Header Files</Filter>
-    </None>
+    <Text Include="Test\Graph.txt" />
+    <Text Include="Test\Heap.txt" />
   </ItemGroup>
 </Project>

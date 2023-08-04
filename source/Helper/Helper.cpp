@@ -84,25 +84,20 @@ std::vector<std::string> Helper::extractStringInput(const std::string& input)
     return res;
 }
 
-listEdge Helper::getEdgeList(const std::string& input, bool& success)
+listEdge Helper::getEdgeList(std::string filePath)
 {
-    listEdge res; 
-    std::istringstream iss(input); 
-    std::string edge; 
-    while (std::getline(iss, edge, ' '))
-    {
-        int u, v, w; 
-        char dash1, dash2; 
+    std::ifstream fin; 
+    fin.open(filePath);
+    assert(fin.is_open());
 
-        std::istringstream tokenStream(edge); 
-        if (tokenStream >> u >> dash1 >> v >> dash2 >> w && dash1 == '-' && dash2 == '-')
-        {
-            res.push_back(std::make_pair(std::make_pair(u, v), w));
-        }
-        else {
-            success = false;
-        }
+    listEdge res; 
+    int u{ 0 }, v{ 0 }, w{ 0 };
+    while (fin >> u >> v >> w)
+    {
+        res.push_back(std::make_pair(std::make_pair(u, v), w));
     }
+
+    fin.close();
     return res;
 }
 

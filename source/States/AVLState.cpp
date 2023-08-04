@@ -24,12 +24,6 @@ void AVLState::AddInitializeOperation()
     GUI::Button::Ptr buttonInit(new GUI::Button());
     buttonInit->setText("Initialize");
 
-    AddNoFieldInput(container, "Empty", [this]() {
-        actionList.setError("");
-        mAlgo.InitRandomFixSize(0);
-        actionList.hideAllOptions();
-        });
-
     AddNoFieldInput(container, "File", [this]() {
         actionList.setError("");
         const char* path = tinyfd_openFileDialog("Open File", "", 0, NULL, NULL, 0);

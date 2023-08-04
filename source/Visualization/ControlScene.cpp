@@ -47,7 +47,7 @@ Visualize::ControlScene::ControlScene(std::vector<VisualScene> &container, Visua
 	this->mButtonContainer.pack(buttonStepFw); 
 	this->mButtonContainer.pack(buttonSkipFw); 
 
-	this->mButtonContainer.SetPos({ Constant::WINDOW_WIDTH / 4, Constant::WINDOW_HEIGHT - Constant::BUTTON_HEIGHT - 30 });
+	this->mButtonContainer.SetPos({ Constant::WINDOW_WIDTH / 2 - this->mButtonContainer.GetSize().x / 2, Constant::WINDOW_HEIGHT - Constant::BUTTON_HEIGHT - 30});
 }
 
 Visualize::ControlScene::~ControlScene()

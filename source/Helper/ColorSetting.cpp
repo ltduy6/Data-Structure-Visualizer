@@ -26,10 +26,10 @@ Color ColorSetting::get(ColorThemeID id)
 
 void ColorSetting::loadLightMode()
 {
-	this->mColor[ColorThemeID::SCREEN_BACKGROUND] = WHITE; 
+	this->mColor[ColorThemeID::SCREEN_BACKGROUND] = { 254, 252, 243, 255 };
 
-	this->mColor[ColorThemeID::BUTTON_BACKGROUND] = Color{ 64, 64, 64, 255 };
-	this->mColor[ColorThemeID::BUTTON_HOVER] = GRAY; 
+	this->mColor[ColorThemeID::BUTTON_BACKGROUND] = { 219, 163, 154, 255 };
+	this->mColor[ColorThemeID::BUTTON_HOVER] = { 236, 205, 180, 255 };
 	this->mColor[ColorThemeID::TEXT] = WHITE; 
 
 	this->mColor[ColorThemeID::NODE_BACKGROUND] = WHITE; 
@@ -40,7 +40,7 @@ void ColorSetting::loadLightMode()
 	this->mColor[ColorThemeID::HIDE_EDGE] = {224, 224, 224, 255};
 
 	this->mColor[ColorThemeID::HIGHLIGHT] = { 253, 153, 51, 255 };
-	this->mColor[ColorThemeID::CODE_HIGHLIGHT_BACKGROUND] = { 255, 255, 0, 255 };
+	this->mColor[ColorThemeID::CODE_HIGHLIGHT_BACKGROUND] = { 240, 219, 219, 255 };
 	this->mColor[ColorThemeID::CODE_HIGHLIGHT_HOVER] = BLACK;
 
 	this->mColor[ColorThemeID::END_OF_WORD] = { 0, 204, 204, 255 };

@@ -67,15 +67,6 @@ void Visualize::VisualScene::moveCirNode(int id, Vector2 position)
 	this->getCirNode(id).SetPosition(position);
 }
 
-void Visualize::VisualScene::moveCirNodeDelta(int id, Vector2 position)
-{
-	Vector2 mPos = this->getCirNode(id).GetPosition();
-	mPos.x += position.x; 
-	mPos.y += position.y;
-
-	this->getCirNode(id).SetPosition(mPos);
-}
-
 void Visualize::VisualScene::colorCirNode(int id, Color color)
 {
 	CircularNode& node = this->getCirNode(id); 
@@ -173,13 +164,6 @@ void Visualize::VisualScene::setWeight(int id, std::string weight)
 {
 	Edge& edge = this->getEdge(id); 
 	edge.SetWeight(weight);
-}
-
-void Visualize::VisualScene::moveEdgeDelta(int id, Vector2 source, Vector2 des)
-{
-	Edge& edge = this->getEdge(id); 
-	edge.SetSource(edge.GetSource() + source); 
-	edge.SetDestination(edge.GetDestination() + des); 
 }
 
 void Visualize::VisualScene::highlightEdge(int id)

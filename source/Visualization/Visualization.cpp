@@ -60,11 +60,6 @@ void Visualize::Visualization::moveCirNode(int id, Vector2 position)
 	this->mContainer.back().moveCirNode(id, position);
 }
 
-void Visualize::Visualization::moveCirNodeDelta(int id, Vector2 position)
-{
-	this->mContainer.back().moveCirNodeDelta(id, position); 
-}
-
 void Visualize::Visualization::colorCirNode(int id, Color color)
 {
 	this->mContainer.back().colorCirNode(id, color);
@@ -133,11 +128,6 @@ void Visualize::Visualization::moveEdgeSource(int id, Vector2 source)
 void Visualize::Visualization::moveEdgeDes(int id, Vector2 des)
 {
 	this->mContainer.back().moveEdgeDes(id, des);
-}
-
-void Visualize::Visualization::moveEdgeDelta(int id, Vector2 source, Vector2 des)
-{
-	this->mContainer.back().moveEdgeDelta(id, source, des);
 }
 
 void Visualize::Visualization::highlightEdge(int id)

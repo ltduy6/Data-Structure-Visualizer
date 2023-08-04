@@ -24,9 +24,13 @@ void TrieState::AddInitializeOperation()
 
     AddNoFieldInput(container, "File", [this]() {
         actionList.setError("");
-        std::vector<std::string> list = readListFromFile<std::string>("Test/Trie.txt");
-        mAlgo.Init(list);
-        actionList.hideAllOptions();
+        const char* path = tinyfd_openFileDialog("Open File", "", 0, NULL, NULL, 0);
+        if (path != NULL)
+        {
+            std::vector<std::string> list = readListFromFile<std::string>(path);
+            mAlgo.Init(list);
+            actionList.hideAllOptions();
+        }
         });
 
     AddIntFieldInput(container, "User define", { {400, "N = ", 1, 20}, {500, "List ", 1, 20} }, [this](std::map<std::string, std::string> input) {

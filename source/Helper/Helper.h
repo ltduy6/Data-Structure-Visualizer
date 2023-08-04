@@ -20,7 +20,7 @@ namespace Helper {
 	bool checkValidString(std::string& input);
 	float EaseCircInOut(float t, float b, float c, float d);  
 	std::vector<std::string> extractStringInput(const std::string& input);
-	listEdge getEdgeList(const std::string& input, bool& success);
+	listEdge getEdgeList(std::string filePath);
 	std::vector<std::vector<int>> getMatrix(std::map<std::string, std::string>& inputs, int size);
 };
 

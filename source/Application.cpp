@@ -17,6 +17,7 @@ Application::Application() : mStateStack{State::Context()}
 
 Application::~Application()
 {
+	mStateStack.clearState();
 	CloseWindow();
 }
 

@@ -223,6 +223,14 @@ void Algorithms::Graph::primMST(int source)
 			}
 		}
 	}
+
+	for (auto edge : this->mEdge)
+	{
+		if (this->mVisualization.getEdgeColor(edge.second) == ColorSetting::GetInstance().get(ColorThemeID::EDGE))
+		{
+			this->mVisualization.unhighlightEdge(edge.second);
+		}
+	}
 }
 
 void Algorithms::Graph::ConnectedCompo()
@@ -296,8 +304,8 @@ void Algorithms::Graph::balanceGraph()
 {
 	if (this->numV >= 7)
 	{
-		RADIUS = 600;
-		CENTER = Vector2{ Constant::WINDOW_WIDTH, Constant::WINDOW_HEIGHT } / 2;
+		RADIUS = 550;
+		CENTER = Vector2{ Constant::WINDOW_WIDTH, Constant::WINDOW_HEIGHT } / 2 + Vector2{ 0, -150 };
 	}
 	this->setVPos(); 
 	this->setEPos();

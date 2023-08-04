@@ -226,11 +226,10 @@
   <ItemGroup>
     <Text Include="Test\AVL.txt" />
     <Text Include="Test\Btree.txt" />
+    <Text Include="Test\Graph.txt" />
     <Text Include="Test\Hash.txt" />
+    <Text Include="Test\Heap.txt" />
     <Text Include="Test\Word.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="source\Core\Btree.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
