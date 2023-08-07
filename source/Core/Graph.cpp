@@ -304,8 +304,8 @@ void Algorithms::Graph::balanceGraph()
 {
 	if (this->numV >= 7)
 	{
-		RADIUS = 550;
-		CENTER = Vector2{ Constant::WINDOW_WIDTH, Constant::WINDOW_HEIGHT } / 2 + Vector2{ 0, -150 };
+		RADIUS = 550 * Helper::scaleFactorY();
+		CENTER = Vector2{ Constant::WINDOW_WIDTH * Helper::scaleFactorX(), Constant::WINDOW_HEIGHT * Helper::scaleFactorY()} / 2 + Vector2{0, -150 * Helper::scaleFactorY()};
 	}
 	this->setVPos(); 
 	this->setEPos();

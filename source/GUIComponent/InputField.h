@@ -25,7 +25,7 @@ namespace GUI
 		std::string label{ "" };
 		Color mLabelColor{ ColorSetting::GetInstance().get(ColorThemeID::NODE_LABEL)};
 		Font font{ FontHolder::getInstance().get(FontID::Roboto) };
-		float FontSize{ 36 };
+		float FontSize{ 36 * Helper::scaleFactorX()};
 	};
 }
 

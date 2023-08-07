@@ -45,7 +45,7 @@ void GUI::NavigationBar::draw(Vector2 base)
     if (this->hasTitle)
     {
         bool willGo = false;
-        Rectangle rec = Rectangle{ 0, 0, Constant::WINDOW_WIDTH, HEIGHT };
+        Rectangle rec = Rectangle{ 0, 0, Constant::WINDOW_WIDTH * Helper::scaleFactorX(), HEIGHT * Helper::scaleFactorY()};
         DrawRectangleRec(rec, BLACK);
         if (this->DrawLogo())
         {
@@ -77,8 +77,8 @@ StateIDs GUI::NavigationBar::DrawTitles()
     const Color unselectedColor = ColorSetting::GetInstance().get(ColorThemeID::NAVBAR_UNSELECT); 
     const Color selectedColor = ColorSetting::GetInstance().get(ColorThemeID::NAVBAR_SELECT);
 
-    float x = 500; 
-    float y = pading;
+    float x = 500 * Helper::scaleFactorX(); 
+    float y = pading * Helper::scaleFactorY();
 
     for (auto title : this->mTitles)
     {
@@ -92,12 +92,12 @@ StateIDs GUI::NavigationBar::DrawTitles()
             font = fontBold;
         }
 
-        Vector2 textBound = MeasureTextEx(font, displayName.c_str(), 36, 0);
-        DrawTextEx(font, displayName.c_str(), {x, y}, 36, 0, color);
+        Vector2 textBound = MeasureTextEx(font, displayName.c_str(), textSize * Helper::scaleFactorX(), 0);
+        DrawTextEx(font, displayName.c_str(), {x, y}, textSize * Helper::scaleFactorX(), 0, color);
 
         hoverBounds[displayName] = Rectangle{ x - pading, y - pading, textBound.x + 2 * pading, textBound.y + 2 * pading};
 
-        x += hoverBounds[displayName].width + 10 * (pading - 5);
+        x += hoverBounds[displayName].width + 10 * Helper::scaleFactorX() * (pading - 5);
 
         if (CheckCollisionPointRec(GetMousePosition(), hoverBounds[displayName]))
         {
@@ -112,14 +112,14 @@ StateIDs GUI::NavigationBar::DrawTitles()
 bool GUI::NavigationBar::DrawSetting()
 {
     std::string text = "Switch Theme";
-    Vector2 textBound = MeasureTextEx(fontDefault, text.c_str(), 50, 0);
+    Vector2 textBound = MeasureTextEx(fontDefault, text.c_str(), 50 * Helper::scaleFactorX(), 0);
     Color color = { 0, 153, 76, 255 };
 
     Vector2 pos; 
-    pos.x = Constant::WINDOW_WIDTH - 100 - textBound.x;
-    pos.y = 50;
+    pos.x = (Constant::WINDOW_WIDTH - 100) * Helper::scaleFactorX() - textBound.x;
+    pos.y = 50 * Helper::scaleFactorY();
 
-    float padding = 2;
+    float padding = 2 * Helper::scaleFactorX();
 
     hoverBounds["setting"] = Rectangle{ pos.x - padding, pos.y - padding + 3, textBound.x + 2 * (padding), textBound.y + 2 * (padding - 3)};
 
@@ -127,7 +127,7 @@ bool GUI::NavigationBar::DrawSetting()
     if (CheckCollisionPointRec(GetMousePosition(), hoverBounds["setting"]))
         textColor = { 0, 204, 0, 255 };
 
-    DrawTextEx(fontDefault, text.c_str(), pos, 50, 0, textColor);
+    DrawTextEx(fontDefault, text.c_str(), pos, 50 * Helper::scaleFactorX(), 0, textColor);
     DrawRectangleLinesEx(hoverBounds["setting"], 1, color);
 
     if (CheckCollisionPointRec(GetMousePosition(), hoverBounds["setting"])) 
@@ -142,14 +142,14 @@ bool GUI::NavigationBar::DrawSetting()
 bool GUI::NavigationBar::DrawLogo()
 {
     std::string text = "DATA STRUCTURE VISUALIZER";
-    Vector2 textBound = MeasureTextEx(fontDefault, text.c_str(), 36, 0);
+    Vector2 textBound = MeasureTextEx(fontDefault, text.c_str(), 36 * Helper::scaleFactorX(), 0);
     Color color = { 255, 102, 102, 255 };
 
     Vector2 pos;
-    pos.x = 30;
-    pos.y = pading;
+    pos.x = 30 * Helper::scaleFactorX();
+    pos.y = pading * Helper::scaleFactorY();
 
-    float padding = 2;
+    float padding = 2 * Helper::scaleFactorX();
 
     hoverBounds["logo"] = Rectangle{ pos.x - padding, pos.y - padding + 3, textBound.x + 2 * (padding), textBound.y + 2 * (padding - 3) };
 
@@ -157,7 +157,7 @@ bool GUI::NavigationBar::DrawLogo()
     if (CheckCollisionPointRec(GetMousePosition(), hoverBounds["logo"]))
         textColor = { 255, 153, 153, 255 };
 
-    DrawTextEx(fontDefault, text.c_str(), pos, 36, 0, textColor);
+    DrawTextEx(fontDefault, text.c_str(), pos, 36 * Helper::scaleFactorX(), 0, textColor);
     DrawRectangleLinesEx(hoverBounds["logo"], 1, color);
 
     if (CheckCollisionPointRec(GetMousePosition(), hoverBounds["logo"]))

@@ -40,7 +40,8 @@ bool GUI::Component::GetActive()
 
 void GUI::Component::SetPos(Vector2 pos)
 {
-	this->mPos = pos;
+	this->mPos.x = pos.x;
+	this->mPos.y = pos.y;
 	this->mRect.x = pos.x;
 	this->mRect.y = pos.y;
 }

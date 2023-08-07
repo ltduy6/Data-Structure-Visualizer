@@ -14,7 +14,7 @@ void HeapState::AddOperation()
     this->AddDeleteOperation();
     this->AddExtractTopOperation();
 
-    actionList.SetPos(Vector2{ 50, Constant::WINDOW_HEIGHT - actionList.GetSize().y - 100 });
+    actionList.SetPos(Vector2{ 50 * Helper::scaleFactorX(), (Constant::WINDOW_HEIGHT - 100) * Helper::scaleFactorY() - actionList.GetSize().y });
 }
 
 void HeapState::AddInitializeOperation()
@@ -87,14 +87,14 @@ void HeapState::AddDeleteOperation()
 {
     GUI::ActionsContainer::Ptr container(new GUI::ActionsContainer());
     GUI::Button::Ptr button(new GUI::Button());
-    button->setText("Remove(v)");
-    AddIntFieldInput(container, "", { {400, "v = ", 1, 99} }, [this](std::map<std::string, std::string> input) {
-        if (Helper::checkValidNumber(input["v = "], 1, 200) == false)
+    button->setText("Remove(i)");
+    AddIntFieldInput(container, "", { {400, "i = ", 1, 99} }, [this](std::map<std::string, std::string> input) {
+        if (Helper::checkValidNumber(input["i = "], 1, 200) == false)
         {
             actionList.setError("Please input an integer number from 1 to 200");
             return;
         }
-        int value = std::stoi(input["v = "]);
+        int value = std::stoi(input["i = "]);
         if (value > mAlgo.getSize())
         {
             actionList.setError("Please input an index within the range of the heap"); 

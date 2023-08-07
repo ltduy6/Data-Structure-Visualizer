@@ -5,10 +5,10 @@ namespace Algorithms {
 	class Btree : public Algorithm
 	{
 	public:
-		static constexpr float WIDTH = 100; 
-		static constexpr float HEIGHT = 60;
-		float VERTICAL_SPACE = 100;
-		float HORIZONTAL_SPACE = 30;
+		float WIDTH = 100 * Helper::scaleFactorX(); 
+		float HEIGHT = 60 * Helper::scaleFactorY();
+		float VERTICAL_SPACE = 100 * Helper::scaleFactorY();
+		float HORIZONTAL_SPACE = 30 * Helper::scaleFactorY();
 		float MODIFIER = 0;
 	public:
 		Btree(Visualize::Visualization& visualization); 

@@ -14,8 +14,8 @@ void AVLState::AddOperation()
     this->AddSearchOperation();
     this->AddUpdateOperation();
 
-    actionList.setButtonSize(Vector2{ Constant::BUTTON_WIDTH + 50, Constant::BUTTON_HEIGHT });
-	actionList.SetPos(Vector2{ 50, Constant::WINDOW_HEIGHT - actionList.GetSize().y - 100 });
+    actionList.setButtonSize(Vector2{ (Constant::BUTTON_WIDTH + 50) * Helper::scaleFactorX(), Constant::BUTTON_HEIGHT * Helper::scaleFactorY()});
+	actionList.SetPos(Vector2{ 50 * Helper::scaleFactorX(), (Constant::WINDOW_HEIGHT - 100) * Helper::scaleFactorY() - actionList.GetSize().y });
 }
 
 void AVLState::AddInitializeOperation()

@@ -33,7 +33,7 @@ void GUI::Button::draw(Vector2 basePos)
 	basePos.x += mPos.x; 
 	basePos.y += mPos.y; 
 
-	mRect.x = basePos.x; mRect.y = basePos.y; 
+	mRect.x = basePos.x ; mRect.y = basePos.y; 
 
 	this->isHover = this->getHoverStatus();
 	this->mColor = ColorSetting::GetInstance().get(ColorThemeID::BUTTON_BACKGROUND); 
@@ -100,20 +100,20 @@ void GUI::Button::UpdateMouseCursor()
 
 Vector2 GUI::Button::getTextPos()
 {
-	Vector2 textBound = MeasureTextEx(FontHolder::getInstance().get(FontID::Roboto), this->mText.c_str(), this->textSize, 0);
+	Vector2 textBound = MeasureTextEx(FontHolder::getInstance().get(FontID::Roboto), this->mText.c_str(), this->textSize * Helper::scaleFactorX(), 0);
 	float x = this->mRect.x;
-	float y = this->mRect.y + (this->mRect.height - this->textSize) / 2; 
+	float y = this->mRect.y + (this->mRect.height - textBound.y) / 2; 
 
 	switch (alignment)
 	{
 	case TextAlignMent::Left:
-		x = this->mRect.x + 10; 
+		x = this->mRect.x + 10 * Helper::scaleFactorX(); 
 		break;
 	case TextAlignMent::Center:
 		x = this->mRect.x + (this->mRect.width - textBound.x) / 2;
 		break; 
 	case TextAlignMent::Right:
-		x = this->mRect.x + this->mRect.width - textBound.x - 10; 
+		x = this->mRect.x + this->mRect.width - textBound.x - 10 * Helper::scaleFactorX();
 		break; 
 	default:
 		break;
@@ -124,7 +124,7 @@ Vector2 GUI::Button::getTextPos()
 void GUI::Button::drawText()
 {
 	DrawTextEx(FontHolder::getInstance().get(FontID::Roboto), this->mText.c_str(),
-		this->getTextPos(), this->textSize, 0, this->mContentColor);
+		this->getTextPos(), this->textSize * Helper::scaleFactorX(), 0, this->mContentColor);
 }
 
 

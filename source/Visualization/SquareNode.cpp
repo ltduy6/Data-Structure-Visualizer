@@ -40,7 +40,7 @@ void Visualize::SquareNode::draw()
         }
         Vector2 labelBound = MeasureTextEx(font, this->mLabel.c_str(), textSize, 0);
         DrawTextEx(font, this->mLabel.c_str(),
-            { x + displaySize.x * size / 2 - labelBound.x / 2, y + displaySize.y + 5 },
+            { x + displaySize.x * size / 2 - labelBound.x / 2, y + displaySize.y + 5 * Helper::scaleFactorY()},
             textSize, 0, this->mLabelColor);
     }
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "raylib.h"
+#include "../Helper/Helper.h"
 #include <memory>
 #include <vector>
 #include <string>

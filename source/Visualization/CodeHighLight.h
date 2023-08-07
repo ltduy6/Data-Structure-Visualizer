@@ -4,6 +4,7 @@
 #include "../Helper/ColorSetting.h"
 #include "../Helper/GlobalVar.h"
 #include "../ResourceHolder/FontHolder.h"
+#include "../Helper/Helper.h"
 
 #include <string> 
 #include <vector>
@@ -27,7 +28,7 @@ namespace Visualize {
 
 		int mTracker{ 0 };
 
-		Rectangle mRect = { Constant::WINDOW_WIDTH - 900 - 5, Constant::WINDOW_HEIGHT - 3 * Constant::BUTTON_HEIGHT, 900, Constant::BUTTON_HEIGHT};
+		Rectangle mRect = { (Constant::WINDOW_WIDTH - 900 - 5) * Helper::scaleFactorX(), (Constant::WINDOW_HEIGHT - 3 * Constant::BUTTON_HEIGHT) * Helper::scaleFactorY(), 900 * Helper::scaleFactorX(), Constant::BUTTON_HEIGHT * Helper::scaleFactorY()};
 		 
 		Color mColor{ ColorSetting::GetInstance().get(ColorThemeID::CODE_HIGHLIGHT_BACKGROUND) };
 		Color mTextColor{ ColorSetting::GetInstance().get(ColorThemeID::NODE_LABEL) };

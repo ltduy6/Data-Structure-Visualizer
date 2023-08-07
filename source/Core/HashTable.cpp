@@ -209,6 +209,12 @@ void Algorithms::HashTable::sceneReset()
 	this->mTable.clear();
 }
 
+void Algorithms::HashTable::sceneInit()
+{
+	mVisualization.reset(mVisualization.getLastScene());
+	this->mVisualization.resetColor();
+}
+
 int Algorithms::HashTable::hashFunc(int value)
 {
 	return value % this->mSize;

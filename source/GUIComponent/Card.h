@@ -4,6 +4,7 @@
 #include "../ResourceHolder/FontHolder.h"
 #include "../ResourceHolder/TextureHolder.h"
 #include "../Helper/Helper.h"
+#include "../Helper/GlobalVar.h"
 
 #include <functional>
 #include <map>

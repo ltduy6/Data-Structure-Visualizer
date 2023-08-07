@@ -45,7 +45,7 @@ namespace GUI {
 		Font font{ FontHolder::getInstance().get(FontID::Roboto) };
 		Rectangle mBound{ Rectangle{0, 0, 0, 0} };
 		Rectangle mCursor{ Rectangle{0, 0, 0, 0} }; 
-		float fontSize{ 30 };
+		float fontSize{ 30 * Helper::scaleFactorX()};
 		float mBorderThickness{ 1 };
 		float countTime{ 0 };
 		bool mIsFocused{ false };

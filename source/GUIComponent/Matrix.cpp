@@ -104,9 +104,7 @@ std::map<std::string, std::string> GUI::Matrix::extractInput()
 		for (int j = 0; j < this->mSize; ++j)
 		{
 			inputs[std::to_string(i) + std::to_string(j)] = this->mMatrix[i][j]->getInputText();
-			std::cout << this->mMatrix[i][j]->getInputText() << ' ';
 		}
-		std::cout << '\n';
 	}
 	return inputs;
 }

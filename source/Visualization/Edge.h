@@ -8,8 +8,8 @@ namespace Visualize {
 	class Edge : public SceneNode
 	{
 	public:
-		static constexpr int THICKNESS = 5;
-		static constexpr int OFFSET = 30;
+		 int THICKNESS = 5 * Helper::scaleFactorX();
+		 int OFFSET = 30;
 	public:
 		Edge();
 		~Edge();

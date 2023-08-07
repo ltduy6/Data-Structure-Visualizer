@@ -39,7 +39,7 @@ namespace Visualize {
 		void resetColor();
 		int getObjectId() const;
 	private:
-		Vector2 mSize = { 100, 60 };
+		Vector2 mSize = { 100 * Helper::scaleFactorX(), 60 * Helper::scaleFactorY()};
 		std::multiset<int> mSetValue;
 		std::string mLabel{ "" };
 		std::string formatValue{ "000" };

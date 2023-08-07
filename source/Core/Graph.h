@@ -25,8 +25,8 @@ namespace Algorithms {
 		std::vector<std::vector<int>> mMatrix; 
 	private:
 		int numV{ 0 };
-		float RADIUS{ 400.f };
-		Vector2 CENTER{ Constant::WINDOW_WIDTH / 2, Constant::WINDOW_HEIGHT / 3 };
+		float RADIUS{ 400.f * Helper::scaleFactorY()};
+		Vector2 CENTER{ Constant::WINDOW_WIDTH * Helper::scaleFactorX() / 2, Constant::WINDOW_HEIGHT * Helper::scaleFactorY() / 3 };
 	private:
 		Vector2 getPos(int value);
 		void setVPos();

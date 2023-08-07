@@ -438,7 +438,7 @@ void Algorithms::Btree::setNodePos(BtreeNode*& root)
 		mLevel.push_back(currLevel);
 	}
 	int levelSize = mLevel.size(); 
-	Vector2 StartPos = { Constant::WINDOW_WIDTH / 2, (levelSize - 1) * VERTICAL_SPACE + 100};
+	Vector2 StartPos = { Constant::WINDOW_WIDTH * Helper::scaleFactorX() / 2, (levelSize - 1) * VERTICAL_SPACE + 100};
 	for (auto child : mLevel.back())
 	{
 		StartPos.x -= (child->size * WIDTH / 2);

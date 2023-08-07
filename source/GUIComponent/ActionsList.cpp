@@ -54,18 +54,18 @@ void GUI::ActionsList::update(float dt)
 
 void GUI::ActionsList::AddOperation(GUI::Button::Ptr action, GUI::Container::Ptr optionContainer)
 {
-	Vector2 lastOperationPos = Vector2{ 43, -Constant::BUTTON_HEIGHT };
+	Vector2 lastOperationPos = Vector2{ 50 * Helper::scaleFactorX(), -Constant::BUTTON_HEIGHT * Helper::scaleFactorY()};
 	if (this->buttons.getChildren().empty() == false)
 	{
-		lastOperationPos = this->buttons.getChildren().rbegin()->get()->GetPos(); 
+		lastOperationPos = this->buttons.getChildren().back().get()->GetPos(); 
 	}
-	lastOperationPos.y += Constant::BUTTON_HEIGHT;
+	lastOperationPos.y += Constant::BUTTON_HEIGHT * Helper::scaleFactorY();
 
-	action.get()->SetPos(lastOperationPos); 
-	action.get()->SetSize(Vector2{Constant::BUTTON_WIDTH + 90, Constant::BUTTON_HEIGHT});
+	action.get()->SetPos(Vector2{ lastOperationPos.x, lastOperationPos.y});
+	action.get()->SetSize(Vector2{(Constant::BUTTON_WIDTH + 90) * Helper::scaleFactorX(), Constant::BUTTON_HEIGHT * Helper::scaleFactorY()});
 	action.get()->setTextSize(36);
 
-	optionContainer.get()->SetPos(Vector2{ lastOperationPos.x + action.get()->GetSize().x, lastOperationPos.y});
+	optionContainer.get()->SetPos(Vector2{ (lastOperationPos.x + action.get()->GetSize().x), lastOperationPos.y});
 	optionContainer.get()->SetActive(false);
 
 	this->buttons.pack(action); 
@@ -96,10 +96,10 @@ void GUI::ActionsList::drawError()
 {
 
 	Font font = FontHolder::getInstance().get(FontID::Roboto);
-	Vector2 textBound = MeasureTextEx(font, this->mError.c_str(), 30, 0); 
+	Vector2 textBound = MeasureTextEx(font, this->mError.c_str(), 30, 0);
 
 	DrawTextEx(font, this->mError.c_str(),
-		Vector2{this->mPos.x + 43, this->mPos.y - textBound.y},
+		Vector2{(this->mPos.x + 43) * Helper::scaleFactorX(), this->mPos.y * Helper::scaleFactorY() - textBound.y * Helper::scaleFactorY()},
 		30, 0, ColorSetting::GetInstance().get(ColorThemeID::ERROR));
 }
 

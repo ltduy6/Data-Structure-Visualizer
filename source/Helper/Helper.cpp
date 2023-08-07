@@ -70,6 +70,18 @@ float Helper::EaseCircInOut(float t, float b, float c, float d)
     t -= 2.0f; return (c / 2.0f * (sqrtf(1.0f - t * t) + 1.0f) + b);
 }
 
+float Helper::scaleFactorX()
+{
+    int width = GetMonitorWidth(0) * Constant::SCALE_X;
+    return (float)width / Constant::WINDOW_WIDTH;
+}
+
+float Helper::scaleFactorY()
+{
+    int height = GetMonitorHeight(0) * Constant::SCALE_Y;
+    return (float)height / Constant::WINDOW_HEIGHT;
+}
+
 std::vector<std::string> Helper::extractStringInput(const std::string& input)
 {
     std::vector<std::string> res; 

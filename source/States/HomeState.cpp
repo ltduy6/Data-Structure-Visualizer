@@ -22,7 +22,7 @@ bool HomeState::update(float dt)
 
 void HomeState::InitCards()
 {
-	this->mCards.SetPos({ 200, -100 });
+	this->mCards.SetPos({ 200 * Helper::scaleFactorX(), -100 * Helper::scaleFactorY()});
 	CreateCard(StateIDs::AVL, "AVL Tree", TextureID::AVL_Card, Vector2{ 100, 500 });
 	CreateCard(StateIDs::Btree, "2-3-4 Tree", TextureID::Btree, Vector2{ 650, 500 });
 	CreateCard(StateIDs::Heap, "Binary Heap", TextureID::Heap, Vector2{ 1200, 500 });
@@ -34,7 +34,7 @@ void HomeState::InitCards()
 void HomeState::CreateCard(StateIDs stateID, std::string title, TextureID textureID, Vector2 pos)
 {
 	std::shared_ptr<GUI::Card> card(new GUI::Card());
-	card->SetPos(pos);
+	card->SetPos(Vector2{ pos.x * Helper::scaleFactorX(), pos.y * Helper::scaleFactorY() });
 	card->SetLink([this](StateIDs stateID) {
 		requestStackPop();
 		requestStackPush(stateID);
@@ -48,9 +48,9 @@ void HomeState::DrawLogo()
 	Font font{ FontHolder::getInstance().get(FontID::Handjet) };
 	Color color = { 255, 102, 102, 255 };
 	std::string text = "DATA STRUCTURE VISUALIZER";
-	float textSize = 120;
-	Vector2 textBound = MeasureTextEx(font, text.c_str(), textSize, 10);
-	Vector2 pos = (Vector2{ Constant::WINDOW_WIDTH, 400 } - textBound) / 2;
+	float textSize = 120 * Helper::scaleFactorX();
+	Vector2 textBound = MeasureTextEx(font, text.c_str(), textSize, 10 * Helper::scaleFactorX());
+	Vector2 pos = (Vector2{ Constant::WINDOW_WIDTH * Helper::scaleFactorX(), 400 * Helper::scaleFactorY()} - textBound) / 2;
 
-	DrawTextEx(font, text.c_str(), pos, textSize, 10, color);
+	DrawTextEx(font, text.c_str(), pos, textSize, 10 * Helper::scaleFactorX(), color);
 }

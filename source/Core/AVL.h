@@ -8,8 +8,8 @@ namespace Algorithms {
 	{
 	public:
 		static constexpr float RADIUS = 20;
-		float VERTICAL_SPACE = 100;
-		float HORIZONTAL_SPACE = 50;
+		float VERTICAL_SPACE = 100 * Helper::scaleFactorY();
+		float HORIZONTAL_SPACE = 50 * Helper::scaleFactorX();
 		float MODIFIER = 0;
 	public:
 		AVL(Visualize::Visualization& visualization); 

@@ -28,7 +28,7 @@ void GUI::OptionInputField::SetOption(std::string content, std::vector<GUI::Inpu
 	if (fields.empty())
 	{
 		GUI::Button::Ptr newButton(genButton(content, actionOnSubmit));
-		newButton->SetSize(Vector2{ Constant::BUTTON_WIDTH, Constant::BUTTON_HEIGHT });
+		newButton->SetSize(Vector2{ Constant::BUTTON_WIDTH * Helper::scaleFactorX(), Constant::BUTTON_HEIGHT * Helper::scaleFactorY()});
 		pack(newButton); 
 		return; 
 	}
@@ -91,7 +91,7 @@ void GUI::OptionInputField::AddSubmit(std::function<void(std::map<std::string, s
 	Vector2 lastChildPos = this->mChildren.rbegin()->get()->GetPos();
 	Vector2 lastChildSize = this->mChildren.rbegin()->get()->GetSize(); 
 
-	buttonSubmit->SetSize(Vector2{ 50, lastChildSize.y }); 
+	buttonSubmit->SetSize(Vector2{ 50 * Helper::scaleFactorX(), lastChildSize.y});
 	buttonSubmit->SetPos(Vector2{ lastChildPos.x + lastChildSize.x + 3, 
 								lastChildPos.y + (lastChildSize.y - buttonSubmit->GetSize().y) / 2});
 	pack(buttonSubmit);

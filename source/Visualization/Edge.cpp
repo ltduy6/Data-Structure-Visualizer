@@ -41,13 +41,13 @@ void Visualize::Edge::draw()
         float displaySize = this->textSize * GetScale(); 
         float u_x = headDestination.x - (this->mSource.x + unitVector.x * headOffset); 
         float u_y = headDestination.y - (this->mSource.y + unitVector.y * headOffset);
-        Vector2 textBound = MeasureTextEx(font, this->mWeight.c_str(), displaySize, 0);
-        Vector2 textPos = (this->mSource + unitVector * headOffset) * 3 / 4 + (headDestination) / 4 - Vector2{-10, textBound.y};
+        Vector2 textBound = MeasureTextEx(font, this->mWeight.c_str(), displaySize * Helper::scaleFactorX(), 0);
+        Vector2 textPos = (this->mSource + unitVector * headOffset) * 3 / 4 + (headDestination) / 4 - Vector2{-10 * Helper::scaleFactorX(), textBound.y};
         if (u_x * u_y < 0)
         {
             textPos.y += textBound.y;
         }
-        DrawTextEx(font, this->mWeight.c_str(), textPos, displaySize, 0, this->mColor);
+        DrawTextEx(font, this->mWeight.c_str(), textPos, displaySize * Helper::scaleFactorX(), 0, this->mColor);
     }
 }
 

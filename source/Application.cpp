@@ -1,11 +1,18 @@
 #include "Application.h"
 #include "../source/Helper/GlobalVar.h"
 #include <raylib.h>
+#include <iostream>
 
 Application::Application() : mStateStack{State::Context()}
 {
 	InitWindow(Constant::WINDOW_WIDTH, Constant::WINDOW_HEIGHT, "DATA STRUCTURE VISUALIZER");
 	SetTargetFPS(60); 
+	
+	int width = GetMonitorWidth(0) * Constant::SCALE_X;
+	int height = GetMonitorHeight(0) * Constant::SCALE_Y;
+
+	SetWindowSize(width, height);
+	SetWindowPosition(GetMonitorWidth(0) / 2 - width / 2, GetMonitorHeight(0) / 2 - height / 2);
 
 	this->loadFonts();
 	this->loadTextures();

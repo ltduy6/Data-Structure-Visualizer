@@ -49,7 +49,7 @@ void GUI::InputBox::drawField(Vector2 base)
 		textBounds = MeasureTextEx(font, DisplayText.c_str(), fontSize, 0);
 	}
 
-	this->drawCursor(Vector2{ base.x + textBounds.x + textSize / 3 + 5, base.y + (float)0.1*this->mBound.height });
+	this->drawCursor(Vector2{ base.x + textBounds.x + textSize / 3 + 5 * Helper::scaleFactorX(), base.y + (float)0.1 * this->mBound.height});
 
 	BeginScissorMode(base.x, base.y, this->mBound.width, this->mBound.height);
 	Vector2 pos{ base.x + textSize / 3, base.y + this->mBound.height / 2 - textBounds.y / 2 };

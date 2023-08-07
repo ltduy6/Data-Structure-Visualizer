@@ -1,4 +1,6 @@
 #pragma once
+#include "GlobalVar.h"
+
 #include <cassert>
 #include <chrono>
 #include <random>
@@ -19,6 +21,8 @@ namespace Helper {
 	bool checkValidNumber(std::string& num, int minValue, int maxValue);
 	bool checkValidString(std::string& input);
 	float EaseCircInOut(float t, float b, float c, float d);  
+	float scaleFactorX();
+	float scaleFactorY();
 	std::vector<std::string> extractStringInput(const std::string& input);
 	listEdge getEdgeList(std::string filePath);
 	std::vector<std::vector<int>> getMatrix(std::map<std::string, std::string>& inputs, int size);

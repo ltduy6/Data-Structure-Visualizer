@@ -29,7 +29,7 @@ void BSTState::AddNoFieldInput(GUI::ActionsContainer::Ptr container, std::string
     GUI::Button::Ptr button(new GUI::Button()); 
     button->setText(title); 
     button->setCallBack(action); 
-    button->SetSize(Vector2{ Constant::BUTTON_WIDTH, Constant::BUTTON_HEIGHT });
+    button->SetSize(Vector2{ Constant::BUTTON_WIDTH * Helper::scaleFactorX(), Constant::BUTTON_HEIGHT * Helper::scaleFactorY()});
     button->setTextAlignment(GUI::Button::TextAlignMent::Center);
     
     container->pack(button);
@@ -45,8 +45,7 @@ void BSTState::AddIntFieldInput(GUI::ActionsContainer::Ptr container, std::strin
     {
         GUI::InputBox::Ptr newBox(new GUI::InputBox()); 
         newBox->SetLabel(box.label);
-        newBox->SetSize(Vector2{ 300, Constant::BUTTON_HEIGHT }); 
-        newBox->SetRange(box.minValue, box.maxValue);
+        newBox->SetSize(Vector2{ 300 * Helper::scaleFactorX(), Constant::BUTTON_HEIGHT * Helper::scaleFactorY()});
         fields.push_back(newBox); 
     }
     button->SetOption(title, fields, action);

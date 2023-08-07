@@ -9,7 +9,7 @@ namespace Algorithms
 		Algorithm(Visualize::Visualization& visualization); 
 		~Algorithm(); 
 	protected:
-		static constexpr Vector2 STARTING_POINT = Vector2{ Constant::WINDOW_WIDTH / 2, 200 };
+		Vector2 STARTING_POINT = Vector2{ Constant::WINDOW_WIDTH * Helper::scaleFactorX() / 2, 200 * Helper::scaleFactorY()};
 	protected:
 		virtual void sceneReset();
 		virtual void sceneInit();

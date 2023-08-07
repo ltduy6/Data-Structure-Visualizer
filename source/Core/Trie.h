@@ -6,10 +6,10 @@ namespace Algorithms {
 	class Trie : public Algorithm
 	{
 	public:
-		static constexpr int ELEMENT_SIZE = 60;
+		int ELEMENT_SIZE = 60 * Helper::scaleFactorX();
 		static constexpr int ALPHABET_SIZE = 26;
-		float VERTICAL_SPACE = 100;
-		float HORIZONTAL_SPACE = 50;
+		float VERTICAL_SPACE = (float) 100 * Helper::scaleFactorY();
+		float HORIZONTAL_SPACE = (float) 50 * Helper::scaleFactorX();
 		float MODIFIER = 0;
 	public: 
 		Trie(Visualize::Visualization& visualization); 

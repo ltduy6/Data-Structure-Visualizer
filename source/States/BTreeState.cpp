@@ -14,7 +14,7 @@ void BTreeState::AddOperation()
 	this->AddSearchOperation(); 
 	this->AddUpdateOperation();
 
-	actionList.SetPos(Vector2{ 50, Constant::WINDOW_HEIGHT - actionList.GetSize().y - 100 });
+    actionList.SetPos(Vector2{ 50 * Helper::scaleFactorX(), (Constant::WINDOW_HEIGHT - 100) * Helper::scaleFactorY() - actionList.GetSize().y });
 }
 
 void BTreeState::AddInitializeOperation()

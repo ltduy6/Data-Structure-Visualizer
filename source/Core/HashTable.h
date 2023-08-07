@@ -5,8 +5,8 @@ namespace Algorithms {
 	class HashTable : public Algorithm
 	{
 	public:
-		static constexpr int HORIZONTAL_SPACE = 200;
-		static constexpr int VERTICAL_SPACE = 200;
+		float HORIZONTAL_SPACE = 200 * Helper::scaleFactorX();
+		float VERTICAL_SPACE = 200 * Helper::scaleFactorY();
 	public:
 		HashTable(Visualize::Visualization& visualization); 
 		~HashTable();
@@ -19,6 +19,7 @@ namespace Algorithms {
 		int getSize() const;
 	private:
 		void sceneReset(); 
+		void sceneInit();
 		int hashFunc(int value);
 		int getVisualId(int index);
 		int getValueId(int index);

@@ -29,8 +29,8 @@ void GUI::InputField::draw(Vector2 base)
 	{
 		DrawTextEx(this->font, this->label.c_str(), pos, this->FontSize, 0, this->mLabelColor);
 
-		this->setSizeBox(Vector2{ this->mRect.width - boundLabel.x - 15, this->mRect.height - 5 });
-		drawField(Vector2{ this->mRect.x + 5 + boundLabel.x, this->mRect.y + 2 });
+		this->setSizeBox(Vector2{ this->mRect.width - boundLabel.x - 15 * Helper::scaleFactorX(), this->mRect.height - 5 * Helper::scaleFactorY()});
+		drawField(Vector2{ this->mRect.x + 5 * Helper::scaleFactorX() + boundLabel.x, this->mRect.y + 2 * Helper::scaleFactorY()});
 	}
 	else {
 		this->setSizeBox(Vector2{ this->mRect.width, this->mRect.height});

@@ -9,8 +9,8 @@ namespace Algorithms {
 	class Heap : public Algorithm
 	{
 	public:
-		float VERTICAL_SPACE = 100;
-		float HORIZONTAL_SPACE = 700;
+		float VERTICAL_SPACE = 100 * Helper::scaleFactorY();
+		float HORIZONTAL_SPACE = 700 * Helper::scaleFactorX();
 		float MODIFIER = 0;
 	public:
 		Heap(Visualize::Visualization& visualization);

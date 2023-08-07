@@ -50,12 +50,13 @@ bool GUI::Card::getHoverStatus() const
 
 bool GUI::Card::DrawImage(Vector2 base)
 {
-	float x = base.x + mPos.x; 
-	float y = base.y + mPos.y; 
+	float x = (base.x + mPos.x);
+	float y = (base.y + mPos.y);
 
-	DrawTexture(this->target, x, y, WHITE);
+	DrawTextureNPatch(this->target, NPatchInfo{Rectangle{0, 0, (float)target.width, (float)target.height}, 500 / 81, 500 / 81, 500 / 81, 500 / 81}, 
+		Rectangle{x , y , 500 * Helper::scaleFactorX(), 500 * Helper::scaleFactorY()}, {0, 0}, 0.f, WHITE);
 
-	hoverBounds["image"] = Rectangle{ x, y, 500, 500 };
+	hoverBounds["image"] = Rectangle{ x, y, 500 * Helper::scaleFactorX(), 500 * Helper::scaleFactorY()};
 
 	if (CheckCollisionPointRec(GetMousePosition(), hoverBounds["image"]))
 	{
@@ -71,17 +72,19 @@ bool GUI::Card::DrawTitle(Vector2 base)
 	const Color Background = Color{ 102, 255, 255, 255 };
 	const Color textColor = BLACK; 
 
+
 	Vector2 pos = base + this->mPos; 
+
 	// draw background
-	DrawRectangleRec({ pos.x, pos.y + 500, 500, 50 }, Background);
+	DrawRectangleRec({ pos.x, pos.y + 500 * Helper::scaleFactorY(), 500 * Helper::scaleFactorX(), 50 * Helper::scaleFactorY()}, Background);
 	// draw title 
-	float textSize = 36; 
-	Vector2 textBound = MeasureTextEx(font, this->name.c_str(), 36, 0);
+	float textSize = 36 * Helper::scaleFactorX(); 
+	Vector2 textBound = MeasureTextEx(font, this->name.c_str(), textSize, 0);
 
-	pos.x += (500 - textBound.x) / 2;
-	pos.y += 505;
+	pos.x += (500 * Helper::scaleFactorX() - textBound.x) / 2;
+	pos.y += 505 * Helper::scaleFactorY();
 
-	hoverBounds["title"] = Rectangle{ pos.x, pos.y, textBound.x, textBound.y };
+	hoverBounds["title"] = Rectangle{ pos.x, pos.y, textBound.x, textBound.y};
 
 	DrawTextEx(font, this->name.c_str(), pos, textSize, 0, textColor);
 

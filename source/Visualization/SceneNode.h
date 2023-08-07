@@ -2,6 +2,7 @@
 
 #include "raylib.h"
 #include "../Helper/GlobalVar.h"
+#include "../Helper/Helper.h"
 #include <memory>
 
 namespace Visualize {
@@ -9,9 +10,9 @@ namespace Visualize {
 	{
 	public:
 		std::shared_ptr<SceneNode> Ptr;
-		float OUTLINE_THICKNESS = 5;
-		float ROUND_SEGMENT = 10; 
-		static constexpr int ELEMENT_SIZE = 60;
+		float OUTLINE_THICKNESS = 5 * Helper::scaleFactorX();
+		float ROUND_SEGMENT = 10 * Helper::scaleFactorX(); 
+		float ELEMENT_SIZE = 60 * Helper::scaleFactorX();
 	public:
 		SceneNode();
 		virtual ~SceneNode();
