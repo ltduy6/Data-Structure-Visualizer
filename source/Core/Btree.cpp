@@ -68,13 +68,13 @@ void Algorithms::Btree::Remove(int value)
 		return;
 	this->sceneInit();
 	this->mVisualization.addCode("Find v");
-	this->mVisualization.addCode("If v is in this and this is a leaf"); 
+	this->mVisualization.addCode("If this has enough keys and this is a leaf"); 
 	this->mVisualization.addCode("	remove v"); 
 	this->mVisualization.addCode("If v is in this and this is an internal node"); 
-	this->mVisualization.addCode("	replace v by its predecessor");
-	this->mVisualization.addCode("	replace v by its successor");
-	this->mVisualization.addCode("	merge children");
-	this->mVisualization.addCode("Fix size of this");
+	this->mVisualization.addCode("	if (predecessor) replace v by its predecessor");
+	this->mVisualization.addCode("	if (successor) replace v by its successor");
+	this->mVisualization.addCode("	else merge children");
+	this->mVisualization.addCode("If (this has 1 key) fix size of this");
 
 	std::vector<int> line = { 0, 1, 2, 3, 4, 5, 6, 7};
 	this->removeAnimation(value, line);
