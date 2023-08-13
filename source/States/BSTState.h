@@ -25,7 +25,7 @@ public:
 		float width;
 		std::string label;
 		int minValue; 
-		int maxValue; 
+		int maxValue;
 	};
 public:
 	BSTState(StateStack& stack, Context context); 
@@ -36,7 +36,7 @@ protected:
 	virtual void AddIntFieldInput(GUI::ActionsContainer::Ptr container, std::string title, std::vector<InputData> InputBoxs,
 		std::function<void(std::map <std::string, std::string>)> action);
 	virtual void IniNavBar();
-	virtual void UpdateMouseCurrsor();
+	virtual void UpdateMouseCursor();
 protected:
 	GUI::ActionsList actionList;
 	GUI::NavigationBar navBar;

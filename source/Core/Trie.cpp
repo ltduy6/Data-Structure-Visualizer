@@ -237,10 +237,10 @@ void Algorithms::Trie::deleteWordAnimation(Node* node, const std::string& word, 
 		if (!nextNode->isEndOfWord && nextNode->children.empty() && node != this->mRoot)
 		{
 			this->newScene({});
-			this->mVisualization.removeCirNode(nextNode->id); 
+			this->mVisualization.removeCirNode(nextNode->id);
 			this->mVisualization.removeEdge(node->Edge[currChar]);
 
-			node->children.erase(currChar); 
+			node->children.erase(currChar);
 			node->Edge.erase(currChar);
 			delete nextNode;
 
@@ -254,7 +254,7 @@ void Algorithms::Trie::deleteWordAnimation(Node* node, const std::string& word, 
 		{
 			if (nextNode->children.empty())
 			{
-				this->newScene({}); 
+				this->newScene({});
 				this->mVisualization.removeCirNode(nextNode->id);
 				this->mVisualization.removeEdge(node->Edge[currChar]);
 
@@ -266,6 +266,8 @@ void Algorithms::Trie::deleteWordAnimation(Node* node, const std::string& word, 
 				this->mVisualization.resetColorCirNode(nextNode->id);
 			}
 		}
+		else if (!nextNode->children.empty())
+			this->mVisualization.resetColorCirNode(nextNode->id);
 	}
 }
 

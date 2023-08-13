@@ -43,16 +43,18 @@ void GUI::Matrix::update(float dt)
 				}
 		this->isHover = false;
 	}
-	else {
-		this->mMatrix.clear();
-		this->firstCol.clear(); 
-		this->firstRow.clear();
-		this->mSize = 0;
-	}
 }
 
 void GUI::Matrix::create(int size)
 {
+	// clear matrix first
+	for (auto& row : this->mMatrix)
+		row.clear();
+	this->mMatrix.clear();
+	this->firstCol.clear();
+	this->firstRow.clear();
+	this->mSize = 0;
+	// create new matrix
 	this->mSize = size;
 	for (int i = 0; i < size; ++i)
 	{

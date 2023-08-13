@@ -14,8 +14,6 @@ void GUI::InputBox::drawField(Vector2 base)
 	this->mBound.x = base.x; 
 	this->mBound.y = base.y; 
 
-	this->checkInteraction();
-
 	if (this->mIsFocused)
 	{
 		int key = GetCharPressed();
@@ -60,6 +58,7 @@ void GUI::InputBox::drawField(Vector2 base)
 
 void GUI::InputBox::updateField(float dt)
 {
+	this->checkInteraction();
 	if (this->GetActive() == false)
 	{
 		this->resetLabel();
@@ -97,6 +96,7 @@ void GUI::InputBox::SetRange(int minValue, int maxValue)
 void GUI::InputBox::resetLabel()
 {
 	this->mCursorVisible = false;
+	this->mIsFocused = false;
 	this->mInputText = "";
 	this->ind_start = 0;
 	this->ind_end = 0;

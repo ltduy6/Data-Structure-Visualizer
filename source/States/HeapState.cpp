@@ -69,9 +69,9 @@ void HeapState::AddInsertOperation()
     GUI::Button::Ptr button(new GUI::Button());
     button->setText("Insert(v)");
     AddIntFieldInput(container, "", { {400, "v = ", 1, 99} }, [this](std::map<std::string, std::string> input) {
-        if (Helper::checkValidNumber(input["v = "], 1, 200) == false)
+        if (Helper::checkValidNumber(input["v = "], 0, 200) == false)
         {
-            actionList.setError("Please input an integer number from 1 to 200");
+            actionList.setError("Please input an integer number from 0 to 200");
             return;
         }
         int value = std::stoi(input["v = "]);
@@ -89,9 +89,9 @@ void HeapState::AddDeleteOperation()
     GUI::Button::Ptr button(new GUI::Button());
     button->setText("Remove(i)");
     AddIntFieldInput(container, "", { {400, "i = ", 1, 99} }, [this](std::map<std::string, std::string> input) {
-        if (Helper::checkValidNumber(input["i = "], 1, 200) == false)
+        if (Helper::checkValidNumber(input["i = "], 0, 200) == false)
         {
-            actionList.setError("Please input an integer number from 1 to 200");
+            actionList.setError("Please input an integer number from 0 to 200");
             return;
         }
         int value = std::stoi(input["i = "]);

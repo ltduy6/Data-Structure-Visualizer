@@ -41,10 +41,10 @@ void GraphState::AddInitializeOperation()
             int value = std::stoi(input["N = "]);
             if (matrix.GetMatrixSize() != value)
             {
-                mAlgo.InitFromMatrix({});
                 matrix.SetActive(true);
                 matrix.SetPos({ 100, 200 });
                 matrix.create(value);
+                mAlgo.InitFromMatrix({});
                 return;
             }
             else {
@@ -77,7 +77,7 @@ void GraphState::AddDijkstraOperation()
     button->setText("Dijkstra");
 
     AddIntFieldInput(container, "User define", {{500, "source = ", 1, 20}}, [this](std::map<std::string, std::string> input) {
-        if (Helper::checkValidNumber(input["source = "], 1, 20) == true)
+        if (Helper::checkValidNumber(input["source = "], 0, 10) == true)
         {
             int value = std::stoi(input["source = "]);
             if(mAlgo.isExist(value))
@@ -102,7 +102,7 @@ void GraphState::AddMSTOperation()
     button->setText("Prim's Algorithm");
 
     AddIntFieldInput(container, "User define", { {500, "source = ", 1, 20} }, [this](std::map<std::string, std::string> input) {
-        if (Helper::checkValidNumber(input["source = "], 1, 20) == true)
+        if (Helper::checkValidNumber(input["source = "], 0, 20) == true)
         {
             int value = std::stoi(input["source = "]);
             if (mAlgo.isExist(value))

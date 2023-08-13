@@ -7,7 +7,7 @@ namespace Algorithms {
 	class AVL : public Algorithm
 	{
 	public:
-		static constexpr float RADIUS = 20;
+		float RADIUS = 60 * Helper::scaleFactorX() / 2;
 		float VERTICAL_SPACE = 100 * Helper::scaleFactorY();
 		float HORIZONTAL_SPACE = 50 * Helper::scaleFactorX();
 		float MODIFIER = 0;

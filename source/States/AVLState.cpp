@@ -65,9 +65,9 @@ void AVLState::AddInsertOperation()
     GUI::Button::Ptr button(new GUI::Button()); 
     button->setText("Insert(v)"); 
     AddIntFieldInput(container, "", { {400, "v = ", 1, 99} }, [this](std::map<std::string, std::string> input) {
-        if (Helper::checkValidNumber(input["v = "], 1, 200) == false)
+        if (Helper::checkValidNumber(input["v = "], 0, 200) == false)
         {
-            actionList.setError("Please input an integer number from 1 to 200");
+            actionList.setError("Please input an integer number from 0 to 200");
             return;
         }
         int value = std::stoi(input["v = "]); 
@@ -85,9 +85,9 @@ void AVLState::AddDeleteOperation()
     GUI::Button::Ptr button(new GUI::Button());
     button->setText("Remove(v)");
     AddIntFieldInput(container, "", { {400, "v = ", 1, 99} }, [this](std::map<std::string, std::string> input) {
-        if (Helper::checkValidNumber(input["v = "], 1, 200) == false)
+        if (Helper::checkValidNumber(input["v = "], 0, 200) == false)
         {
-            actionList.setError("Please input an integer number from 1 to 200");
+            actionList.setError("Please input an integer number from 0 to 200");
             return;
         }
         int value = std::stoi(input["v = "]);
@@ -105,9 +105,9 @@ void AVLState::AddSearchOperation()
     GUI::Button::Ptr button(new GUI::Button());
     button->setText("Search(v)");
     AddIntFieldInput(container, "", { {400, "v = ", 1, 99} }, [this](std::map<std::string, std::string> input) {
-        if (Helper::checkValidNumber(input["v = "], 1, 200) == false)
+        if (Helper::checkValidNumber(input["v = "], 0, 200) == false)
         {
-            actionList.setError("Please input an integer number from 1 to 200");
+            actionList.setError("Please input an integer number from 0 to 200");
             return;
         }
         int value = std::stoi(input["v = "]);
@@ -125,9 +125,9 @@ void AVLState::AddUpdateOperation()
     GUI::Button::Ptr button(new GUI::Button());
     button->setText("Update(i, newv)");
     AddIntFieldInput(container, "", { {400, "i = ", 1, 99}, {400, "newv = ", 1, 99} }, [this](std::map<std::string, std::string> input) {
-        if (Helper::checkValidNumber(input["i = "], 1, 200) == false || Helper::checkValidNumber(input["newv = "], 1, 200) == false)
+        if (Helper::checkValidNumber(input["i = "], 0, 200) == false || Helper::checkValidNumber(input["newv = "], 0, 200) == false)
         {
-            actionList.setError("Please input an integer number from 1 to 200");
+            actionList.setError("Please input an integer number from 0 to 200");
             return;
         }
         int oldValue = std::stoi(input["i = "]);

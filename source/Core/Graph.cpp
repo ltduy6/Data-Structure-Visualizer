@@ -97,6 +97,7 @@ void Algorithms::Graph::InitFromMatrix(std::vector<std::vector<int>> matrix)
 void Algorithms::Graph::Dijkstra(int source)
 {
 	this->sceneInit(); 
+	std::cout << "Yes" << '\n';
 	std::map<int, int> dist;
 	
 	for (auto v : this->mNode)

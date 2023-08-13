@@ -20,7 +20,7 @@ bool BSTState::update(float dt)
     mVisualization.update(dt);
     navBar.update(dt);
     matrix.update(dt);
-    this->UpdateMouseCurrsor();
+    this->UpdateMouseCursor();
     return true; 
 }
 
@@ -65,7 +65,7 @@ void BSTState::IniNavBar()
     navBar.InsertTitle(StateIDs::Graph, "GRAPH");
 }
 
-void BSTState::UpdateMouseCurrsor()
+void BSTState::UpdateMouseCursor()
 {
     if (!this->navBar.getHoverStatus() && !this->actionList.getHoverStatus() && !this->mVisualization.getHoverStatus() && !this->matrix.getHoverStatus())
         SetMouseCursor(MOUSE_CURSOR_DEFAULT);
