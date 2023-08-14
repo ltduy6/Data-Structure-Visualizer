@@ -5,6 +5,8 @@
 
 Application::Application() : mStateStack{State::Context()}
 {
+	SetConfigFlags(FLAG_MSAA_4X_HINT);      // Enable Multi Sampling Anti Aliasing 4x (if available)
+
 	InitWindow(Constant::WINDOW_WIDTH, Constant::WINDOW_HEIGHT, "DATA STRUCTURE VISUALIZER");
 	SetTargetFPS(60); 
 	
