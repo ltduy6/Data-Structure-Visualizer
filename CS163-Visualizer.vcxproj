@@ -152,7 +152,6 @@
     <ClCompile Include="source\States\BSTState.cpp" />
     <ClCompile Include="source\GUIComponent\InputField.cpp" />
     <ClCompile Include="source\Helper\ColorSetting.cpp" />
-    <ClCompile Include="source\GUIComponent\ActionBox.cpp" />
     <ClCompile Include="source\GUIComponent\OptionInputField.cpp" />
     <ClCompile Include="source\Helper\Helper.cpp" />
     <ClCompile Include="source\GUIComponent\InputBox.cpp" />
@@ -199,7 +198,6 @@
     <ClInclude Include="source\States\BSTState.h" />
     <ClInclude Include="source\GUIComponent\InputField.h" />
     <ClInclude Include="source\Helper\ColorSetting.h" />
-    <ClInclude Include="source\GUIComponent\ActionBox.h" />
     <ClInclude Include="source\GUIComponent\OptionInputField.h" />
     <ClInclude Include="source\Helper\Helper.h" />
     <ClInclude Include="source\GUIComponent\InputBox.h" />

@@ -60,9 +60,6 @@
     <ClCompile Include="source\GUIComponent\OptionInputField.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\GUIComponent\ActionBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\Helper\ColorSetting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -198,9 +195,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\GUIComponent\OptionInputField.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\GUIComponent\ActionBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Helper\ColorSetting.h">
