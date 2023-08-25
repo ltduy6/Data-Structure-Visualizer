@@ -50,9 +50,8 @@ namespace Algorithms {
 	private:
 		void sceneReset();
 	private:
-		Node* InitUntil(Node*& root, Node*& parent, int value, int indexCode);
+		Node* InitUntil(Node*& root, Node*& parent, int value, int indexCode, bool isAnimation = true);
 		Node* RemoveUntil(Node*& root, int value);
-		Node* SortedArrayToAVL(std::vector<int>& nums, int start, int end);
 		Node* rotateLeft(Node*& root); 
 		Node* rotateRight(Node*& root); 
 

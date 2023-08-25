@@ -32,11 +32,15 @@ void Algorithms::AVL::InitRandomFixSize(int size)
 
 void Algorithms::AVL::Init(std::vector<int>& list)
 {
-	std::sort(list.begin(), list.end());
 	this->sceneReset();
 	if (list.size() == 0)
 		return; 
-	this->mRoot = this->SortedArrayToAVL(list, 0, list.size() - 1);
+	for (int value : list)
+	{
+		/*std::cout << value << ' ';*/
+		this->InitUntil(this->mRoot, this->mRoot, value, 0, false);
+	}
+	this->mVisualization.resetColor();
 	this->BalanceTree(this->mRoot);
 }
 
@@ -51,7 +55,7 @@ void Algorithms::AVL::Insert(int value)
 	this->mVisualization.addCode("    this.right.rotateRight, this.rotateLeft");     // 5
 	this->mVisualization.addCode("    this is balanced");                            // 6
 
-	this->InitUntil(this->mRoot, this->mRoot, value, 0);
+	this->InitUntil(this->mRoot, this->mRoot, value, 0, true);
 	this->newScene({});
 	this->BalanceTree(this->mRoot);
 	this->newScene({});
@@ -73,8 +77,9 @@ void Algorithms::AVL::Remove(int value)
 	this->mVisualization.addCode("    this.right.rotateRight, this.rotateLeft");     // 5
 	this->mVisualization.addCode("    this is balanced");                            // 6
 
-	this->RemoveUntil(this->mRoot, value);
 	this->finishRotation = true; 
+	this->RemoveUntil(this->mRoot, value);
+	this->newScene({ 6 }); 
 	this->BalanceTree(this->mRoot);
 	this->newScene({ 6 });
 	this->mVisualization.resetColor();
@@ -140,7 +145,7 @@ void Algorithms::AVL::sceneReset()
 	this->removeAVL(this->mRoot);
 }
 
-Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, int value, int indexCode)
+Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, int value, int indexCode, bool isAnimation)
 {
 	if (root == nullptr)
 	{
@@ -158,58 +163,70 @@ Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, in
 						this->mVisualization.getCirNodePosition(parent->id),
 						this->mVisualization.getCirNodePosition(parent->id)
 					);
-					this->mVisualization.highlightEdge(parent->idEdgeRight);
+					if(isAnimation)
+						this->mVisualization.highlightEdge(parent->idEdgeRight);
 				}
 				else {
 					parent->idEdgeLeft = this->mVisualization.createEdge(
 						this->mVisualization.getCirNodePosition(parent->id),
 						this->mVisualization.getCirNodePosition(parent->id)
 					);
-					this->mVisualization.highlightEdge(parent->idEdgeLeft);
+					if(isAnimation)
+						this->mVisualization.highlightEdge(parent->idEdgeLeft);
 				}
 			}
 		}
-		this->mVisualization.highlightCirNode(root->id);
+		if(isAnimation)
+			this->mVisualization.highlightCirNode(root->id);
 		this->BalanceTree(this->mRoot);
-		this->newScene({0 + indexCode});
-		this->mVisualization.resetColor();
+		if (isAnimation)
+		{
+			this->newScene({ 0 + indexCode });
+			this->mVisualization.resetColor();
+		}
 		this->finishRotation = true; 
 		return root; 
 	}
 	
-	this->newScene({0 + indexCode});
-	this->mVisualization.highlightCirNode(root->id);
+	if (isAnimation)
+	{
+		this->newScene({ 0 + indexCode });
+		this->mVisualization.highlightCirNode(root->id);
 
-	this->newScene({0 + indexCode});
-	this->mVisualization.unhighlightCirNode(root->id);
+		this->newScene({ 0 + indexCode });
+		this->mVisualization.unhighlightCirNode(root->id);
+	}
 
 	if (root->value < value)
 	{
-		if (root->idEdgeRight)
+		if (root->idEdgeRight && isAnimation)
 		{
 			this->newScene({0 + indexCode});
 			this->mVisualization.highlightEdge(root->idEdgeRight);
 		}
-		root->right = this->InitUntil(root->right, root, value, indexCode);
+		root->right = this->InitUntil(root->right, root, value, indexCode, isAnimation);
 	}
 	else if (root->value > value)
 	{
-		if (root->idEdgeLeft)
+		if (root->idEdgeLeft && isAnimation)
 		{
 			this->newScene({0 + indexCode});
 			this->mVisualization.highlightEdge(root->idEdgeLeft);
 		}
-		root->left = this->InitUntil(root->left, root, value, indexCode);
+		root->left = this->InitUntil(root->left, root, value, indexCode, isAnimation);
 	}
 	else {
-		this->newScene({}); 
-		this->mVisualization.resetColor(); 
+		if (isAnimation)
+		{
+			this->newScene({});
+			this->mVisualization.resetColor();
+		}
 		return root; 
 	}
 
 	int balanceFactor = Height(root->left) - Height(root->right);
 
-	if (this->finishRotation)
+	if (this->finishRotation && isAnimation)
 	{
 		newScene({1 + indexCode});
 		this->mVisualization.highlightCirNode(root->id);
@@ -223,14 +240,20 @@ Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, in
 		this->finishRotation = false; 
 		if (value > root->right->value)
 		{
-			this->newScene({ 4 + indexCode});
+			if(isAnimation)
+				this->newScene({ 4 + indexCode});
 			root = rotateLeft(root); 
 		}
 		else if (value < root->right->value)
 		{
-			this->newScene({ 5 + indexCode});
+			if(isAnimation)
+				this->newScene({ 5 + indexCode});
 			root->right = rotateRight(root->right); 
-			this->newScene({ 5 + indexCode});
+			if (isAnimation)
+				this->newScene({ 5 + indexCode });
+			this->BalanceTree(this->mRoot);
+			if(isAnimation)
+				this->newScene({ 5 + indexCode});
 			root = rotateLeft(root); 
 		}
 		this->mVisual = root; 
@@ -240,17 +263,22 @@ Algorithms::AVL::Node* Algorithms::AVL::InitUntil(Node*& root, Node*& parent, in
 		this->finishRotation = false; 
 		if (value < root->left->value)
 		{
-			this->newScene({ 2 + indexCode});
+			if(isAnimation)
+				this->newScene({ 2 + indexCode});
 			root = rotateRight(root); 
 		}
 		else if (value > root->left->value)
 		{
-			this->newScene({ 3 + indexCode});
+			if(isAnimation)
+				this->newScene({ 3 + indexCode});
 			root->left = rotateLeft(root->left); 
-			this->newScene({ 3 + indexCode});
+			if (isAnimation)
+				this->newScene({ 3 + indexCode }); 
+			this->BalanceTree(this->mRoot);
+			if(isAnimation)
+				this->newScene({ 3 + indexCode});
 			root = rotateRight(root);
 		}
-		this->mVisual = root;
 	}
 
 	this->mVisualization.resetColorCirNode(root->id);
@@ -405,6 +433,8 @@ Algorithms::AVL::Node* Algorithms::AVL::RemoveUntil(Node*& root, int value)
 		{
 			this->newScene({ 5 });
 			root->right = rotateRight(root->right);
+			this->newScene({ 5 }); 
+			this->BalanceTree(this->mRoot);
 			this->newScene({ 5 });
 			root = rotateLeft(root);
 		}
@@ -421,38 +451,14 @@ Algorithms::AVL::Node* Algorithms::AVL::RemoveUntil(Node*& root, int value)
 		{
 			this->newScene({ 3 }); 
 			root->left = rotateLeft(root->left);
+			this->newScene({ 3 }); 
+			this->BalanceTree(this->mRoot);
 			this->newScene({ 3 });
 			root = rotateRight(root);
 		}
 	}
 	this->mVisualization.resetColorCirNode(root->id);
 	return root;
-}
-
-Algorithms::AVL::Node* Algorithms::AVL::SortedArrayToAVL(std::vector<int>& nums, int start, int end)
-{
-	if (start > end)
-		return nullptr;
-
-	int mid = (start + end) / 2; 
-	Node* root = new Node(); 
-	root->value = nums[mid]; 
-	root->id = this->mVisualization.createCirNode(nums[mid]); 
-
-	root->left = this->SortedArrayToAVL(nums, start, mid - 1); 
-	root->right = this->SortedArrayToAVL(nums, mid + 1, end);
-
-	if (root->left)
-	{
-		root->left->parent = root; 
-		root->idEdgeLeft = this->mVisualization.createEdge(STARTING_POINT, STARTING_POINT);
-	}
-	if (root->right)
-	{
-		root->right->parent = root;
-		root->idEdgeRight = this->mVisualization.createEdge(STARTING_POINT, STARTING_POINT);
-	}
-	return root; 
 }
 
 Algorithms::AVL::Node* Algorithms::AVL::rotateLeft(Node*& root)
