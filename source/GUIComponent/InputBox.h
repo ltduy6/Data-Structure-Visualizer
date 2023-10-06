@@ -21,11 +21,8 @@ namespace GUI {
 		virtual void drawField(Vector2 base);
 		virtual void updateField(float dt);
 		virtual std::string getInputText() const;
-
 		void SetRange(int minValue, int maxValue);
-
 		void resetLabel(); 
-
 	private:
 		void checkInteraction();
 		void drawCursor(Vector2 base); 

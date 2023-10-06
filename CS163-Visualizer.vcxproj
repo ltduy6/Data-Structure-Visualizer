@@ -192,7 +192,6 @@
     <ClInclude Include="source\Visualization\Edge.h" />
     <ClInclude Include="source\Core\AVL.h" />
     <ClInclude Include="source\Core\Algorithm.h" />
-    <ClInclude Include="source\NonCopyable.hpp" />
     <ClInclude Include="source\Visualization\CircularNode.h" />
     <ClInclude Include="source\Visualization\SceneNode.h" />
     <ClInclude Include="source\States\BSTState.h" />

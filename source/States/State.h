@@ -2,7 +2,6 @@
 
 #include "StateIdentifiers.h"
 
-
 #include <memory>
 #include <functional>
 
@@ -12,7 +11,6 @@ class State
 {
 public:
 	typedef std::unique_ptr<State> Ptr;
-
 	struct Context{};
 
 public:

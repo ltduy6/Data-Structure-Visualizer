@@ -5,6 +5,8 @@ class GraphState : public BSTState
 {
 public:
 	GraphState(StateStack& stack, Context context); 
+protected:
+	virtual void handleDraging();
 private:
 	virtual void AddOperation();
 	virtual void AddInitializeOperation();

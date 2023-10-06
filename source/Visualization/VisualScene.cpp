@@ -27,12 +27,18 @@ float Visualize::VisualScene::easeInOut(float from, float to, float time, float 
 
 void Visualize::VisualScene::draw()
 {
-	for (auto obj : this->mEdgeMap)
+	for (auto &obj : this->mEdgeMap)
 		obj.second.draw();
-	for (auto obj : this->mSquareMap)
+	for (auto &obj : this->mSquareMap)
 		obj.second.draw();
-	for (auto obj : this->mCirNodeMap)
+	for (auto &obj : this->mCirNodeMap)
 		obj.second.draw();
+}
+
+void Visualize::VisualScene::update(float dt)
+{
+	for (auto &obj : this->mCirNodeMap)
+		obj.second.update(dt);
 }
 
 int Visualize::VisualScene::createCirNode(int value)
@@ -114,6 +120,11 @@ void Visualize::VisualScene::setLabel(int id, std::string label)
 Vector2 Visualize::VisualScene::getCirNodePosition(int id) const
 {
 	return this->getCirNode(id).GetPosition();
+}
+
+bool Visualize::VisualScene::getMouseHover(int id)
+{
+	return this->getCirNode(id).isMouseHover();
 }
 
 int Visualize::VisualScene::createEdge(Vector2 source, Vector2 des)

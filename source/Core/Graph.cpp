@@ -88,6 +88,8 @@ void Algorithms::Graph::InitFromMatrix(std::vector<std::vector<int>> matrix)
 				this->mEdge.emplace(std::make_pair(j, i), newEdge);
 				this->mList[i].emplace(std::make_pair(j, matrix[i][j]));
 				this->mList[j].emplace(std::make_pair(i, matrix[i][j]));
+				this->mEdgeOrder.emplace(std::make_pair(i, j), true); 
+				this->mEdgeOrder.emplace(std::make_pair(j, i), false);	
 			}
 		}
 	}
@@ -261,6 +263,32 @@ void Algorithms::Graph::ConnectedCompo()
 	}
 }
 
+void Algorithms::Graph::updatePos()
+{
+	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+		this->isMousePress = true;
+
+	if(IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+		this->isMousePress = false;
+
+	for (const auto& v : this->mNode)
+	{
+		if (this->mVisualization.getMouseHover(v.second) && this->isMousePress)
+		{
+			this->mVisualization.moveCirNode(v.second, GetMousePosition());
+			auto adEdge = this->mList.find(v.first);
+			if(adEdge != this->mList.end())
+				for (auto &edge : adEdge->second)
+				{
+					if(this->mEdgeOrder[std::make_pair(v.first, edge.first)])
+						this->mVisualization.moveEdgeSource(this->mEdge[std::make_pair(v.first, edge.first)], this->getPos(v.first));
+					else
+						this->mVisualization.moveEdgeDes(this->mEdge[std::make_pair(v.first, edge.first)], this->getPos(v.first));
+				}
+		}
+	}
+}
+
 bool Algorithms::Graph::isExist(int vertex)
 {
 	return this->mNode.find(vertex) != this->mNode.end();
@@ -280,6 +308,11 @@ Vector2 Algorithms::Graph::getPos(int value)
 	return this->mVisualization.getCirNodePosition(found->second); 
 }
 
+float Algorithms::Graph::distance(Vector2 a, Vector2 b)
+{
+	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y); 
+}
+
 void Algorithms::Graph::setVPos()
 {
 	int i = 0;
@@ -296,8 +329,11 @@ void Algorithms::Graph::setEPos()
 {
 	for (const auto& e : this->mEdge)
 	{
-		this->mVisualization.moveEdgeSource(e.second, this->getPos(e.first.first));
-		this->mVisualization.moveEdgeDes(e.second, this->getPos(e.first.second));
+		if (this->mEdgeOrder[std::make_pair(e.first.first, e.first.second)])
+		{
+			this->mVisualization.moveEdgeSource(e.second, this->getPos(e.first.first));
+			this->mVisualization.moveEdgeDes(e.second, this->getPos(e.first.second));
+		}
 	}
 }
 

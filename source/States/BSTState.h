@@ -1,4 +1,5 @@
 #pragma once
+
 #include "State.h"
 #include "../GUIComponent/ActionsList.h"
 #include "../GUIComponent/ActionsContainer.h"
@@ -37,10 +38,12 @@ protected:
 		std::function<void(std::map <std::string, std::string>)> action);
 	virtual void IniNavBar();
 	virtual void UpdateMouseCursor();
+	virtual void handleDraging(); 
 protected:
 	GUI::ActionsList actionList;
 	GUI::NavigationBar navBar;
 	Visualize::Visualization mVisualization;
 	GUI::Matrix matrix;
 };
+
 

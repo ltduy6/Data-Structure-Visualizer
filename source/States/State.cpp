@@ -9,7 +9,6 @@ State::~State()
 {
 }
 
-
 State::Context State::getContex() const
 {
 	return mContext;

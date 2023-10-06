@@ -12,7 +12,7 @@ GUI::InputBox::~InputBox()
 void GUI::InputBox::drawField(Vector2 base)
 {
 	this->mBound.x = base.x; 
-	this->mBound.y = base.y; 
+	this->mBound.y = base.y;
 
 	if (this->mIsFocused)
 	{

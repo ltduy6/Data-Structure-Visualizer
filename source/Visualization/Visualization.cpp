@@ -100,6 +100,11 @@ Vector2 Visualize::Visualization::getCirNodePosition(int id) const
 	return this->mContainer.back().getCirNodePosition(id);
 }
 
+bool Visualize::Visualization::getMouseHover(int id)
+{
+	return this->mContainer.back().getMouseHover(id);
+}
+
 int Visualize::Visualization::createEdge(Vector2 source, Vector2 des)
 {
 	return this->mContainer.back().createEdge(source, des);

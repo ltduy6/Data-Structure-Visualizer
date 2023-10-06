@@ -1,4 +1,6 @@
 #pragma once
+#ifndef STATESTACK_H
+#define STATESTACK_H
 
 #include "States/State.h"
 #include "States/StateIdentifiers.h"
@@ -36,7 +38,6 @@ private:
 private:
 	struct PendingChange {
 		explicit PendingChange(Action action, StateIDs stateID = StateIDs::None);
-
 		Action action;
 		StateIDs stateID;
 	};
@@ -55,3 +56,5 @@ inline void StateStack::registerState(StateIDs id)
 		return State::Ptr(new T(*this, mContext));
 	};
 }
+
+#endif // !STATESTACK_H

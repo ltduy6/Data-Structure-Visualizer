@@ -7,6 +7,11 @@ GraphState::GraphState(StateStack& stack, Context context) : BSTState(stack, con
 	this->AddOperation();
 }
 
+void GraphState::handleDraging()
+{
+    this->mAlgo.updatePos();
+}
+
 void GraphState::AddOperation()
 {
 	this->AddInitializeOperation();

@@ -218,9 +218,6 @@
     <ClInclude Include="source\Visualization\Visualization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\NonCopyable.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\Core\Algorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -20,7 +20,8 @@ bool BSTState::update(float dt)
     mVisualization.update(dt);
     navBar.update(dt);
     matrix.update(dt);
-    this->UpdateMouseCursor();
+    handleDraging();
+    UpdateMouseCursor();
     return true; 
 }
 
@@ -69,5 +70,9 @@ void BSTState::UpdateMouseCursor()
 {
     if (!this->navBar.getHoverStatus() && !this->actionList.getHoverStatus() && !this->mVisualization.getHoverStatus() && !this->matrix.getHoverStatus())
         SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+}
+
+void BSTState::handleDraging()
+{
 }
 

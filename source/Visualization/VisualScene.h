@@ -24,6 +24,7 @@ namespace Visualize
 		static float easeInOut(float from, float to, float time, float totalTime);
 		
 		void draw(); 
+		void update(float dt);
 
 		int createCirNode(int value); 
 		int createCharNode(std::string value);
@@ -36,6 +37,7 @@ namespace Visualize
 		void removeCirNode(int id); 
 		void setLabel(int id, std::string label);
 		Vector2 getCirNodePosition(int id) const;
+		bool getMouseHover(int id); 
 
 		int createEdge(Vector2 source, Vector2 des); 
 		int createEdgeOffSet(Vector2 source, Vector2 des, int offset = 0); 
@@ -87,6 +89,7 @@ namespace Visualize
 
 		static void transitionSquareNode(const VisualScene& fromScene, const VisualScene& toScene, 
 			float time, float totalTime, VisualScene& sceneRes);
+
 	private: 
 		std::map<int, CircularNode> mCirNodeMap;
 		std::map<int, Edge> mEdgeMap;

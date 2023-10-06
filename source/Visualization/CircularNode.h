@@ -10,6 +10,7 @@ namespace Visualize {
 		CircularNode();
 		~CircularNode();
 		virtual void draw();
+		virtual void update(float dt);
 
 		void SetValue(int value);
 		int GetValue() const;
@@ -33,6 +34,8 @@ namespace Visualize {
 
 		void resetColor(); 
 		int getObjectId() const; 
+
+		bool isMouseHover(); 
 	private:
 		float mRadius{ ELEMENT_SIZE / 2 };
 		int mValue{ 0 };

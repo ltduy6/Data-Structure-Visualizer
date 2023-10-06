@@ -1,4 +1,5 @@
 #include "CircularNode.h"
+#include <iostream>
 
 Visualize::CircularNode::CircularNode()
 {
@@ -11,7 +12,6 @@ Visualize::CircularNode::~CircularNode()
 
 void Visualize::CircularNode::draw()
 {
-
 	float x = this->GetPosition().x;
 	float y = this->GetPosition().y;
 
@@ -35,6 +35,15 @@ void Visualize::CircularNode::draw()
 	Vector2 labelBounds = MeasureTextEx(fontLabel, this->mLabel.c_str(), TextSize , 0);
 
 	DrawTextEx(fontLabel, this->mLabel.c_str(), { x - labelBounds.x / 2, y + DisplayRadius + DisplayRadius * 1 / 3 }, TextSize , 0, this->mLabelColor);
+}
+
+void Visualize::CircularNode::update(float dt)
+{
+	if (this->isMouseHover() && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+	{
+		this->SetPosition({100.f, 100.f});
+		std::cout << this->getObjectId() << ' ' << this->GetPosition().x << " " << this->GetPosition().y << "\n";
+	}
 }
 
 void Visualize::CircularNode::SetValue(int value)
@@ -117,4 +126,16 @@ void Visualize::CircularNode::resetColor()
 int Visualize::CircularNode::getObjectId() const
 {
 	return this->objectID_CIRNODE;
+}
+
+bool Visualize::CircularNode::isMouseHover()
+{
+	float x = this->GetPosition().x;
+	float y = this->GetPosition().y;
+	float displayRadius = this->mRadius * this->GetScale();
+
+	Vector2 mousePos = GetMousePosition();
+	if (CheckCollisionPointCircle(mousePos, { x, y }, displayRadius))
+		return true;
+	return false;
 }
